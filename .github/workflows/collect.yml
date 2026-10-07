@@ -1,0 +1,49 @@
+name: collect
+
+on:
+  schedule:
+    - cron: '0 3,9 * * *' # 12:00, 18:00 KST (학과 사무실 오전·오후 마감 직후)
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['site/**', 'extension/departments.json', 'extension/extract.js', 'collector/**']
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: collect
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    # Secrets(CNU_KEY)와 Pages 준비 후 레포 변수 COLLECT_ENABLED=true로 켠다
+    if: ${{ vars.COLLECT_ENABLED == 'true' }}
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node --test "collector/*.test.js"
+      - name: 학내 게시판 수집
+        env:
+          CNU_KEY: ${{ secrets.CNU_KEY }}
+        run: node collector/collect.js
+      - name: 수집 결과 커밋
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add site/data
+          git diff --cached --quiet || (git commit -m "data: 학과 공지 수집" && git push)
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+      - id: deploy
+        uses: actions/deploy-pages@v4

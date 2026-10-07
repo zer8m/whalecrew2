@@ -1,0 +1,1309 @@
+[
+ {
+  "name": "공과대학",
+  "depts": [
+   {
+    "id": "d01",
+    "name": "컴퓨터융합학부",
+    "boards": [
+     {
+      "no": 305,
+      "name": "공지사항 > 학사공지",
+      "url": "https://computer.cnu.ac.kr/computer/notice/bachelor.do"
+     },
+     {
+      "no": 306,
+      "name": "공지사항 > 교내 일반소식",
+      "url": "https://computer.cnu.ac.kr/computer/notice/notice.do"
+     },
+     {
+      "no": 307,
+      "name": "공지사항 > 취업정보",
+      "url": "https://computer.cnu.ac.kr/computer/notice/job.do"
+     }
+    ]
+   },
+   {
+    "id": "d02",
+    "name": "인공지능학과",
+    "boards": [
+     {
+      "no": 4645,
+      "name": "학사공지",
+      "url": null
+     },
+     {
+      "no": 4634,
+      "name": "공지사항 | 학과주최행사",
+      "url": null
+     }
+    ]
+   },
+   {
+    "id": "d03",
+    "name": "건축학과",
+    "boards": [
+     {
+      "no": 353,
+      "name": "커뮤니티 > 학부공지사항",
+      "url": "https://archi-eng.cnu.ac.kr/archi/community/department.do"
+     }
+    ]
+   },
+   {
+    "id": "d04",
+    "name": "토목공학과",
+    "boards": [
+     {
+      "no": 1261,
+      "name": "공지사항 학부",
+      "url": "https://civileng.cnu.ac.kr/civil/undergrad/notice.do"
+     }
+    ]
+   },
+   {
+    "id": "d05",
+    "name": "환경공학과",
+    "boards": [
+     {
+      "no": 5345,
+      "name": "커뮤니티 > 학부공지사항",
+      "url": "https://envi.cnu.ac.kr/envi/board/notice.do"
+     }
+    ]
+   },
+   {
+    "id": "d06",
+    "name": "기계공학부",
+    "boards": [
+     {
+      "no": 2674,
+      "name": "공지사항(학부)",
+      "url": "https://me.cnu.ac.kr/me/news/notice01.do"
+     }
+    ]
+   },
+   {
+    "id": "d07",
+    "name": "메카트로닉스공학과",
+    "boards": [
+     {
+      "no": 1579,
+      "name": "공지사항 > 학부",
+      "url": "https://mec.cnu.ac.kr/medc/notice/undergrad.do"
+     },
+     {
+      "no": 1581,
+      "name": "공지사항 > 취업",
+      "url": "https://mec.cnu.ac.kr/medc/notice/job.do"
+     }
+    ]
+   },
+   {
+    "id": "d08",
+    "name": "항공우주공학과",
+    "boards": [
+     {
+      "no": 274,
+      "name": "공지사항",
+      "url": "https://aero.cnu.ac.kr/aero/community/notice.do"
+     },
+     {
+      "no": 277,
+      "name": "장학금 소식",
+      "url": "https://aero.cnu.ac.kr/aero/community/scholarship.do"
+     },
+     {
+      "no": 275,
+      "name": "취업소식",
+      "url": "https://aero.cnu.ac.kr/aero/community/job.do"
+     }
+    ]
+   },
+   {
+    "id": "d09",
+    "name": "전기공학과",
+    "boards": [
+     {
+      "no": 1146,
+      "name": "학부 공지사항",
+      "url": "https://elec.cnu.ac.kr/elec/notice/notice-under.do"
+     }
+    ]
+   },
+   {
+    "id": "d10",
+    "name": "전자공학과",
+    "boards": [
+     {
+      "no": 5791,
+      "name": "커뮤니티 > 공지사항",
+      "url": "https://ee.cnu.ac.kr/ee/community/notice.do"
+     }
+    ]
+   },
+   {
+    "id": "d11",
+    "name": "전파정보통신공학과",
+    "boards": [
+     {
+      "no": 5296,
+      "name": "학부공지사항",
+      "url": "https://rice.cnu.ac.kr/rice/community/notice01.do"
+     }
+    ]
+   },
+   {
+    "id": "d12",
+    "name": "신소재공학과",
+    "boards": [
+     {
+      "no": 2583,
+      "name": "공지사항(학부)",
+      "url": "https://mse.cnu.ac.kr/mse/square/notice01.do"
+     }
+    ]
+   },
+   {
+    "id": "d13",
+    "name": "응용화학공학과",
+    "boards": [
+     {
+      "no": 2604,
+      "name": "학부-공지사항",
+      "url": "https://ceac.cnu.ac.kr/ceac/under/notice.do"
+     }
+    ]
+   },
+   {
+    "id": "d14",
+    "name": "유기재료공학과",
+    "boards": [
+     {
+      "no": 196,
+      "name": "공지사항 학부",
+      "url": null
+     }
+    ]
+   },
+   {
+    "id": "d15",
+    "name": "스마트시티건축공학과",
+    "boards": [
+     {
+      "no": 4479,
+      "name": "커뮤니티 > 공지사항",
+      "url": null
+     }
+    ]
+   },
+   {
+    "id": "d16",
+    "name": "자율운항시스템공학과",
+    "boards": [
+     {
+      "no": 4383,
+      "name": "공지사항",
+      "url": "https://avse.cnu.ac.kr/avse1/notice/notice.do"
+     },
+     {
+      "no": 4388,
+      "name": "취업소식",
+      "url": "https://avse.cnu.ac.kr/avse1/notice/job.do"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "name": "인문대학",
+  "depts": [
+   {
+    "id": "d17",
+    "name": "국어국문학과",
+    "boards": [
+     {
+      "no": 182,
+      "name": "학부 공지",
+      "url": "https://korean.cnu.ac.kr/korean/notice/undergrad.do"
+     }
+    ]
+   },
+   {
+    "id": "d18",
+    "name": "영어영문학과",
+    "boards": [
+     {
+      "no": 2241,
+      "name": "학부공지",
+      "url": null
+     }
+    ]
+   },
+   {
+    "id": "d19",
+    "name": "독어독문학과",
+    "boards": [
+     {
+      "no": 1247,
+      "name": "학부공지사항",
+      "url": null
+     }
+    ]
+   },
+   {
+    "id": "d20",
+    "name": "불어불문학과",
+    "boards": [
+     {
+      "no": 580,
+      "name": "공지사항 - 대학",
+      "url": "https://french.cnu.ac.kr/french/community/notice-under.do"
+     }
+    ]
+   },
+   {
+    "id": "d21",
+    "name": "중어중문학과",
+    "boards": [
+     {
+      "no": 1083,
+      "name": "학과 공지사항",
+      "url": "https://cnucn.cnu.ac.kr/cnuch/notice/notice.do"
+     }
+    ]
+   },
+   {
+    "id": "d22",
+    "name": "일어일문학과",
+    "boards": [
+     {
+      "no": 202,
+      "name": "학과공지 > 학부",
+      "url": "https://cnujapan.cnu.ac.kr/japanese/notice/undergraduate.do"
+     }
+    ]
+   },
+   {
+    "id": "d23",
+    "name": "한문학과",
+    "boards": [
+     {
+      "no": 1528,
+      "name": "공지사항 > 학부공지사항",
+      "url": null
+     }
+    ]
+   },
+   {
+    "id": "d24",
+    "name": "언어학과",
+    "boards": [
+     {
+      "no": 5363,
+      "name": "커뮤니티 > 공지사항 > 학부(언어학과)",
+      "url": "https://cnulinguistics.cnu.ac.kr/cnulinguistics/community/notice-linguistics.do"
+     },
+     {
+      "no": 5392,
+      "name": "커뮤니티 > 공지사항 > 학부(언어정보처리)",
+      "url": null
+     },
+     {
+      "no": 5355,
+      "name": "공지사항",
+      "url": null
+     }
+    ]
+   },
+   {
+    "id": "d25",
+    "name": "국사학과",
+    "boards": [
+     {
+      "no": 624,
+      "name": "공지사항",
+      "url": null
+     }
+    ]
+   },
+   {
+    "id": "d26",
+    "name": "사학과",
+    "boards": [
+     {
+      "no": 1063,
+      "name": "공지사항 - 학부",
+      "url": null
+     }
+    ]
+   },
+   {
+    "id": "d27",
+    "name": "고고학과",
+    "boards": [
+     {
+      "no": 1057,
+      "name": "공지사항",
+      "url": null
+     }
+    ]
+   },
+   {
+    "id": "d28",
+    "name": "철학과",
+    "boards": [
+     {
+      "no": 1125,
+      "name": "학부공지사항",
+      "url": null
+     },
+     {
+      "no": 3928,
+      "name": "취업 및 교내 공지",
+      "url": null
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "name": "사회과학대학",
+  "depts": [
+   {
+    "id": "d29",
+    "name": "사회학과",
+    "boards": [
+     {
+      "no": 1044,
+      "name": "공지사항 - 학부",
+      "url": null
+     }
+    ]
+   },
+   {
+    "id": "d30",
+    "name": "문헌정보학과",
+    "boards": [
+     {
+      "no": 746,
+      "name": "공지사항-학부",
+      "url": null
+     },
+     {
+      "no": 763,
+      "name": "공지사항-취업",
+      "url": null
+     }
+    ]
+   },
+   {
+    "id": "d31",
+    "name": "심리학과",
+    "boards": []
+   },
+   {
+    "id": "d32",
+    "name": "언론정보학과",
+    "boards": [
+     {
+      "no": 944,
+      "name": "공지사항-학부",
+      "url": null
+     },
+     {
+      "no": 6937,
+      "name": "학과공지 | 학부 | 공모전 및 대외활동 등",
+      "url": null
+     }
+    ]
+   },
+   {
+    "id": "d33",
+    "name": "사회복지학과",
+    "boards": [
+     {
+      "no": 708,
+      "name": "학부 공지사항",
+      "url": null
+     }
+    ]
+   },
+   {
+    "id": "d34",
+    "name": "행정학부",
+    "boards": [
+     {
+      "no": 3236,
+      "name": "열린마당 > 공지사항",
+      "url": null
+     }
+    ]
+   },
+   {
+    "id": "d35",
+    "name": "정치외교학과",
+    "boards": [
+     {
+      "no": 617,
+      "name": "게시판 > 학부공지",
+      "url": null
+     }
+    ]
+   },
+   {
+    "id": "d36",
+    "name": "도시·자치융합학과",
+    "boards": [
+     {
+      "no": 1170,
+      "name": "공지사항 - 학부",
+      "url": null
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "name": "자연과학대학",
+  "depts": [
+   {
+    "id": "d37",
+    "name": "수학과",
+    "boards": [
+     {
+      "no": 969,
+      "name": "공지사항",
+      "url": "https://math.cnu.ac.kr/math/community/notice.do"
+     }
+    ]
+   },
+   {
+    "id": "d38",
+    "name": "정보통계학과",
+    "boards": [
+     {
+      "no": 869,
+      "name": "학부 > 공지사항",
+      "url": "https://stat.cnu.ac.kr/stat/undergrad/notice.do"
+     }
+    ]
+   },
+   {
+    "id": "d39",
+    "name": "물리학과",
+    "boards": [
+     {
+      "no": 1756,
+      "name": "학과공지",
+      "url": null
+     }
+    ]
+   },
+   {
+    "id": "d40",
+    "name": "천문우주과학과",
+    "boards": [
+     {
+      "no": 1497,
+      "name": "공지사항 > 학과공지",
+      "url": null
+     },
+     {
+      "no": 1495,
+      "name": "공지사항 > 취업관련",
+      "url": null
+     },
+     {
+      "no": 1496,
+      "name": "공지사항 > 학과소식",
+      "url": null
+     }
+    ]
+   },
+   {
+    "id": "d41",
+    "name": "화학과",
+    "boards": [
+     {
+      "no": 1228,
+      "name": "공지사항 - 학부",
+      "url": null
+     }
+    ]
+   },
+   {
+    "id": "d42",
+    "name": "생화학과",
+    "boards": [
+     {
+      "no": 846,
+      "name": "커뮤니티 > 학부공지사항",
+      "url": null
+     }
+    ]
+   },
+   {
+    "id": "d43",
+    "name": "지질환경과학과",
+    "boards": [
+     {
+      "no": 2374,
+      "name": "공지사항",
+      "url": null
+     }
+    ]
+   },
+   {
+    "id": "d44",
+    "name": "해양환경과학과",
+    "boards": [
+     {
+      "no": 1442,
+      "name": "공지사항",
+      "url": null
+     }
+    ]
+   },
+   {
+    "id": "d45",
+    "name": "스포츠과학과",
+    "boards": [
+     {
+      "no": 1587,
+      "name": "커뮤니티 > 공지사항",
+      "url": null
+     }
+    ]
+   },
+   {
+    "id": "d46",
+    "name": "무용학과",
+    "boards": [
+     {
+      "no": 2591,
+      "name": "공지사항",
+      "url": null
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "name": "경상대학",
+  "depts": [
+   {
+    "id": "d47",
+    "name": "경영학부",
+    "boards": [
+     {
+      "no": 3792,
+      "name": "학부 공지사항",
+      "url": "https://biz.cnu.ac.kr/biz/community/notice.do"
+     }
+    ]
+   },
+   {
+    "id": "d48",
+    "name": "경제학과",
+    "boards": [
+     {
+      "no": 1211,
+      "name": "학부 공지사항",
+      "url": "https://economics.cnu.ac.kr/economic/notice/notice.do"
+     },
+     {
+      "no": 2096,
+      "name": "공지사항 > 취업정보",
+      "url": "https://economics.cnu.ac.kr/economic/notice/job.do"
+     }
+    ]
+   },
+   {
+    "id": "d49",
+    "name": "무역학과",
+    "boards": [
+     {
+      "no": 1192,
+      "name": "학부 공지사항",
+      "url": "https://trade.cnu.ac.kr/trade/community/notice.do"
+     },
+     {
+      "no": 1193,
+      "name": "취업소식",
+      "url": "https://trade.cnu.ac.kr/trade/community/careers.do"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "name": "농업생명과학대학",
+  "depts": [
+   {
+    "id": "d50",
+    "name": "농업경제학과",
+    "boards": [
+     {
+      "no": 2860,
+      "name": "학과공지",
+      "url": "https://agrieco.cnu.ac.kr/agrieco/community/notice.do"
+     }
+    ]
+   },
+   {
+    "id": "d51",
+    "name": "식물자원학과",
+    "boards": [
+     {
+      "no": 2749,
+      "name": "공지사항",
+      "url": "https://crop.cnu.ac.kr/crop/board/notice.do"
+     }
+    ]
+   },
+   {
+    "id": "d52",
+    "name": "원예학과",
+    "boards": [
+     {
+      "no": 2754,
+      "name": "학과공지",
+      "url": "https://horti.cnu.ac.kr/horti/community/notice.do"
+     },
+     {
+      "no": 2759,
+      "name": "장학금안내",
+      "url": "https://horti.cnu.ac.kr/horti/community/data.do"
+     }
+    ]
+   },
+   {
+    "id": "d53",
+    "name": "산림환경자원학과",
+    "boards": [
+     {
+      "no": 3130,
+      "name": "학과공지",
+      "url": "https://forestry.cnu.ac.kr/forestry/community/notice.do"
+     },
+     {
+      "no": 3132,
+      "name": "장학금안내",
+      "url": "https://forestry.cnu.ac.kr/forestry/community/scholarship.do"
+     }
+    ]
+   },
+   {
+    "id": "d54",
+    "name": "환경소재공학과",
+    "boards": [
+     {
+      "no": 2707,
+      "name": "일반소식",
+      "url": null
+     }
+    ]
+   },
+   {
+    "id": "d55",
+    "name": "동물자원과학부",
+    "boards": [
+     {
+      "no": 7171,
+      "name": "게시판 | 학과공지사항",
+      "url": "https://asbt.cnu.ac.kr/asb/board/notice3.do"
+     }
+    ]
+   },
+   {
+    "id": "d56",
+    "name": "응용생물학과",
+    "boards": [
+     {
+      "no": 2897,
+      "name": "공지사항",
+      "url": null
+     }
+    ]
+   },
+   {
+    "id": "d57",
+    "name": "생물환경화학과",
+    "boards": [
+     {
+      "no": 2384,
+      "name": "학부공지사항",
+      "url": "https://bec.cnu.ac.kr/bec/notice/notice01.do"
+     }
+    ]
+   },
+   {
+    "id": "d58",
+    "name": "식품공학과",
+    "boards": [
+     {
+      "no": 2850,
+      "name": "학부공지_학사일반",
+      "url": "https://fst.cnu.ac.kr/fst/board/notice01.do"
+     },
+     {
+      "no": 7086,
+      "name": "학부공지_장학",
+      "url": "https://fst.cnu.ac.kr/fst/board/notice11.do"
+     },
+     {
+      "no": 7087,
+      "name": "학부공지_비교과",
+      "url": null
+     }
+    ]
+   },
+   {
+    "id": "d59",
+    "name": "지역환경토목학과",
+    "boards": [
+     {
+      "no": 2980,
+      "name": "커뮤니티 > 학과공지",
+      "url": "https://are.cnu.ac.kr/are/community/notice.do"
+     }
+    ]
+   },
+   {
+    "id": "d60",
+    "name": "바이오시스템기계공학과",
+    "boards": [
+     {
+      "no": 3409,
+      "name": "1. 학부공지사항",
+      "url": "https://bme.cnu.ac.kr/bme/community/faculty01.do"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "name": "약학대학",
+  "depts": [
+   {
+    "id": "d61",
+    "name": "약학과",
+    "boards": [
+     {
+      "no": 3373,
+      "name": "알림마당 > 공지사항",
+      "url": "https://pharm.cnu.ac.kr/pharm/community/notice.do"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "name": "의과대학",
+  "depts": [
+   {
+    "id": "d62",
+    "name": "의예과",
+    "boards": [
+     {
+      "no": 1824,
+      "name": "알림마당 > 공지사항",
+      "url": null
+     },
+     {
+      "no": 1845,
+      "name": "정보마당 > 공지사항",
+      "url": "https://medicine.cnu.ac.kr/medicine/info/notice.do"
+     },
+     {
+      "no": 2003,
+      "name": "대학 > 대학공지",
+      "url": "https://medicine.cnu.ac.kr/medicine/undergrad/notice.do"
+     }
+    ]
+   },
+   {
+    "id": "d63",
+    "name": "의학과",
+    "boards": [
+     {
+      "no": 1824,
+      "name": "알림마당 > 공지사항",
+      "url": null
+     },
+     {
+      "no": 1845,
+      "name": "정보마당 > 공지사항",
+      "url": "https://medicine.cnu.ac.kr/medicine/info/notice.do"
+     },
+     {
+      "no": 2003,
+      "name": "대학 > 대학공지",
+      "url": "https://medicine.cnu.ac.kr/medicine/undergrad/notice.do"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "name": "간호대학",
+  "depts": [
+   {
+    "id": "d64",
+    "name": "간호학과",
+    "boards": [
+     {
+      "no": 725,
+      "name": "간호학과 > 공지사항 > 학부",
+      "url": "https://nursing.cnu.ac.kr/nursing1/announce/under-notice.do"
+     },
+     {
+      "no": 6369,
+      "name": "알림마당 | 전체공지",
+      "url": "https://nursing.cnu.ac.kr/nursing1/announce/notice.do"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "name": "생활과학대학",
+  "depts": [
+   {
+    "id": "d65",
+    "name": "의류학과",
+    "boards": [
+     {
+      "no": 1419,
+      "name": "학과공지 > 학부",
+      "url": "https://cloth.cnu.ac.kr/cloth/notice/undergrad.do"
+     }
+    ]
+   },
+   {
+    "id": "d66",
+    "name": "식품영양학과",
+    "boards": [
+     {
+      "no": 1489,
+      "name": "게시판 > 공지사항",
+      "url": "https://fdnutri.cnu.ac.kr/fdnutri/board/notice.do"
+     }
+    ]
+   },
+   {
+    "id": "d67",
+    "name": "소비자학과",
+    "boards": [
+     {
+      "no": 1423,
+      "name": "공지사항 > 학과공지",
+      "url": "https://cli.cnu.ac.kr/cli/notice/notice.do"
+     },
+     {
+      "no": 3794,
+      "name": "공지사항 > 장학공지",
+      "url": null
+     },
+     {
+      "no": 3920,
+      "name": "장학공지",
+      "url": "https://cli.cnu.ac.kr/cli/notice/scholarship.do"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "name": "예술대학",
+  "depts": [
+   {
+    "id": "d68",
+    "name": "음악과",
+    "boards": [
+     {
+      "no": 686,
+      "name": "공지사항",
+      "url": "https://music.cnu.ac.kr/music/board/notice.do"
+     }
+    ]
+   },
+   {
+    "id": "d69",
+    "name": "관현악과",
+    "boards": [
+     {
+      "no": 448,
+      "name": "공지사항",
+      "url": "https://orch.cnu.ac.kr/orch/community/notice.do"
+     }
+    ]
+   },
+   {
+    "id": "d70",
+    "name": "회화과",
+    "boards": [
+     {
+      "no": 435,
+      "name": "학과공지",
+      "url": "https://fineart.cnu.ac.kr/fineart/notice/notice.do"
+     }
+    ]
+   },
+   {
+    "id": "d71",
+    "name": "조소과",
+    "boards": [
+     {
+      "no": 2251,
+      "name": "공지사항",
+      "url": "https://sculpture.cnu.ac.kr/sculpture/notice/notice.do"
+     },
+     {
+      "no": 2844,
+      "name": "학과공지",
+      "url": null
+     }
+    ]
+   },
+   {
+    "id": "d72",
+    "name": "디자인창의학과",
+    "boards": []
+   }
+  ]
+ },
+ {
+  "name": "수의과대학",
+  "depts": [
+   {
+    "id": "d73",
+    "name": "수의예과",
+    "boards": [
+     {
+      "no": 402,
+      "name": "정보광장 > 공지사항",
+      "url": "https://vetmed.cnu.ac.kr/vetmed/community/notice.do"
+     },
+     {
+      "no": 397,
+      "name": "정보광장 > 장학금안내",
+      "url": null
+     },
+     {
+      "no": 398,
+      "name": "정보광장 > 장학 공지사항",
+      "url": "https://vetmed.cnu.ac.kr/vetmed/community/alumnus.do"
+     }
+    ]
+   },
+   {
+    "id": "d74",
+    "name": "수의학과",
+    "boards": [
+     {
+      "no": 402,
+      "name": "정보광장 > 공지사항",
+      "url": "https://vetmed.cnu.ac.kr/vetmed/community/notice.do"
+     },
+     {
+      "no": 397,
+      "name": "정보광장 > 장학금안내",
+      "url": null
+     },
+     {
+      "no": 398,
+      "name": "정보광장 > 장학 공지사항",
+      "url": "https://vetmed.cnu.ac.kr/vetmed/community/alumnus.do"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "name": "사범대학",
+  "depts": [
+   {
+    "id": "d75",
+    "name": "국어교육과",
+    "boards": [
+     {
+      "no": 1307,
+      "name": "알림마당 > 공지사항",
+      "url": "https://koreanedu.cnu.ac.kr/koreanedu/notice/notice.do"
+     }
+    ]
+   },
+   {
+    "id": "d76",
+    "name": "영어교육과",
+    "boards": [
+     {
+      "no": 1184,
+      "name": "커뮤니티 > 공지사항",
+      "url": "https://enedu.cnu.ac.kr/enedu/community/notice.do"
+     }
+    ]
+   },
+   {
+    "id": "d77",
+    "name": "교육학과",
+    "boards": [
+     {
+      "no": 603,
+      "name": "공지사항-학부",
+      "url": "https://education.cnu.ac.kr/education/notice/notice.do"
+     }
+    ]
+   },
+   {
+    "id": "d78",
+    "name": "수학교육과",
+    "boards": [
+     {
+      "no": 895,
+      "name": "학과 공지사항",
+      "url": "https://mathedu.cnu.ac.kr/mathedu/notice/notice.do"
+     }
+    ]
+   },
+   {
+    "id": "d79",
+    "name": "건설공학교육과",
+    "boards": [
+     {
+      "no": 171,
+      "name": "학부공지사항",
+      "url": "https://conedu.cnu.ac.kr/conedu/cummunity/notice.do"
+     },
+     {
+      "no": 1705,
+      "name": "융합시스템공지사항",
+      "url": null
+     }
+    ]
+   },
+   {
+    "id": "d80",
+    "name": "기계공학교육과",
+    "boards": [
+     {
+      "no": 247,
+      "name": "공지사항",
+      "url": "https://mmee.cnu.ac.kr/mmee/notice/notice.do"
+     }
+    ]
+   },
+   {
+    "id": "d81",
+    "name": "전기·전자·통신공학교육과",
+    "boards": [
+     {
+      "no": 139,
+      "name": "학과공지",
+      "url": "https://eedu.cnu.ac.kr/eedu/notice/notice-department.do"
+     }
+    ]
+   },
+   {
+    "id": "d82",
+    "name": "화학공학교육과",
+    "boards": [
+     {
+      "no": 544,
+      "name": "공지사항",
+      "url": "https://cnucee.cnu.ac.kr/cnucee/notice/notice.do"
+     }
+    ]
+   },
+   {
+    "id": "d83",
+    "name": "기술교육과",
+    "boards": [
+     {
+      "no": 529,
+      "name": "공지사항 > 공지사항",
+      "url": "https://techedu.cnu.ac.kr/techedu/notice/notice.do"
+     }
+    ]
+   },
+   {
+    "id": "d84",
+    "name": "체육교육과",
+    "boards": [
+     {
+      "no": 209,
+      "name": "학부 공지사항",
+      "url": "https://sportsedu.cnu.ac.kr/sportsedu/board/notice.do"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "name": "생명시스템과학대학",
+  "depts": [
+   {
+    "id": "d85",
+    "name": "생물과학과",
+    "boards": [
+     {
+      "no": 2530,
+      "name": "공지사항",
+      "url": "https://biology.cnu.ac.kr/biology/community/notice.do"
+     }
+    ]
+   },
+   {
+    "id": "d86",
+    "name": "미생물·분자생명과학과",
+    "boards": [
+     {
+      "no": 2536,
+      "name": "공지사항",
+      "url": "https://micro.cnu.ac.kr/micro/community/notice.do"
+     }
+    ]
+   },
+   {
+    "id": "d87",
+    "name": "생명정보융합학과",
+    "boards": [
+     {
+      "no": 5057,
+      "name": "공지사항",
+      "url": null
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "name": "자유전공학부",
+  "depts": [
+   {
+    "id": "d88",
+    "name": "인문사회과학전공",
+    "boards": [
+     {
+      "no": 3930,
+      "name": "학사안내",
+      "url": "https://liberalarts.cnu.ac.kr/free/curriculum/schedule.do"
+     },
+     {
+      "no": 2464,
+      "name": "공지사항",
+      "url": "https://liberalarts.cnu.ac.kr/free/board/notice.do"
+     }
+    ]
+   },
+   {
+    "id": "d89",
+    "name": "리더십과 조직과학전공",
+    "boards": [
+     {
+      "no": 3930,
+      "name": "학사안내",
+      "url": "https://liberalarts.cnu.ac.kr/free/curriculum/schedule.do"
+     },
+     {
+      "no": 2464,
+      "name": "공지사항",
+      "url": "https://liberalarts.cnu.ac.kr/free/board/notice.do"
+     }
+    ]
+   },
+   {
+    "id": "d90",
+    "name": "공공안전학전공",
+    "boards": [
+     {
+      "no": 3930,
+      "name": "학사안내",
+      "url": "https://liberalarts.cnu.ac.kr/free/curriculum/schedule.do"
+     },
+     {
+      "no": 2464,
+      "name": "공지사항",
+      "url": "https://liberalarts.cnu.ac.kr/free/board/notice.do"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "name": "국제학부",
+  "depts": [
+   {
+    "id": "d91",
+    "name": "국제학전공",
+    "boards": [
+     {
+      "no": 5695,
+      "name": "sis notice",
+      "url": "https://cnusis.cnu.ac.kr/cnusis/community/sis.do"
+     }
+    ]
+   },
+   {
+    "id": "d92",
+    "name": "한국문화학전공",
+    "boards": [
+     {
+      "no": 5695,
+      "name": "sis notice",
+      "url": "https://cnusis.cnu.ac.kr/cnusis/community/sis.do"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "name": "국가안보융합학부",
+  "depts": [
+   {
+    "id": "d93",
+    "name": "국토안보학전공",
+    "boards": [
+     {
+      "no": 6205,
+      "name": "공지사항 > 학부",
+      "url": "https://soins.cnu.ac.kr/soins/notice/notice01.do"
+     },
+     {
+      "no": 6206,
+      "name": "공지사항 > 국토안보",
+      "url": null
+     },
+     {
+      "no": 498,
+      "name": "커뮤니티>공지사항",
+      "url": null
+     }
+    ]
+   },
+   {
+    "id": "d94",
+    "name": "해양안보학전공",
+    "boards": [
+     {
+      "no": 6205,
+      "name": "공지사항 > 학부",
+      "url": "https://soins.cnu.ac.kr/soins/notice/notice01.do"
+     },
+     {
+      "no": 6207,
+      "name": "공지사항 > 해양안보",
+      "url": null
+     },
+     {
+      "no": 498,
+      "name": "커뮤니티>공지사항",
+      "url": null
+     }
+    ]
+   }
+  ]
+ }
+]

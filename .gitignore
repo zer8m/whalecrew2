@@ -1,0 +1,9 @@
+# 학교 API 원본 응답(조교 실명 등 포함) — 커밋 금지
+cmsBoard.json
+contents*.json
+*.pdf
+.env
+node_modules/
+dist/
+*.zip
+.claude/
