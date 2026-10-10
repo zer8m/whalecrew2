@@ -134,11 +134,13 @@
     const sub = mode === 'up' ? `${i.time} · ${esc(i.sub)}` : esc(i.src === 'notice' ? '학과 공지 자동 연동' : i.sub);
     const link = i.url ? `<a href="${esc(i.url)}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px;font-size:12px;color:${WH};font-weight:600;">원문${svg('ext', 11, WH, 2.4)}</a>` : '';
     const memo = mode === 'up' && i.memo ? `<span class="c2" style="display:flex;align-items:center;gap:5px;min-width:0;">${svg('memo', 12, '#9AA3B2', 2, 'flex:none;')}<span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${esc(i.memo)}</span></span>` : '';
-    return `<div style="display:flex;gap:14px;padding:14px 16px;align-items:flex-start;${border ? 'border-bottom:1px solid #EEF1F6;' : ''}">
+    // 메인 목록: 행 전체 → 날짜 상세(읽기). 상세·스크랩 화면 안: 제목 → 편집
+    const toDay = U.view === 'main' && !U.scrap;
+    return `<div${toDay ? ` class="rowp" data-go="day:${i.date}"` : ''} style="display:flex;gap:14px;padding:14px 16px;align-items:flex-start;${border ? 'border-bottom:1px solid #EEF1F6;' : ''}">
   <span style="width:44px;flex:none;display:flex;flex-direction:column;gap:2px;padding-top:1px;"><span style="font-size:14px;font-weight:700;">${left}</span><span class="c2" style="font-size:11px;">${i.kind}</span></span>
   <span style="display:flex;flex-direction:column;gap:5px;flex:1;min-width:0;">
     <span style="display:flex;align-items:center;gap:6px;">${catChip(i)}${mode === 'up' || i.kind === '마감' ? dchip : ''}</span>
-    <a data-go="edit:${i.id}" style="font-size:15px;font-weight:600;line-height:20px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${esc(i.title)}</a>
+    <a${toDay ? '' : ` data-go="edit:${i.id}"`} style="font-size:15px;font-weight:600;line-height:20px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${esc(i.title)}</a>
     <span class="c" style="display:flex;gap:8px;align-items:center;">${sub}${link}</span>${memo}
   </span>
 </div>`;
@@ -213,7 +215,7 @@
   </a>`;
     if (hero) {
       const where = hero.src === 'notice' ? (hero.dept || S.depts[0]) : hero.sub;
-      h += `<a class="card press" data-go="edit:${hero.id}" style="padding:14px 16px 14px;display:flex;flex-direction:column;gap:8px;background:#FFF0F1;border-color:#FBD5D8;margin-top:4px;">
+      h += `<a class="card press" data-go="day:${hero.date}" style="padding:14px 16px 14px;display:flex;flex-direction:column;gap:8px;background:#FFF0F1;border-color:#FBD5D8;margin-top:4px;">
     <span style="display:flex;align-items:center;justify-content:space-between;">
       <span style="display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:#E5484D;letter-spacing:.01em;"><span class="dot" style="background:#E5484D;"></span>가장 가까운 마감</span>
       ${chip(catLabel(hero), (CAT[hero.cat] || CAT['개인']).c, (CAT[hero.cat] || CAT['개인']).bg)}
@@ -544,6 +546,7 @@
   }
 
   side.addEventListener('click', (e) => {
+    if (e.target.closest('a[href]')) return; // 원문 링크는 그대로 열기
     const el = e.target.closest('[data-go],[data-act]');
     if (!el) return;
     if (el.dataset.go) {
