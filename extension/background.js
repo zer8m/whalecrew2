@@ -1,4 +1,4 @@
-// 백그라운드: 학과 공지 새로고침(3시간) · 알림 확인(1분) · 드래그 스크랩 중계 · 알림 클릭 처리
+// 백그라운드: 학과 공지 새로고침(3시간) · 알림(다음 시점에 정확히 + 1분 안전망) · 드래그 스크랩 중계 · 알림 클릭 처리
 importScripts('core.js');
 const { load, mutate, pushAlert, colleges, deptId, allItems, remTimes, parseD, midnight, DATA_BASE } = Core;
 const sidebar = self.whale && whale.sidebarAction;
@@ -11,6 +11,8 @@ function ensureAlarms() {
 chrome.runtime.onInstalled.addListener(() => { ensureAlarms(); refresh(); });
 chrome.runtime.onStartup.addListener(() => { ensureAlarms(); refresh().then(tick); });
 chrome.alarms.onAlarm.addListener((a) => (a.name === 'refresh' ? refresh() : tick()));
+// 일정을 저장·수정하면 다음 알림 시각을 다시 잡는다
+chrome.storage.onChanged.addListener((c) => { if (c.S) tick(); });
 
 // ───── 학과 공지 ─────
 async function refresh() {
@@ -47,19 +49,24 @@ function rel(s) {
   const n = Math.round((parseD(s) - midnight(new Date())) / 864e5), d = parseD(s);
   return n === 0 ? '오늘' : n === 1 ? '내일' : `${d.getMonth() + 1}/${d.getDate()}(${W[d.getDay()]})`;
 }
-async function tick() {
+// 여러 경로(알람·저장·시작)에서 동시에 불려도 한 번에 하나씩 → 중복 발송 방지
+let running = Promise.resolve();
+const tick = () => (running = running.then(check, check));
+async function check() {
   const { S, notices } = await load();
   if (!S.onboarded) return;
   const items = allItems(S, notices, await colleges());
   const { fired = {}, seen = {} } = await chrome.storage.local.get(['fired', 'seen']);
   const now = Date.now();
+  let nextAt = Infinity;
   for (const i of items) {
     if (i.done) continue;
     // 저장(또는 공지 수신) 전에 이미 지난 알림 시점은 보내지 않는다
     const floor = i.savedAt || seen[i.id] || S.deptAt || 0;
     for (const r of remTimes(S, i)) {
       const k = i.id + '|' + r.key;
-      if (fired[k] || r.at > now) continue;
+      if (fired[k]) continue;
+      if (r.at > now) { nextAt = Math.min(nextAt, r.at); continue; }
       fired[k] = now;
       if (r.at < floor) continue;
       await deliver(S, i, r, now - r.at > 3600e3);
@@ -67,6 +74,9 @@ async function tick() {
   }
   for (const k in fired) if (now - fired[k] > 60 * 864e5) delete fired[k];
   await chrome.storage.local.set({ fired });
+  // 1분 주기만으로는 최대 1분 늦으므로 다음 시점에 정확히 울리는 알람을 따로 건다
+  if (nextAt < Infinity) chrome.alarms.create('next', { when: nextAt });
+  else chrome.alarms.clear('next');
 }
 
 async function deliver(S, item, r, missed) {
