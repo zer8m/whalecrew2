@@ -77,7 +77,9 @@
   const dots = (s) => [...new Set(onDate(s).map((i) => (CAT[i.cat] || CAT['개인']).c))].slice(0, 3).map((c) => `<i style="background:${c};"></i>`).join('');
 
   function remText(i) {
-    const r = getRem(i);
+    const r = getRem(i), extra = (i.custom || []).length;
+    // 시작형(개인 일정)은 D-n 대신 시작 2시간 전 알림(remTimes와 같은 규칙)
+    if (i.kind === '시작') return r.d0 !== false ? '시작 2시간 전' + (extra ? ' 외 ' + extra + '개' : '') : extra ? '직접 지정 ' + extra + '개' : '없음';
     const on = [['d7', 'D-7'], ['d3', 'D-3'], ['d1', 'D-1'], ['d0', 'D-Day']].filter(([k]) => r[k]).map(([, l]) => l);
     if (!on.length) return (i.custom || []).length ? '직접 지정 ' + i.custom.length + '개' : '없음';
     return on.join(' · ') + ' ' + S.settings.time + ((i.custom || []).length ? ' 외 ' + i.custom.length + '개' : '');
@@ -274,7 +276,7 @@
     <div style="display:flex;align-items:center;gap:6px;">${chip(catLabel(i), c.c, c.bg)}${chip(i.done ? '완료' : dd(diff(i.date)), i.done ? '#2FBF71' : WH, i.done ? '#E6F7EE' : '#EAF0FF')}${imp}</div>
     <a data-go="edit:${i.id}" style="font-size:18px;font-weight:700;letter-spacing:-.02em;line-height:24px;text-wrap:balance;">${esc(i.title)}</a>
     <div class="well" style="padding:4px 14px;display:flex;flex-direction:column;">
-      <div style="display:flex;justify-content:space-between;align-items:center;height:36px;"><span class="c">마감</span><span style="font-size:14px;font-weight:600;">${mdw(i.date)} ${i.time}</span></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;height:36px;"><span class="c">${i.kind === '시작' ? '시작' : '마감'}</span><span style="font-size:14px;font-weight:600;">${mdw(i.date)} ${i.time}</span></div>
       <div style="display:flex;justify-content:space-between;align-items:center;height:36px;border-top:1px solid #E9EDF3;"><span class="c">알림</span><span style="font-size:14px;font-weight:600;">${remText(i)}</span></div>
       ${url}
     </div>
@@ -294,7 +296,7 @@
       strip += `<a data-go="day:${s}" class="day" style="height:76px;gap:5px;font-size:16px;"><span class="c2" style="font-size:12px;color:${k === 0 ? '#E5484D' : '#9AA3B2'};">${W[k]}</span><span class="n" style="${st}">${addD(start, k).getDate()}</span><span class="d">${dots(s)}</span></a>`;
     }
     const items = onDate(U.sel);
-    const cards = items.map((i) => i.kind === '마감' ? bigCard(i) : `<div class="card" style="overflow:hidden;">${row(i, 'date')}</div>`).join('');
+    const cards = items.map(bigCard).join('');
     return frame(header(`<a class="ib press" data-go="main" aria-label="뒤로" style="margin-left:-10px;">${svg('left', 22, '#1A1C22', 2)}</a>`, `<div style="display:flex;align-items:center;"><a class="ib press" data-go="new:${U.sel}" aria-label="일정 추가">${svg('plus', 22, '#1A1C22', 2)}</a></div>`) +
       `<div style="position:absolute;left:0;right:0;top:0;height:56px;display:flex;align-items:center;justify-content:center;pointer-events:none;font-size:16px;font-weight:700;letter-spacing:-.02em;">${d.getFullYear()}년 ${d.getMonth() + 1}월</div>
 <div style="flex:1;display:flex;flex-direction:column;gap:14px;padding:0 20px;overflow-y:auto;overflow-x:hidden;">
