@@ -9,7 +9,7 @@
 
 ## 구조
 ```
-[GitHub Actions 하루 2회 12시·18시 KST]
+[GitHub Actions 하루 4회 9·12·15·18시 KST]
   collector/collect.js
    ├ Secrets.CNU_KEY → POST form (homepageboardContents, P_board_no)
    ├ extension/departments.json의 학과별 board 순회, 게시판당 1회 호출, 최신 50건만 처리
@@ -18,7 +18,7 @@
 [웨일 확장앱 MV3] extension/
   sidebar.html/app.js  데모 이식, 시안 마크업 그대로(메일·학사일정·백마 게시판 문구만 제거)
   content.js           드래그 → 차차 버튼(Shadow DOM) → pendingScrap 저장 → 사이드바 열기
-  background.js        chrome.alarms 알림 예약·발송, 6시간마다 학과 JSON 새로고침
+  background.js        chrome.alarms 알림 예약·발송, 3시간마다 학과 JSON 새로고침
   저장                 chrome.storage.local, 외부 전송 없음
 ```
 키는 Actions Secrets에만 존재. 확장앱 패키지에는 키가 없다.

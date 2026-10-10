@@ -1,4 +1,4 @@
-// 백그라운드: 학과 공지 새로고침(6시간) · 알림 확인(1분) · 드래그 스크랩 중계 · 알림 클릭 처리
+// 백그라운드: 학과 공지 새로고침(3시간) · 알림 확인(1분) · 드래그 스크랩 중계 · 알림 클릭 처리
 importScripts('core.js');
 const { load, mutate, pushAlert, colleges, deptId, allItems, remTimes, parseD, midnight, DATA_BASE } = Core;
 const sidebar = self.whale && whale.sidebarAction;
@@ -6,7 +6,7 @@ const W = ['일', '월', '화', '수', '목', '금', '토'];
 
 function ensureAlarms() {
   chrome.alarms.create('tick', { periodInMinutes: 1 });
-  chrome.alarms.create('refresh', { periodInMinutes: 360 });
+  chrome.alarms.create('refresh', { periodInMinutes: 180 });
 }
 chrome.runtime.onInstalled.addListener(() => { ensureAlarms(); refresh(); });
 chrome.runtime.onStartup.addListener(() => { ensureAlarms(); refresh().then(tick); });
