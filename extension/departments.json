@@ -247,7 +247,7 @@
      {
       "no": 1247,
       "name": "학부공지사항",
-      "url": null
+      "url": "https://german.cnu.ac.kr/german/notice/notice-under.do"
      }
     ]
    },
@@ -291,7 +291,7 @@
      {
       "no": 1528,
       "name": "공지사항 > 학부공지사항",
-      "url": null
+      "url": "https://sinokor.cnu.ac.kr/sinokor/notice/grad-notice.do"
      }
     ]
    },
@@ -307,7 +307,7 @@
      {
       "no": 5392,
       "name": "커뮤니티 > 공지사항 > 학부(언어정보처리)",
-      "url": null
+      "url": "https://cnulinguistics.cnu.ac.kr/cnulinguistics/community/notice-linguistics-info.do"
      },
      {
       "no": 5355,
@@ -323,7 +323,7 @@
      {
       "no": 624,
       "name": "공지사항",
-      "url": null
+      "url": "https://koreanhistory.cnu.ac.kr/koreanhistory/board/notice.do"
      }
     ]
    },
@@ -334,7 +334,7 @@
      {
       "no": 1063,
       "name": "공지사항 - 학부",
-      "url": null
+      "url": "https://history.cnu.ac.kr/history/notice/notice.do"
      }
     ]
    },
@@ -345,7 +345,7 @@
      {
       "no": 1057,
       "name": "공지사항",
-      "url": null
+      "url": "https://cnuarchaeology.cnu.ac.kr/archaeology/community/notice.do"
      }
     ]
    },
@@ -356,12 +356,12 @@
      {
       "no": 1125,
       "name": "학부공지사항",
-      "url": null
+      "url": "https://philosophy.cnu.ac.kr/phil/notice/notice-under.do"
      },
      {
       "no": 3928,
       "name": "취업 및 교내 공지",
-      "url": null
+      "url": "https://philosophy.cnu.ac.kr/phil/notice/notice-job.do"
      }
     ]
    }
@@ -377,7 +377,7 @@
      {
       "no": 1044,
       "name": "공지사항 - 학부",
-      "url": null
+      "url": "https://socio.cnu.ac.kr/socio/notice/notice.do"
      }
     ]
    },
@@ -388,12 +388,12 @@
      {
       "no": 746,
       "name": "공지사항-학부",
-      "url": null
+      "url": "https://lis.cnu.ac.kr/lis/notice/notice.do"
      },
      {
       "no": 763,
       "name": "공지사항-취업",
-      "url": null
+      "url": "https://lis.cnu.ac.kr/lis/notice/notice-job.do"
      }
     ]
    },
@@ -409,7 +409,7 @@
      {
       "no": 944,
       "name": "공지사항-학부",
-      "url": null
+      "url": "https://comm.cnu.ac.kr/comm/notice/notice.do"
      },
      {
       "no": 6937,
@@ -425,7 +425,7 @@
      {
       "no": 708,
       "name": "학부 공지사항",
-      "url": null
+      "url": "https://welfare.cnu.ac.kr/welfare/community/notice.do"
      }
     ]
    },
@@ -447,7 +447,7 @@
      {
       "no": 617,
       "name": "게시판 > 학부공지",
-      "url": null
+      "url": "https://politics.cnu.ac.kr/politics/board/undergrad.do"
      }
     ]
    },
@@ -496,7 +496,7 @@
      {
       "no": 1756,
       "name": "학과공지",
-      "url": null
+      "url": "https://physics.cnu.ac.kr/physics/notice/notice.do"
      }
     ]
    },
@@ -507,17 +507,17 @@
      {
       "no": 1497,
       "name": "공지사항 > 학과공지",
-      "url": null
+      "url": "https://astro1.cnu.ac.kr/astro/notice/notice.do"
      },
      {
       "no": 1495,
       "name": "공지사항 > 취업관련",
-      "url": null
+      "url": "https://astro1.cnu.ac.kr/astro/notice/job.do"
      },
      {
       "no": 1496,
       "name": "공지사항 > 학과소식",
-      "url": null
+      "url": "https://astro1.cnu.ac.kr/astro/notice/news.do"
      }
     ]
    },
@@ -528,7 +528,7 @@
      {
       "no": 1228,
       "name": "공지사항 - 학부",
-      "url": null
+      "url": "https://chem.cnu.ac.kr/chem/undergrad/notice.do"
      }
     ]
    },
@@ -539,7 +539,7 @@
      {
       "no": 846,
       "name": "커뮤니티 > 학부공지사항",
-      "url": null
+      "url": "https://biochemistry.cnu.ac.kr/biochemistry/community/undergrad-notice.do"
      }
     ]
    },
@@ -561,7 +561,7 @@
      {
       "no": 1442,
       "name": "공지사항",
-      "url": null
+      "url": "https://ocean.cnu.ac.kr/ocean/community/notice.do"
      }
     ]
    },
@@ -572,7 +572,7 @@
      {
       "no": 1587,
       "name": "커뮤니티 > 공지사항",
-      "url": null
+      "url": "https://sports.cnu.ac.kr/sports/community/notice.do"
      }
     ]
    },
@@ -583,7 +583,7 @@
      {
       "no": 2591,
       "name": "공지사항",
-      "url": null
+      "url": "https://dance.cnu.ac.kr/dance/community/notice.do"
      }
     ]
    }
@@ -1279,7 +1279,7 @@
      {
       "no": 498,
       "name": "커뮤니티>공지사항",
-      "url": null
+      "url": "https://soins.cnu.ac.kr/soins/board/noticec.do"
      }
     ]
    },
@@ -1300,7 +1300,7 @@
      {
       "no": 498,
       "name": "커뮤니티>공지사항",
-      "url": null
+      "url": "https://soins.cnu.ac.kr/soins/board/noticec.do"
      }
     ]
    }

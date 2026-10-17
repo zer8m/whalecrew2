@@ -49,7 +49,7 @@ async function get(url) {
 async function hosts() {
   const p = await get('https://plus.cnu.ac.kr/html/kr/sub02/sub02_020118.html');
   const set = new Set();
-  for (const m of p.html.matchAll(/href="(https?:\/\/[a-z0-9-]+\.cnu\.ac\.kr(?:\/[a-z0-9_-]*)?\/?)"/gi)) set.add(m[1].replace(/^http:/, 'https:').replace(/\/?$/, '/'));
+  for (const m of p.html.matchAll(/href="\s*(https?:\/\/[a-z0-9-]+\.cnu\.ac\.kr(?:\/[a-z0-9_-]*)?\/?)"/gi)) set.add(m[1].replace(/^http:/, 'https:').replace(/\/?$/, '/'));
   return [...set];
 }
 
@@ -59,10 +59,10 @@ async function crawl(home, found) {
   if (!p) return;
   const links = new Map();
   for (const m of p.html.matchAll(/<a[^>]+href="([^"#]+\.do)"[^>]*>\s*([^<]{1,30})</g)) {
-    if (!/(공지|학사|장학|취업|소식|notice)/i.test(m[2])) continue;
+    if (!/(공지|학사|장학|취업|소식|학부|열린마당|게시판|커뮤니티|알림|notice)/i.test(m[2])) continue;
     try { links.set(new URL(m[1], p.url).href.split('?')[0], 1); } catch (e) {}
   }
-  for (const u of [...links.keys()].slice(0, 25)) {
+  for (const u of [...links.keys()].slice(0, 40)) {
     const q = await get(u);
     await sleep(300);
     const b = q && q.html.match(/boardNo\s*=\s*'(\d+)'/);
