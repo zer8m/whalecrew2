@@ -14,12 +14,27 @@
      {
       "no": 4645,
       "name": "학사공지",
-      "url": null
+      "url": "https://ai.cnu.ac.kr/ai/board/notice.do"
      },
      {
       "no": 307,
       "name": "공지사항 > 취업정보",
       "url": "https://computer.cnu.ac.kr/computer/notice/job.do"
+     },
+     {
+      "no": 324,
+      "name": "공지사항 > 사업단소식",
+      "url": "https://computer.cnu.ac.kr/computer/notice/project.do"
+     },
+     {
+      "no": 7347,
+      "name": "공지사항 > 사업단소식",
+      "url": null
+     },
+     {
+      "no": 7348,
+      "name": "공지사항 > 교외활동, 인턴",
+      "url": null
      }
     ]
    },
