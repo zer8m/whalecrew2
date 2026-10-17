@@ -138,7 +138,7 @@
     const memo = mode === 'up' && i.memo ? `<span class="c2" style="display:flex;align-items:center;gap:5px;min-width:0;">${svg('memo', 12, '#9AA3B2', 2, 'flex:none;')}<span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${esc(i.memo)}</span></span>` : '';
     // 메인 목록: 행 전체 → 날짜 상세(읽기). 상세·스크랩 화면 안: 제목 → 편집
     const toDay = U.view === 'main' && !U.scrap;
-    return `<div${toDay ? ` class="rowp" data-go="day:${i.date}"` : ''} style="display:flex;gap:14px;padding:14px 16px;align-items:flex-start;${border ? 'border-bottom:1px solid #EEF1F6;' : ''}">
+    return `<div data-id="${esc(i.id)}"${toDay ? ` class="rowp" data-go="day:${i.date}"` : ''} style="display:flex;gap:14px;padding:14px 16px;align-items:flex-start;${border ? 'border-bottom:1px solid #EEF1F6;' : ''}">
   <span style="width:44px;flex:none;display:flex;flex-direction:column;gap:2px;padding-top:1px;"><span style="font-size:14px;font-weight:700;">${left}</span><span class="c2" style="font-size:11px;">${i.kind}</span></span>
   <span style="display:flex;flex-direction:column;gap:5px;flex:1;min-width:0;">
     <span style="display:flex;align-items:center;gap:6px;">${catChip(i)}${mode === 'up' || i.kind === '마감' ? dchip : ''}</span>
@@ -187,7 +187,7 @@
     <input id="q" class="inp" data-in="q" placeholder="학과명을 검색하세요" value="${esc(U.q)}" style="padding-left:42px;">
   </div>
   <div id="selChips">${selChips()}</div>
-  <div class="tabs" id="colTabs" style="overflow-x:auto;overflow-y:hidden;flex:none;scrollbar-width:none;margin:0 -20px;padding:0 20px;-webkit-mask-image:linear-gradient(to right,#000 calc(100% - 40px),transparent);mask-image:linear-gradient(to right,#000 calc(100% - 40px),transparent);">${collegeTabs(false)}</div>
+  <div class="tabs hscroll" id="colTabs" style="overflow-x:auto;overflow-y:hidden;flex:none;scrollbar-width:none;margin:0 -20px;padding:0 20px;-webkit-mask-image:linear-gradient(to right,#000 calc(100% - 40px),transparent);mask-image:linear-gradient(to right,#000 calc(100% - 40px),transparent);">${collegeTabs(false)}</div>
   <div class="card" id="deptList" style="overflow:hidden;">${deptRows(false)}</div>
 </div>
 <div style="flex:none;padding:12px 20px 20px;">
@@ -207,19 +207,20 @@
     if (U.scrap) return vScrap();
     const noDept = !S.depts.length, now = Date.now();
     const future = allItems().filter((i) => i.kind === '마감' && !i.done && at(i.date, i.time) >= now);
-    const hero = future[0];
-    const up = future.filter((i) => i !== hero && diff(i.date) <= 7).slice(0, 2);
+    // 가장 가까운 마감이 같은 시각에 여러 개면 모두 카드로 보여주고 옆으로 넘긴다
+    const heroes = future.length ? future.filter((i) => +at(i.date, i.time) === +at(future[0].date, future[0].time)) : [];
+    const up = future.filter((i) => !heroes.includes(i) && diff(i.date) <= 7).slice(0, 2);
     const day = onDate(U.sel);
     let h = '';
     if (noDept) h += `<a class="press" data-act="openDeptSheet" style="display:flex;align-items:center;justify-content:space-between;gap:10px;height:34px;padding:0 12px;border-radius:8px;background:#F5F7FB;margin-top:2px;">
     <span class="c2" style="display:inline-flex;align-items:center;gap:6px;min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;"><span class="dot" style="background:${WH};"></span>학과 공지 없이 사용 중</span>
     <span style="display:inline-flex;align-items:center;gap:2px;font-size:12px;font-weight:700;color:${WH};flex:none;">학과 선택${svg('right', 13, WH, 2.4)}</span>
   </a>`;
-    if (hero) {
+    const heroCard = (hero, k) => {
       const where = hero.src === 'notice' ? (hero.dept || S.depts[0]) : hero.sub;
-      h += `<a class="card press" data-go="day:${hero.date}" style="padding:14px 16px 14px;display:flex;flex-direction:column;gap:8px;background:#FFF0F1;border-color:#FBD5D8;margin-top:4px;">
+      return `<a class="card press" data-go="day:${hero.date}" data-id="${esc(hero.id)}" style="padding:14px 16px 14px;display:flex;flex-direction:column;gap:8px;background:#FFF0F1;border-color:#FBD5D8;${heroes.length > 1 ? 'flex:0 0 100%;scroll-snap-align:start;' : 'margin-top:4px;'}">
     <span style="display:flex;align-items:center;justify-content:space-between;">
-      <span style="display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:#E5484D;letter-spacing:.01em;"><span class="dot" style="background:#E5484D;"></span>가장 가까운 마감</span>
+      <span style="display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:#E5484D;letter-spacing:.01em;"><span class="dot" style="background:#E5484D;"></span>가장 가까운 마감${heroes.length > 1 ? ` <span style="font-weight:600;opacity:.75;">${k + 1}/${heroes.length}</span>` : ''}</span>
       ${chip(catLabel(hero), (CAT[hero.cat] || CAT['개인']).c, (CAT[hero.cat] || CAT['개인']).bg)}
     </span>
     <span style="display:flex;align-items:baseline;gap:10px;min-width:0;">
@@ -231,7 +232,9 @@
       <span style="display:inline-flex;align-items:center;gap:2px;font-size:12px;font-weight:600;color:#E5484D;">자세히${svg('right', 14, '#E5484D', 2.2)}</span>
     </span>
   </a>`;
-    }
+    };
+    if (heroes.length === 1) h += heroCard(heroes[0], 0);
+    else if (heroes.length) h += `<div class="hscroll" style="display:flex;gap:8px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;margin-top:4px;flex:none;">${heroes.map(heroCard).join('')}</div>`;
     h += calCard(U.sel, 'main');
     h += `<div style="display:flex;align-items:center;justify-content:space-between;padding:6px 2px 0;">
     <span style="font-size:16px;font-weight:700;letter-spacing:-.02em;">${mdl(U.sel)}</span>
@@ -260,7 +263,7 @@
   <div style="display:flex;align-items:flex-start;justify-content:space-between;padding-top:2px;"><span style="display:flex;flex-direction:column;gap:2px;"><span style="font-size:18px;font-weight:700;letter-spacing:-.03em;line-height:24px;">학과 선택</span><span class="c">복수전공·부전공까지 여러 개 고를 수 있어요</span></span><a class="ib press" data-act="closeSheet" aria-label="닫기" style="margin:-8px -10px 0 0;">${svg('x', 20, '#1A1C22', 2)}</a></div>
   <div style="position:relative;display:flex;align-items:center;"><span style="position:absolute;left:14px;display:flex;">${svg('search', 18, '#9AA3B2', 2)}</span><input id="q" class="inp" data-in="q" placeholder="학과명을 검색하세요" value="${esc(U.q)}" style="padding-left:42px;height:44px;background:#F5F7FB;border-color:transparent;"></div>
   <div id="selChips" style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;">${sheetChips()}</div>
-  <div class="tabs" id="colTabs" style="overflow-x:auto;scrollbar-width:none;flex:none;margin:0 -20px;padding:0 20px;-webkit-mask-image:linear-gradient(to right,#000 calc(100% - 40px),transparent);mask-image:linear-gradient(to right,#000 calc(100% - 40px),transparent);">${collegeTabs(true)}</div>
+  <div class="tabs hscroll" id="colTabs" style="overflow-x:auto;scrollbar-width:none;flex:none;margin:0 -20px;padding:0 20px;-webkit-mask-image:linear-gradient(to right,#000 calc(100% - 40px),transparent);mask-image:linear-gradient(to right,#000 calc(100% - 40px),transparent);">${collegeTabs(true)}</div>
   <div class="card" id="deptList" style="overflow-y:auto;flex:none;max-height:262px;">${deptRows(true)}</div>
   <div style="display:flex;flex-direction:column;gap:10px;"><a class="btn press" id="ctaBtn" data-act="saveDepts" style="width:100%;background:${WH};color:#fff;">${sheetCta()}</a></div>
 </div>`;
@@ -341,12 +344,20 @@
   <div style="display:flex;flex-direction:column;gap:8px;"><span class="lbl">분류</span><div class="tabs">${['학과공지', '과제·시험', '대외활동', '개인'].map((c) => `<span${D.cat === c ? ' class="on"' : ''} data-act="cat" data-arg="${c}">${c}</span>`).join('')}</div></div>
   <div style="display:grid;grid-template-columns:repeat(2, minmax(0, 1fr));gap:12px;">
     <div style="display:flex;flex-direction:column;gap:8px;"><span class="lbl" style="display:flex;align-items:center;gap:6px;">마감 날짜<span class="chip" style="height:18px;padding:0 6px;font-size:10px;color:${WH};background:#EAF0FF;">${dd(n)}</span></span><a class="inp press" data-act="openDeadline" style="justify-content:space-between;cursor:pointer;font-weight:500;">${d.getFullYear()}. ${pad(d.getMonth() + 1)}. ${pad(d.getDate())}${svg('cal', 16, '#9AA3B2', 2)}</a></div>
-    <div style="display:flex;flex-direction:column;gap:8px;"><span class="lbl">마감 시간</span><button class="inp press" data-act="pickTime" data-arg="edit" style="justify-content:space-between;cursor:pointer;font-weight:500;">${D.time}${svg('clock', 16, '#9AA3B2', 2)}</button></div>
+    <div style="display:flex;flex-direction:column;gap:8px;"><span class="lbl">마감 시간</span><input class="inp" type="time" data-in="time" value="${D.time}" aria-label="마감 시간" style="font-weight:500;"></div>
   </div>
   <div style="display:flex;flex-direction:column;gap:8px;">
     <div style="display:flex;justify-content:space-between;align-items:center;"><span class="lbl">마감 알림</span><span class="c2">${S.settings.time}에 · ${remOn}개 켜짐</span></div>
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr 44px;gap:6px;">${rb}<button class="press" data-act="addCustom" aria-label="알림 시간 직접 지정" style="height:44px;border-radius:10px;border:1px dashed #C9CFD9;background:#fff;display:flex;align-items:center;justify-content:center;color:${WH};cursor:pointer;">${svg('plus', 16, WH, 2.4)}</button></div>
     ${customs}
+    ${U.addRem ? `<div class="well" style="padding:12px;display:flex;flex-direction:column;gap:10px;">
+      <div style="display:flex;gap:6px;flex-wrap:wrap;">${[[1, '1시간 전'], [3, '3시간 전'], [24, '하루 전'], [48, '이틀 전']].map(([h, l]) => `<button class="chip press" data-act="quickRem" data-arg="${h}" style="height:32px;padding:0 12px;border-radius:999px;font-size:13px;border:1px solid #E1E6EE;background:#fff;color:#4B5261;cursor:pointer;">${l}</button>`).join('')}</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr auto;gap:6px;align-items:center;">
+        <input class="inp" type="date" data-in="remDate" value="${U.remDate}" aria-label="알림 날짜" style="height:40px;font-size:14px;padding:0 10px;">
+        <input class="inp" type="time" data-in="remTime" value="${U.remTime}" aria-label="알림 시간" style="height:40px;font-size:14px;padding:0 10px;">
+        <button class="btn2 press" data-act="addRemOk" style="height:40px;padding:0 14px;color:${WH};">추가</button>
+      </div>
+    </div>` : ''}
   </div>
   <div style="display:flex;flex-direction:column;gap:8px;"><span class="lbl">원문 링크 <span style="font-weight:500;color:#9AA3B2;">${from}</span></span>${link}</div>
   <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;"><span class="lbl">중요도</span><div style="display:grid;grid-template-columns:repeat(3, 64px);gap:6px;">${impBtn('낮음')}${impBtn('보통')}${impBtn('높음')}</div></div>
@@ -516,6 +527,7 @@
   // ───── 편집 흐름 ─────
   function openEdit(id) {
     const it = find(id); if (!it) return;
+    U.addRem = false;
     U.back = U.view === 'edit' ? U.back : U.view;
     U.draft = { ...it, rem: { ...getRem(it) }, custom: [...(it.custom || [])], importance: it.importance || '보통', memo: it.memo || '', url: it.url || '', isNew: false };
     go('edit');
@@ -556,7 +568,7 @@
       const [v, arg] = el.dataset.go.split(':');
       if (v === 'day') { U.sel = arg; go('day'); }
       else if (v === 'edit') openEdit(arg);
-      else if (v === 'new') { U.back = U.view; U.draft = newDraft(arg); go('edit'); }
+      else if (v === 'new') { U.back = U.view; U.draft = newDraft(arg); U.addRem = false; go('edit'); }
       else go(v);
       return;
     }
@@ -574,14 +586,17 @@
       case 'closeSheet': U.sheet = null; renderSide(); break;
       case 'month': { let [y, m] = U.month; m += +arg; if (m < 0) { m = 11; y--; } if (m > 11) { m = 0; y++; } U.month = [y, m]; renderSide(); break; }
       case 'today': U.month = [TODAY.getFullYear(), TODAY.getMonth()]; U.sel = ymd(TODAY); renderSide(); break;
-      case 'del': remove(arg); if (U.view === 'edit') { U.sel = D.date; go('day'); } else renderSide(); break;
+      case 'del': if (!confirm('이 일정을 삭제할까요?')) break; remove(arg); if (U.view === 'edit') { U.sel = D.date; go('day'); } else renderSide(); break;
       case 'cat': D.cat = arg; renderSide(); break;
       case 'rem': D.rem[arg] = !D.rem[arg]; renderSide(); break;
       case 'imp': D.importance = arg; renderSide(); break;
       case 'clearUrl': D.url = ''; renderSide(); break;
       case 'delCustom': D.custom.splice(+arg, 1); renderSide(); break;
-      case 'addCustom': { const base = new Date(at(D.date, D.time) - 3 * 3600e3); const v = ymd(base) + 'T' + hm(base);
-        pick($('dtPick'), v, e.clientX, e.clientY, (val) => { D.custom.push(new Date(val).toISOString()); renderSide(); }); break; }
+      case 'addCustom': {
+        if (!U.addRem) { const b = new Date(at(D.date, D.time) - 3 * 3600e3); U.remDate = ymd(b); U.remTime = hm(b); }
+        U.addRem = !U.addRem; renderSide(); break; }
+      case 'quickRem': { const v = new Date(at(D.date, D.time) - arg * 3600e3).toISOString(); if (!D.custom.includes(v)) D.custom.push(v); U.addRem = false; renderSide(); break; }
+      case 'addRemOk': { if (!U.remDate || !U.remTime) break; const v = new Date(U.remDate + 'T' + U.remTime).toISOString(); if (!D.custom.includes(v)) D.custom.push(v); U.addRem = false; renderSide(); break; }
       case 'pickTime': {
         const cur = arg === 'edit' ? D.time : arg === 'sheet' ? U.sd.time : S.settings.time;
         pick($('timePick'), cur, e.clientX, e.clientY, (val) => {
@@ -605,9 +620,45 @@
         if (act.startsWith('set:')) { const k = act.slice(4); S.settings[k] = !S.settings[k]; save(); renderSide(); }
     }
   });
+  // 달력 화면 일정 우클릭 → 삭제
+  side.addEventListener('contextmenu', (e) => {
+    const el = e.target.closest('[data-id]');
+    if (!el || U.view === 'edit') return;
+    const it = find(el.dataset.id);
+    if (!it) return;
+    e.preventDefault();
+    if (confirm(`'${it.title}' 일정을 삭제할까요?`)) { remove(it.id); renderSide(); }
+  });
+  // 가로로 넘기는 목록(단과대학 탭·같은 시각 마감): 마우스 휠·드래그로 넘기기
+  side.addEventListener('wheel', (e) => {
+    const el = e.target.closest('.hscroll');
+    if (!el || el.scrollWidth <= el.clientWidth || !e.deltaY) return;
+    e.preventDefault();
+    el.scrollLeft += e.deltaY;
+  }, { passive: false });
+  let drag = null;
+  side.addEventListener('pointerdown', (e) => {
+    const el = e.target.closest('.hscroll');
+    if (el && e.button === 0) drag = { el, x: e.clientX, left: el.scrollLeft, moved: false };
+  });
+  addEventListener('pointermove', (e) => {
+    if (!drag) return;
+    const dx = e.clientX - drag.x;
+    if (Math.abs(dx) > 5) drag.moved = true;
+    if (drag.moved) { drag.el.style.scrollSnapType = 'none'; drag.el.scrollLeft = drag.left - dx; }
+  });
+  addEventListener('pointerup', () => {
+    if (!drag) return;
+    const d = drag; drag = null;
+    d.el.style.scrollSnapType = '';
+    // 드래그로 넘긴 뒤 손을 뗄 때는 클릭으로 치지 않는다
+    if (d.moved) addEventListener('click', (ev) => { ev.stopPropagation(); ev.preventDefault(); }, { capture: true, once: true });
+  });
   side.addEventListener('input', (e) => {
     const f = e.target.dataset.in; if (!f) return;
     if (f === 'q') { U.q = e.target.value; $('deptList').innerHTML = deptRows(U.sheet === 'dept'); $('colTabs').innerHTML = collegeTabs(U.sheet === 'dept'); return; }
+    if (f === 'remDate' || f === 'remTime') { U[f] = e.target.value; return; }
+    if (f === 'time' && !e.target.value) return;
     U.draft[f] = e.target.value;
     if (f === 'memo') $('memoCnt').textContent = e.target.value.length + '/200 · 상세·알림에 표시';
   });

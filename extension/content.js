@@ -11,12 +11,12 @@
   host.style.cssText = 'all:initial;position:absolute;z-index:2147483647;display:none;';
   const root = host.attachShadow({ mode: 'closed' });
   root.innerHTML = `<style>
-  .w{display:flex;align-items:center;gap:10px;font-family:'Pretendard',-apple-system,'Malgun Gothic',system-ui,sans-serif;letter-spacing:-.01em}
-  button{width:52px;height:52px;padding:0;border:0;border-radius:16px;background:#2B6CFF;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;overflow:hidden;box-shadow:0 8px 20px rgba(43,108,255,.28),0 0 0 4px #fff;transition:transform 160ms cubic-bezier(.23,1,.32,1)}
+  .w{display:flex;align-items:center;gap:6px;font-family:'Pretendard',-apple-system,'Malgun Gothic',system-ui,sans-serif;letter-spacing:-.01em}
+  button{width:36px;height:36px;padding:0;border:0;border-radius:11px;background:#2B6CFF;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;overflow:hidden;box-shadow:0 4px 12px rgba(43,108,255,.28),0 0 0 3px #fff;transition:transform 160ms cubic-bezier(.23,1,.32,1)}
   button:active{transform:scale(.96)}
   button:focus-visible{outline:2px solid #2B6CFF;outline-offset:4px}
-  img{width:52px;height:52px;object-fit:cover}
-  span{height:30px;padding:0 12px;border-radius:8px;background:#1A1C22;color:#fff;font-size:13px;font-weight:600;display:inline-flex;align-items:center;white-space:nowrap;box-shadow:0 6px 16px rgba(26,28,34,.18)}
+  img{width:36px;height:36px;object-fit:cover}
+  span{height:24px;padding:0 9px;border-radius:6px;background:#1A1C22;color:#fff;font-size:12px;font-weight:600;display:inline-flex;align-items:center;white-space:nowrap;box-shadow:0 6px 16px rgba(26,28,34,.18)}
   @media (prefers-reduced-motion:reduce){button{transition:none}button:active{transform:none}}
 </style><div class="w"><button aria-label="앗!차차에 저장"><img src="${chrome.runtime.getURL('chacha.png')}" alt=""></button><span>앗!차차에 저장</span></div>`;
   (document.body || document.documentElement).appendChild(host);
@@ -32,7 +32,7 @@
       text = sel.toString();
       const r = sel.getRangeAt(0).getBoundingClientRect();
       host.style.left = Math.max(8, Math.min(r.left, innerWidth - 200)) + scrollX + 'px';
-      host.style.top = r.bottom + scrollY + 12 + 'px';
+      host.style.top = r.bottom + scrollY + 8 + 'px';
       host.style.display = 'block';
     }, 0);
   });

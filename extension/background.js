@@ -85,7 +85,8 @@ async function deliver(S, item, r, missed) {
   if (missed || !S.settings.browser) return;
   const n = Math.round((parseD(item.date) - midnight(new Date())) / 864e5);
   const dd = n === 0 ? 'D-Day' : n > 0 ? 'D-' + n : 'D+' + -n;
-  chrome.notifications.create('it|' + item.id + '|' + Date.now(), {
+  const nid = 'it|' + item.id + '|' + Date.now();
+  const opts = {
     type: 'basic',
     iconUrl: 'icons/icon128.png',
     title: item.kind === '시작' ? `${r.label} · ${item.title}` : `${dd} · ${item.title}`,
@@ -93,6 +94,12 @@ async function deliver(S, item, r, missed) {
     contextMessage: '앗!차차 · ' + (item.kind === '시작' ? '일정 알림' : '마감 알림'),
     buttons: [{ title: '원문 열기' }, { title: '완료' }],
     priority: 2,
+  };
+  // 일부 환경은 버튼·우선순위가 있는 알림을 거부한다 → 제목·내용만으로 다시 시도
+  chrome.notifications.create(nid, opts, () => {
+    if (!chrome.runtime.lastError) return;
+    console.warn('알림 생성 실패, 단순 알림으로 재시도:', chrome.runtime.lastError.message);
+    chrome.notifications.create(nid, { type: 'basic', iconUrl: opts.iconUrl, title: opts.title, message: opts.message });
   });
 }
 
