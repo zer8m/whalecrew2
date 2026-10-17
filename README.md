@@ -30,6 +30,7 @@ node --test "collector/*.test.js"
 - 학과 매핑 다시 만들기: `node collector/build-map.js cmsBoard.json` (cmsBoard 응답 파일은 커밋 금지)
 
 ## 스토어 패키지
+(PowerShell 5.1 `Compress-Archive`는 경로를 `icons\icon.png`처럼 역슬래시로 넣어 다른 OS·스토어에서 깨질 수 있어 쓰지 않는다)
 ```bash
-powershell -Command "Compress-Archive -Path extension/* -DestinationPath dist/attchacha.zip -Force"
+python -c "import zipfile,os; z=zipfile.ZipFile('dist/attchacha.zip','w',zipfile.ZIP_DEFLATED); [z.write(os.path.join(r,f), os.path.relpath(os.path.join(r,f),'extension').replace(os.sep,'/')) for r,_,fs in os.walk('extension') for f in fs]"
 ```
