@@ -680,7 +680,8 @@
   function takeFocus(id) {
     if (!id) return;
     chrome.storage.local.remove('focus');
-    if (find(id)) openEdit(id);
+    if (id === '@alerts') go('alerts'); // 묶음 알림을 누른 경우
+    else if (find(id)) openEdit(id);
   }
 
   // ───── 시작 ─────

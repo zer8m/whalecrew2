@@ -59,6 +59,7 @@ async function check() {
   const { fired = {}, seen = {} } = await chrome.storage.local.get(['fired', 'seen']);
   const now = Date.now();
   let nextAt = Infinity;
+  const due = []; // 이번에 팝업으로 보낼 알림
   for (const i of items) {
     if (i.done) continue;
     // 저장(또는 공지 수신) 전에 이미 지난 알림 시점은 보내지 않는다
@@ -69,9 +70,12 @@ async function check() {
       if (r.at > now) { nextAt = Math.min(nextAt, r.at); continue; }
       fired[k] = now;
       if (r.at < floor) continue;
-      await deliver(S, i, r, now - r.at > 3600e3);
+      if (await deliver(S, i, r, now - r.at > 3600e3)) due.push([i, r]);
     }
   }
+  // 같은 시각에 2개까지는 각각 창으로, 3개 이상이면 한 창으로 묶는다(누르면 알림탭)
+  if (due.length <= 2) for (const [i, r] of due) notify(i, r);
+  else notifyGroup(due.map(([i]) => i));
   for (const k in fired) if (now - fired[k] > 60 * 864e5) delete fired[k];
   await chrome.storage.local.set({ fired });
   // 1분 주기만으로는 최대 1분 늦으므로 다음 시점에 정확히 울리는 알람을 따로 건다
@@ -79,10 +83,35 @@ async function check() {
   else chrome.alarms.clear('next');
 }
 
+// 알림탭에 기록하고, 팝업으로 보낼 대상이면 true
 async function deliver(S, item, r, missed) {
+  await pushAlert(S, { itemId: item.id, type: item.kind === '시작' ? 'start' : 'deadline', chip: r.label, title: item.title, sub: `${rel(item.date)} ${item.time} · ${item.sub}${missed ? ' · 놓친 알림' : ''}` });
+  return !missed && S.settings.browser;
+}
+
+// 일부 환경은 버튼·우선순위가 있는 알림을 거부한다 → 제목·내용만으로 다시 시도
+function createNote(nid, opts) {
+  chrome.notifications.create(nid, opts, () => {
+    if (!chrome.runtime.lastError) return;
+    console.warn('알림 생성 실패, 단순 알림으로 재시도:', chrome.runtime.lastError.message);
+    chrome.notifications.create(nid, { type: 'basic', iconUrl: opts.iconUrl, title: opts.title, message: opts.message });
+  });
+}
+
+function notifyGroup(list) {
+  const kinds = new Set(list.map((i) => i.kind));
+  createNote('group|alerts|' + Date.now(), {
+    type: 'basic',
+    iconUrl: 'icons/icon128.png',
+    title: `${kinds.has('마감') ? '마감' : '일정'} 알림 ${list.length}건`,
+    message: list.slice(0, 2).map((i) => i.title).join(', ') + ` 외 ${list.length - 2}건`,
+    contextMessage: '앗!차차 · 눌러서 알림탭에서 모두 보기',
+    priority: 2,
+  });
+}
+
+function notify(item, r) {
   const when = `${rel(item.date)} ${item.time}`;
-  await pushAlert(S, { itemId: item.id, type: item.kind === '시작' ? 'start' : 'deadline', chip: r.label, title: item.title, sub: `${when} · ${item.sub}${missed ? ' · 놓친 알림' : ''}` });
-  if (missed || !S.settings.browser) return;
   const n = Math.round((parseD(item.date) - midnight(new Date())) / 864e5);
   const dd = n === 0 ? 'D-Day' : n > 0 ? 'D-' + n : 'D+' + -n;
   // 알림마다 별도 창: 같은 일정의 같은 시각 알림(예: D-Day + 직접 지정)도 서로 덮어쓰지 않게 알림 종류까지 넣는다
@@ -96,12 +125,7 @@ async function deliver(S, item, r, missed) {
     buttons: [{ title: '원문 열기' }, { title: '완료' }],
     priority: 2,
   };
-  // 일부 환경은 버튼·우선순위가 있는 알림을 거부한다 → 제목·내용만으로 다시 시도
-  chrome.notifications.create(nid, opts, () => {
-    if (!chrome.runtime.lastError) return;
-    console.warn('알림 생성 실패, 단순 알림으로 재시도:', chrome.runtime.lastError.message);
-    chrome.notifications.create(nid, { type: 'basic', iconUrl: opts.iconUrl, title: opts.title, message: opts.message });
-  });
+  createNote(nid, opts);
 }
 
 const itemOf = (nid) => nid.split('|')[1];
@@ -113,7 +137,7 @@ function openSidebar(windowId) {
   if (!sidebar) return;
   try { windowId ? sidebar.show(windowId) : sidebar.show(); } catch (e) {}
 }
-chrome.notifications.onClicked.addListener((nid) => { chrome.notifications.clear(nid); focusItem(itemOf(nid)); });
+chrome.notifications.onClicked.addListener((nid) => { chrome.notifications.clear(nid); focusItem(nid.startsWith('group|') ? '@alerts' : itemOf(nid)); });
 chrome.notifications.onButtonClicked.addListener(async (nid, btn) => {
   chrome.notifications.clear(nid);
   const { S, notices } = await load();

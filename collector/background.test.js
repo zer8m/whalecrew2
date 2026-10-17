@@ -70,15 +70,30 @@ test('다음 알림 시각에 정확히 울리는 알람을 예약한다', async
   assert.strictEqual(bg.notes.length, 0);
 });
 
-test('같은 시각 알림이 여러 개면 각각 별도 창으로 띄운다', async () => {
+test('같은 시각 알림이 2개면 각각 별도 창으로 띄운다', async () => {
   const now = Date.now();
   const at = new Date(now - 60e3).toISOString();
   const d = ymd(new Date(now + 864e5));
   const item = (id, custom) => ({ id, title: id, cat: '개인', date: d, time: '23:59', kind: '마감', sub: 't', src: 'manual', rem: { d7: false, d3: false, d1: false, d0: false }, custom, savedAt: now - 3600e3 });
-  // 서로 다른 일정 2개 + 한 일정에 같은 시각 알림 2개(직접 지정 두 번)
-  const mem = { S: { onboarded: true, depts: [], hidden: [], settings: {}, deptAt: 0, items: [item('a', [at]), item('b', [at, new Date(now - 60e3 + 1).toISOString()])] }, alerts: [] };
+  // 한 일정에 같은 시각 알림 2개(직접 지정 두 번) → 서로 덮어쓰지 않는 창 2개
+  const mem = { S: { onboarded: true, depts: [], hidden: [], settings: {}, deptAt: 0, items: [item('b', [at, new Date(now - 60e3 + 1).toISOString()])] }, alerts: [] };
   const bg = boot(mem);
   await bg.tick();
-  assert.strictEqual(bg.notes.length, 3);
-  assert.strictEqual(new Set(bg.notes.map((n) => n.id.split('|').slice(0, 3).join('|'))).size, 3);
+  assert.strictEqual(bg.notes.length, 2);
+  assert.strictEqual(new Set(bg.notes.map((n) => n.id.split('|').slice(0, 3).join('|'))).size, 2);
+});
+
+test('같은 시각 알림이 3개 이상이면 한 창으로 묶고, 알림탭에는 모두 기록한다', async () => {
+  const now = Date.now();
+  const at = new Date(now - 60e3).toISOString();
+  const d = ymd(new Date(now + 864e5));
+  const item = (id) => ({ id, title: '과제 ' + id, cat: '개인', date: d, time: '23:59', kind: '마감', sub: 't', src: 'manual', rem: { d7: false, d3: false, d1: false, d0: false }, custom: [at], savedAt: now - 3600e3 });
+  const mem = { S: { onboarded: true, depts: [], hidden: [], settings: {}, deptAt: 0, items: ['a', 'b', 'c', 'd'].map(item) }, alerts: [] };
+  const bg = boot(mem);
+  await bg.tick();
+  assert.strictEqual(bg.notes.length, 1);
+  assert.ok(bg.notes[0].id.startsWith('group|'));
+  assert.strictEqual(bg.notes[0].title, '마감 알림 4건');
+  assert.strictEqual(bg.notes[0].message, '과제 a, 과제 b 외 2건');
+  assert.strictEqual(mem.alerts.length, 4);
 });
