@@ -1,6 +1,6 @@
 {
- "at": "2026-10-17T08:19:08.793Z",
- "calls": 126,
+ "at": "2026-10-17T10:15:06.766Z",
+ "calls": 127,
  "fails": 0,
  "boards": {
   "139": {
@@ -123,14 +123,6 @@
    "items": 10,
    "url": true
   },
-  "397": {
-   "name": "정보광장 > 장학금안내",
-   "inList": true,
-   "rows": 0,
-   "latest": null,
-   "items": 0,
-   "url": false
-  },
   "398": {
    "name": "정보광장 > 장학 공지사항",
    "inList": true,
@@ -198,7 +190,7 @@
   "603": {
    "name": "공지사항-학부",
    "inList": true,
-   "rows": 174,
+   "rows": 173,
    "latest": "2026-10-15",
    "items": 32,
    "url": true
@@ -742,7 +734,7 @@
   "3236": {
    "name": "열린마당 > 공지사항",
    "inList": true,
-   "rows": 367,
+   "rows": 366,
    "latest": "2026-10-16",
    "items": 15,
    "url": false
@@ -963,6 +955,14 @@
    "items": 6,
    "url": true
   },
+  "6903": {
+   "name": "학교생활 소식",
+   "inList": true,
+   "rows": 3,
+   "latest": "2026-07-12",
+   "items": 0,
+   "url": false
+  },
   "6937": {
    "name": "학과공지 | 학부 | 공모전 및 대외활동 등",
    "inList": true,
@@ -985,6 +985,14 @@
    "rows": 32,
    "latest": "2026-09-10",
    "items": 15,
+   "url": false
+  },
+  "7164": {
+   "name": "학과소식",
+   "inList": true,
+   "rows": 2,
+   "latest": "2026-09-17",
+   "items": 0,
    "url": false
   },
   "7171": {
