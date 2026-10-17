@@ -97,3 +97,12 @@ test('같은 시각 알림이 3개 이상이면 한 창으로 묶고, 알림탭�
   assert.strictEqual(bg.notes[0].message, '과제 a, 과제 b 외 2건');
   assert.strictEqual(mem.alerts.length, 4);
 });
+
+test('저장된 옛 학과명은 새 이름으로 옮기고 중복은 합친다', async () => {
+  const ctx = vm.createContext({ chrome: { storage: { local: {} }, runtime: { getURL: (p) => p } }, fetch: async (u) => ({ json: async () => JSON.parse(fs.readFileSync(path.join(EXT, u), 'utf8')) }) });
+  vm.runInContext(fs.readFileSync(path.join(EXT, 'core.js'), 'utf8'), ctx);
+  const S = await ctx.Core.normalize({ depts: ['컴퓨터융합학부', '인공지능학과', '사학과'], items: [], hidden: [], settings: { time: '08:00' } });
+  assert.deepStrictEqual([...S.depts], ['컴퓨터인공지능학부', '사학과']);
+  assert.strictEqual(S.settings.time, '08:00');
+  assert.strictEqual(S.settings.d3, true);
+});

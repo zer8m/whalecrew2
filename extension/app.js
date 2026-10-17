@@ -560,6 +560,7 @@
   }
 
   side.addEventListener('click', (e) => {
+    if (dragged) { dragged = false; e.preventDefault(); return; } // 가로로 끌어 넘긴 직후의 클릭은 무시
     if (e.target.closest('a[href]')) return; // 원문 링크는 그대로 열기
     const el = e.target.closest('[data-go],[data-act]');
     if (!el) return;
@@ -636,8 +637,9 @@
     e.preventDefault();
     el.scrollLeft += e.deltaY;
   }, { passive: false });
-  let drag = null;
+  let drag = null, dragged = false;
   side.addEventListener('pointerdown', (e) => {
+    dragged = false;
     const el = e.target.closest('.hscroll');
     if (el && e.button === 0) drag = { el, x: e.clientX, left: el.scrollLeft, moved: false };
   });
@@ -651,8 +653,7 @@
     if (!drag) return;
     const d = drag; drag = null;
     d.el.style.scrollSnapType = '';
-    // 드래그로 넘긴 뒤 손을 뗄 때는 클릭으로 치지 않는다
-    if (d.moved) addEventListener('click', (ev) => { ev.stopPropagation(); ev.preventDefault(); }, { capture: true, once: true });
+    dragged = d.moved; // 다음 클릭 한 번만 무시(다음 pointerdown에서 풀림)
   });
   side.addEventListener('input', (e) => {
     const f = e.target.dataset.in; if (!f) return;
@@ -685,10 +686,12 @@
   }
 
   // ───── 시작 ─────
-  chrome.storage.onChanged.addListener((c) => {
+  let ready = false; // 처음 불러오기 전에 온 변경은 무시(시작 코드가 최신 값을 다시 읽는다)
+  chrome.storage.onChanged.addListener(async (c) => {
     if (c.alerts) ALERTS = c.alerts.newValue || [];
     if (c.notices) NOTICES = c.notices.newValue || {};
-    if (c.S && c.S.newValue && JSON.stringify(c.S.newValue) !== JSON.stringify(S)) S = { ...c.S.newValue, settings: { ...Core.DEF_SETTINGS, ...c.S.newValue.settings } };
+    if (!ready) return;
+    if (c.S && c.S.newValue && JSON.stringify(c.S.newValue) !== JSON.stringify(S)) S = await Core.normalize(c.S.newValue);
     if (c.pendingScrap && c.pendingScrap.newValue) return takeScrap(c.pendingScrap.newValue);
     if (c.focus && c.focus.newValue) return takeFocus(c.focus.newValue);
     if ((c.alerts || c.notices || c.S) && U.view !== 'edit' && U.view !== 'onboard' && !U.sheet) renderSide();
@@ -700,6 +703,7 @@
     LIST = await Core.colleges();
     COLLEGES = LIST.map((c) => ({ name: c.name, depts: c.depts.map((d) => d.name) }));
     U.view = S.onboarded ? 'main' : 'onboard';
+    ready = true;
     renderSide();
     const r = await chrome.storage.local.get(['pendingScrap', 'focus']);
     takeScrap(r.pendingScrap);

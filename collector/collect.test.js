@@ -20,3 +20,8 @@ test('API 응답 → 달력 일정: 정보형은 빼고 마감일·원문 링크
 test('게시판 URL을 모르면 원문 링크는 null', () => {
   assert.strictEqual(toItems(fixture.RESULT, { ...board, url: null })[0].url, null);
 });
+
+test('update_dt가 빠진 글이 섞여도 게시판 전체가 실패하지 않는다', () => {
+  const rows = [...fixture.RESULT, { ...fixture.RESULT[0], article_no: 1, update_dt: null }];
+  assert.doesNotThrow(() => toItems(rows, board));
+});

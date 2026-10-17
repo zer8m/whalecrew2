@@ -23,12 +23,14 @@
 
   let text = '';
   const hide = () => { host.style.display = 'none'; };
+  // 확장앱을 업데이트·새로고침하면 이미 열린 탭의 이 스크립트는 확장앱과 끊긴다(chrome.runtime 사용 불가)
+  const alive = () => { try { return !!chrome.runtime.id; } catch (e) { return false; } };
   document.addEventListener('mouseup', (e) => {
     if (e.composedPath().includes(host)) return;
     setTimeout(() => {
       const sel = getSelection();
       const t = sel ? sel.toString().trim() : '';
-      if (!enabled || t.length < 2 || !sel.rangeCount) return hide();
+      if (!enabled || t.length < 2 || !sel.rangeCount || !alive()) return hide();
       text = sel.toString();
       const r = sel.getRangeAt(0).getBoundingClientRect();
       host.style.left = Math.max(8, Math.min(r.left, innerWidth - 200)) + scrollX + 'px';
@@ -42,6 +44,7 @@
   root.querySelector('button').addEventListener('mousedown', (e) => e.preventDefault());
   root.querySelector('button').addEventListener('click', () => {
     hide();
+    if (!alive()) return alert('앗!차차가 업데이트됐어요. 이 페이지를 새로고침한 뒤 다시 드래그해 주세요.');
     chrome.runtime.sendMessage({ type: 'scrap', text, url: location.href, title: document.title });
     getSelection().removeAllRanges();
   });

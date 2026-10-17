@@ -26,16 +26,18 @@ async function fetchBoard(no, key) {
   return j.RESULT;
 }
 
+const timeOf = (x) => (x.update_dt && +x.update_dt.time) || 0; // update_dt가 빠진 글도 있을 수 있다
+
 // API 응답 → 달력 일정. 정보형·날짜 없는 글은 버린다. 본문은 저장하지 않는다.
 function toItems(rows, board) {
   return rows
     .slice()
-    .sort((a, b) => b.update_dt.time - a.update_dt.time)
+    .sort((a, b) => timeOf(b) - timeOf(a))
     .slice(0, LATEST)
     .flatMap((x) => {
       const type = E.classify(x.article_title);
       if (type === 'info') return [];
-      const d = E.extractDeadline(x.article_title, E.htmlText(x.article_text), new Date(x.update_dt.time));
+      const d = E.extractDeadline(x.article_title, E.htmlText(x.article_text), new Date(timeOf(x) || Date.now()));
       if (!d) return [];
       return [{
         id: `${board.no}-${x.article_no}`,
@@ -82,7 +84,7 @@ async function main() {
           const rows = await fetchBoard(b.no, key);
           const items = toItems(rows, b);
           cache.set(b.no, items);
-          const latest = rows.reduce((m, x) => Math.max(m, x.update_dt.time), 0);
+          const latest = rows.reduce((m, x) => Math.max(m, timeOf(x)), 0);
           report[b.no] = { name: b.name, inList: listed ? listed.has(b.no) : null, rows: rows.length, latest: latest ? new Date(latest).toISOString().slice(0, 10) : null, items: items.length, url: !!b.url };
         } catch (e) { fails++; console.error(e.message); cache.set(b.no, e); report[b.no] = { name: b.name, inList: listed ? listed.has(b.no) : null, error: e.message, url: !!b.url }; }
       }

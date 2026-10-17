@@ -15,7 +15,10 @@ chrome.alarms.onAlarm.addListener((a) => (a.name === 'refresh' ? refresh() : tic
 chrome.storage.onChanged.addListener((c) => { if (c.S) tick(); });
 
 // ───── 학과 공지 ─────
-async function refresh() {
+// 사이드바를 열 때마다·3시간 알람·시작 때 불리므로 한 번에 하나씩(같은 새 공지를 두 번 알리지 않게)
+let refreshing = Promise.resolve();
+const refresh = () => (refreshing = refreshing.then(doRefresh).catch((e) => console.error('공지 새로고침 실패', e)));
+async function doRefresh() {
   const { S, notices } = await load();
   const list = await colleges();
   const ids = S.depts.map((n) => deptId(list, n)).filter(Boolean);
@@ -39,6 +42,7 @@ async function refresh() {
       if (notices[id]) next[id] = notices[id]; // 실패하면 지난 데이터 유지
     }
   }
+  for (const k in seen) if (Date.now() - seen[k] > 120 * 864e5) delete seen[k]; // 넉 달 지난 기록은 정리
   await chrome.storage.local.set({ notices: next, seen });
   for (const n of fresh.slice(0, 5))
     await pushAlert(S, { itemId: 'n-' + n.id, type: 'notice', chip: '새 공지', title: n.title, sub: (n.writer || n.tag) + ' · 달력 추가됨' });
@@ -51,7 +55,7 @@ function rel(s) {
 }
 // 여러 경로(알람·저장·시작)에서 동시에 불려도 한 번에 하나씩 → 중복 발송 방지
 let running = Promise.resolve();
-const tick = () => (running = running.then(check, check));
+const tick = () => (running = running.then(check).catch((e) => console.error('알림 확인 실패', e)));
 async function check() {
   const { S, notices } = await load();
   if (!S.onboarded) return;
