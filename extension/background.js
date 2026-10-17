@@ -85,7 +85,8 @@ async function deliver(S, item, r, missed) {
   if (missed || !S.settings.browser) return;
   const n = Math.round((parseD(item.date) - midnight(new Date())) / 864e5);
   const dd = n === 0 ? 'D-Day' : n > 0 ? 'D-' + n : 'D+' + -n;
-  const nid = 'it|' + item.id + '|' + Date.now();
+  // 알림마다 별도 창: 같은 일정의 같은 시각 알림(예: D-Day + 직접 지정)도 서로 덮어쓰지 않게 알림 종류까지 넣는다
+  const nid = 'it|' + item.id + '|' + r.key + '|' + Date.now();
   const opts = {
     type: 'basic',
     iconUrl: 'icons/icon128.png',

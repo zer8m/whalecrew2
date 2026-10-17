@@ -18,7 +18,7 @@ function boot(mem) {
     } },
     runtime: { getURL: (p) => p, onInstalled: ev('installed'), onStartup: ev('startup'), onMessage: ev('message') },
     alarms: { create: (n, o) => (alarms[n] = o), clear: (n) => delete alarms[n], onAlarm: ev('alarm') },
-    notifications: { create: (id, o) => notes.push(o), clear() {}, onClicked: ev('nclick'), onButtonClicked: ev('nbutton') },
+    notifications: { create: (id, o) => notes.push({ id, ...o }), clear() {}, onClicked: ev('nclick'), onButtonClicked: ev('nbutton') },
     tabs: { create() {} },
   };
   const ctx = vm.createContext({
@@ -68,4 +68,17 @@ test('다음 알림 시각에 정확히 울리는 알람을 예약한다', async
   await bg.tick();
   assert.strictEqual(bg.alarms.next.when, +soon);
   assert.strictEqual(bg.notes.length, 0);
+});
+
+test('같은 시각 알림이 여러 개면 각각 별도 창으로 띄운다', async () => {
+  const now = Date.now();
+  const at = new Date(now - 60e3).toISOString();
+  const d = ymd(new Date(now + 864e5));
+  const item = (id, custom) => ({ id, title: id, cat: '개인', date: d, time: '23:59', kind: '마감', sub: 't', src: 'manual', rem: { d7: false, d3: false, d1: false, d0: false }, custom, savedAt: now - 3600e3 });
+  // 서로 다른 일정 2개 + 한 일정에 같은 시각 알림 2개(직접 지정 두 번)
+  const mem = { S: { onboarded: true, depts: [], hidden: [], settings: {}, deptAt: 0, items: [item('a', [at]), item('b', [at, new Date(now - 60e3 + 1).toISOString()])] }, alerts: [] };
+  const bg = boot(mem);
+  await bg.tick();
+  assert.strictEqual(bg.notes.length, 3);
+  assert.strictEqual(new Set(bg.notes.map((n) => n.id.split('|').slice(0, 3).join('|'))).size, 3);
 });
