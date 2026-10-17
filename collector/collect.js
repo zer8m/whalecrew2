@@ -1,21 +1,25 @@
-// 학내 게시판 수집 → site/data/{학과id}.json. GitHub Actions에서 하루 2회 실행.
+// 학내 게시판 수집 → site/data/{학과id}.json. GitHub Actions에서 하루 4회 실행.
 // CNU_KEY=... node collector/collect.js
 const fs = require('fs');
 const path = require('path');
 const E = require('../extension/extract.js');
 
 const API = 'https://api.cnu.ac.kr/svc/offcam/pub/homepageboardContents';
+const LIST_API = 'https://api.cnu.ac.kr/svc/offcam/pub/cmsBoard';
 const LATEST = 50;
 const OUT = path.join(__dirname, '..', 'site', 'data');
 
 // 게시판 1개 호출. 키가 URL에 남지 않도록 POST form만 쓴다(학교 요구사항).
-async function fetchBoard(no, key) {
-  const r = await fetch(API, {
+async function post(url, params) {
+  return fetch(url, {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: new URLSearchParams({ AUTH_KEY: key, P_board_no: String(no) }),
+    body: new URLSearchParams(params),
     signal: AbortSignal.timeout(30000),
   });
+}
+async function fetchBoard(no, key) {
+  const r = await post(API, { AUTH_KEY: key, P_board_no: String(no) });
   if (!r.ok) throw new Error(`board ${no}: HTTP ${r.status}`);
   const j = await r.json();
   if (!Array.isArray(j.RESULT)) throw new Error(`board ${no}: ${JSON.stringify(j.OutBlock || j).slice(0, 120)}`);
@@ -58,7 +62,12 @@ async function main() {
   const colleges = readJson(path.join(__dirname, '..', 'extension', 'departments.json'));
   fs.mkdirSync(OUT, { recursive: true });
 
+  // 게시판 점검용: 학교 API 게시판 목록(1건 호출)
+  let listed = null;
+  try { const r = await post(LIST_API, { AUTH_KEY: key }); listed = new Map((await r.json()).RESULT.map((b) => [+b.board_no, b.board_nm.trim()])); } catch (e) { console.error('cmsBoard:', e.message); }
+
   const cache = new Map(); // board no → items | Error (학과끼리 게시판을 공유한다)
+  const report = {}; // board no → 점검 결과(커밋되는 공개 파일이라 키·본문은 넣지 않는다)
   let calls = 0, fails = 0;
   for (const c of colleges) for (const d of c.depts) {
     if (!d.boards.length) continue;
@@ -68,8 +77,14 @@ async function main() {
     let ok = true;
     for (const b of d.boards) {
       if (!cache.has(b.no)) {
-        try { calls++; cache.set(b.no, toItems(await fetchBoard(b.no, key), b)); }
-        catch (e) { fails++; console.error(e.message); cache.set(b.no, e); }
+        try {
+          calls++;
+          const rows = await fetchBoard(b.no, key);
+          const items = toItems(rows, b);
+          cache.set(b.no, items);
+          const latest = rows.reduce((m, x) => Math.max(m, x.update_dt.time), 0);
+          report[b.no] = { name: b.name, inList: listed ? listed.has(b.no) : null, rows: rows.length, latest: latest ? new Date(latest).toISOString().slice(0, 10) : null, items: items.length, url: !!b.url };
+        } catch (e) { fails++; console.error(e.message); cache.set(b.no, e); report[b.no] = { name: b.name, inList: listed ? listed.has(b.no) : null, error: e.message, url: !!b.url }; }
       }
       const got = cache.get(b.no);
       if (got instanceof Error) {
@@ -82,7 +97,8 @@ async function main() {
     const updated = ok ? new Date().toISOString() : (prev && prev.updated) || null;
     fs.writeFileSync(file, JSON.stringify({ updated, ok, items: uniq }) + '\n');
   }
-  console.log(`호출 ${calls}건, 실패 ${fails}건`);
+  fs.writeFileSync(path.join(OUT, '_report.json'), JSON.stringify({ at: new Date().toISOString(), calls: calls + 1, fails, boards: report }, null, 1) + '\n');
+  console.log(`호출 ${calls + 1}건(목록 1건 포함), 실패 ${fails}건`);
   if (calls && fails === calls) process.exit(1); // 전부 실패 = 키 만료·API 변경. Actions 실패 메일로 알린다
 }
 

@@ -1,6 +1,12 @@
 // 사이드바(app.js)와 백그라운드(background.js)가 같이 쓰는 상태·일정 로직
 (function (root) {
   const DATA_BASE = 'https://zer8m.github.io/whalecrew2/data/';
+  // 통합·개명된 학과: 옛 이름으로 저장한 사용자를 새 이름으로 옮긴다(collector/build-map.js RENAMED와 같게)
+  const RENAMED = {
+    '컴퓨터융합학부': '컴퓨터인공지능학부', '인공지능학과': '컴퓨터인공지능학부', '건축학과': '건축공학과',
+    '동물자원과학부': '동물자원생명과학과', '바이오시스템기계공학과': '스마트농업시스템기계공학과',
+    '인문사회과학전공': '인문사회학과', '리더십과 조직과학전공': '리더쉽과 조직과학과', '공공안전학전공': '공공안전학과',
+  };
   const DEF_SETTINGS = { sync: true, d7: false, d3: true, d1: true, d0: true, time: '09:00', browser: true, appTab: true, dragBtn: true, autoDetect: true };
 
   const pad = (n) => String(n).padStart(2, '0');
@@ -17,6 +23,7 @@
     const r = await store.get(['S', 'alerts', 'notices']);
     const S = r.S || { onboarded: false, depts: [], items: [], hidden: [], settings: {}, deptAt: Date.now() };
     S.settings = { ...DEF_SETTINGS, ...S.settings };
+    S.depts = [...new Set(S.depts.map((n) => RENAMED[n] || n))];
     return { S, alerts: r.alerts || [], notices: r.notices || {} };
   }
   // 읽고-고치고-쓰기를 한 번에(사이드바·백그라운드 동시 수정 대비)

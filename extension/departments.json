@@ -4,7 +4,7 @@
   "depts": [
    {
     "id": "d01",
-    "name": "컴퓨터융합학부",
+    "name": "컴퓨터인공지능학부",
     "boards": [
      {
       "no": 305,
@@ -12,9 +12,9 @@
       "url": "https://computer.cnu.ac.kr/computer/notice/bachelor.do"
      },
      {
-      "no": 306,
-      "name": "공지사항 > 교내 일반소식",
-      "url": "https://computer.cnu.ac.kr/computer/notice/notice.do"
+      "no": 4645,
+      "name": "학사공지",
+      "url": null
      },
      {
       "no": 307,
@@ -24,24 +24,8 @@
     ]
    },
    {
-    "id": "d02",
-    "name": "인공지능학과",
-    "boards": [
-     {
-      "no": 4645,
-      "name": "학사공지",
-      "url": null
-     },
-     {
-      "no": 4634,
-      "name": "공지사항 | 학과주최행사",
-      "url": null
-     }
-    ]
-   },
-   {
     "id": "d03",
-    "name": "건축학과",
+    "name": "건축공학과",
     "boards": [
      {
       "no": 353,
@@ -100,6 +84,22 @@
     ]
    },
    {
+    "id": "d95",
+    "name": "선박해양공학과",
+    "boards": [
+     {
+      "no": 228,
+      "name": "공지사항",
+      "url": null
+     },
+     {
+      "no": 229,
+      "name": "취업소식",
+      "url": null
+     }
+    ]
+   },
+   {
     "id": "d08",
     "name": "항공우주공학과",
     "boards": [
@@ -154,6 +154,17 @@
     ]
    },
    {
+    "id": "d96",
+    "name": "정보통신융합학부",
+    "boards": [
+     {
+      "no": 5296,
+      "name": "학부공지사항",
+      "url": "https://rice.cnu.ac.kr/rice/community/notice01.do"
+     }
+    ]
+   },
+   {
     "id": "d12",
     "name": "신소재공학과",
     "boards": [
@@ -187,17 +198,6 @@
     ]
    },
    {
-    "id": "d15",
-    "name": "스마트시티건축공학과",
-    "boards": [
-     {
-      "no": 4479,
-      "name": "커뮤니티 > 공지사항",
-      "url": null
-     }
-    ]
-   },
-   {
     "id": "d16",
     "name": "자율운항시스템공학과",
     "boards": [
@@ -210,6 +210,38 @@
       "no": 4388,
       "name": "취업소식",
       "url": "https://avse.cnu.ac.kr/avse1/notice/job.do"
+     }
+    ]
+   },
+   {
+    "id": "d97",
+    "name": "에너지공학과",
+    "boards": [
+     {
+      "no": 3614,
+      "name": "공지사항 > 학부공지",
+      "url": null
+     },
+     {
+      "no": 3617,
+      "name": "공지사항 > 학과소식",
+      "url": null
+     },
+     {
+      "no": 7375,
+      "name": "공지사항 > 취창업게시판",
+      "url": null
+     }
+    ]
+   },
+   {
+    "id": "d15",
+    "name": "스마트시티건축공학과",
+    "boards": [
+     {
+      "no": 4479,
+      "name": "커뮤니티 > 공지사항",
+      "url": null
      }
     ]
    }
@@ -586,6 +618,17 @@
       "url": "https://dance.cnu.ac.kr/dance/community/notice.do"
      }
     ]
+   },
+   {
+    "id": "d98",
+    "name": "반도체융합학과",
+    "boards": [
+     {
+      "no": 6293,
+      "name": "학과공지",
+      "url": null
+     }
+    ]
    }
   ]
  },
@@ -632,6 +675,22 @@
       "no": 1193,
       "name": "취업소식",
       "url": "https://trade.cnu.ac.kr/trade/community/careers.do"
+     }
+    ]
+   },
+   {
+    "id": "d99",
+    "name": "아시아비즈니스국제학과",
+    "boards": [
+     {
+      "no": 1620,
+      "name": "공지사항 > 공지사항",
+      "url": null
+     },
+     {
+      "no": 3942,
+      "name": "공지사항 > 장학금",
+      "url": null
      }
     ]
    }
@@ -707,7 +766,7 @@
    },
    {
     "id": "d55",
-    "name": "동물자원과학부",
+    "name": "동물자원생명과학과",
     "boards": [
      {
       "no": 7171,
@@ -715,6 +774,11 @@
       "url": "https://asbt.cnu.ac.kr/asb/board/notice3.do"
      }
     ]
+   },
+   {
+    "id": "d100",
+    "name": "동물바이오시스템과학과",
+    "boards": []
    },
    {
     "id": "d56",
@@ -772,7 +836,7 @@
    },
    {
     "id": "d60",
-    "name": "바이오시스템기계공학과",
+    "name": "스마트농업시스템기계공학과",
     "boards": [
      {
       "no": 3409,
@@ -1180,11 +1244,11 @@
   ]
  },
  {
-  "name": "자유전공학부",
+  "name": "지식융합학부",
   "depts": [
    {
     "id": "d88",
-    "name": "인문사회과학전공",
+    "name": "인문사회학과",
     "boards": [
      {
       "no": 3930,
@@ -1200,7 +1264,7 @@
    },
    {
     "id": "d89",
-    "name": "리더십과 조직과학전공",
+    "name": "리더쉽과 조직과학과",
     "boards": [
      {
       "no": 3930,
@@ -1216,7 +1280,7 @@
    },
    {
     "id": "d90",
-    "name": "공공안전학전공",
+    "name": "공공안전학과",
     "boards": [
      {
       "no": 3930,
