@@ -1,6 +1,6 @@
 {
- "at": "2026-10-17T10:15:06.766Z",
- "calls": 127,
+ "at": "2026-10-17T10:22:14.219Z",
+ "calls": 130,
  "fails": 0,
  "boards": {
   "139": {
@@ -113,6 +113,14 @@
    "rows": 19,
    "latest": "2026-10-13",
    "items": 5,
+   "url": true
+  },
+  "324": {
+   "name": "공지사항 > 사업단소식",
+   "inList": true,
+   "rows": 82,
+   "latest": "2026-10-16",
+   "items": 34,
    "url": true
   },
   "353": {
@@ -849,7 +857,7 @@
    "rows": 40,
    "latest": "2026-10-15",
    "items": 32,
-   "url": false
+   "url": true
   },
   "5057": {
    "name": "공지사항",
@@ -1002,6 +1010,22 @@
    "latest": "2026-09-16",
    "items": 6,
    "url": true
+  },
+  "7347": {
+   "name": "공지사항 > 사업단소식",
+   "inList": true,
+   "rows": 0,
+   "latest": null,
+   "items": 0,
+   "url": false
+  },
+  "7348": {
+   "name": "공지사항 > 교외활동, 인턴",
+   "inList": true,
+   "rows": 0,
+   "latest": null,
+   "items": 0,
+   "url": false
   },
   "7375": {
    "name": "공지사항 > 취창업게시판",
