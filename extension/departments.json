@@ -788,6 +788,11 @@
       "no": 2897,
       "name": "공지사항",
       "url": null
+     },
+     {
+      "no": 7164,
+      "name": "학과소식",
+      "url": null
      }
     ]
    },
@@ -1051,14 +1056,14 @@
       "url": "https://vetmed.cnu.ac.kr/vetmed/community/notice.do"
      },
      {
-      "no": 397,
-      "name": "정보광장 > 장학금안내",
-      "url": null
-     },
-     {
       "no": 398,
       "name": "정보광장 > 장학 공지사항",
       "url": "https://vetmed.cnu.ac.kr/vetmed/community/alumnus.do"
+     },
+     {
+      "no": 6903,
+      "name": "학교생활 소식",
+      "url": null
      }
     ]
    },
@@ -1072,14 +1077,14 @@
       "url": "https://vetmed.cnu.ac.kr/vetmed/community/notice.do"
      },
      {
-      "no": 397,
-      "name": "정보광장 > 장학금안내",
-      "url": null
-     },
-     {
       "no": 398,
       "name": "정보광장 > 장학 공지사항",
       "url": "https://vetmed.cnu.ac.kr/vetmed/community/alumnus.do"
+     },
+     {
+      "no": 6903,
+      "name": "학교생활 소식",
+      "url": null
      }
     ]
    }
