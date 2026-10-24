@@ -1,5 +1,5 @@
 {
- "at": "2026-10-24T04:00:15.536Z",
+ "at": "2026-10-24T10:38:25.139Z",
  "calls": 128,
  "fails": 0,
  "boards": {
@@ -342,7 +342,7 @@
   "1146": {
    "name": "학부 공지사항",
    "inList": true,
-   "rows": 67,
+   "rows": 65,
    "latest": "2026-10-23",
    "items": 20,
    "url": true
@@ -366,7 +366,7 @@
   "1192": {
    "name": "학부 공지사항",
    "inList": true,
-   "rows": 250,
+   "rows": 249,
    "latest": "2026-10-23",
    "items": 30,
    "url": true
@@ -390,7 +390,7 @@
   "1228": {
    "name": "공지사항 - 학부",
    "inList": true,
-   "rows": 188,
+   "rows": 187,
    "latest": "2026-10-23",
    "items": 19,
    "url": true
@@ -438,7 +438,7 @@
   "1442": {
    "name": "공지사항",
    "inList": true,
-   "rows": 93,
+   "rows": 86,
    "latest": "2026-10-22",
    "items": 22,
    "url": true
@@ -486,9 +486,9 @@
   "1579": {
    "name": "공지사항 > 학부",
    "inList": true,
-   "rows": 49,
+   "rows": 48,
    "latest": "2026-10-22",
-   "items": 24,
+   "items": 23,
    "url": true
   },
   "1581": {
@@ -550,7 +550,7 @@
   "2003": {
    "name": "대학 > 대학공지",
    "inList": true,
-   "rows": 326,
+   "rows": 321,
    "latest": "2026-10-23",
    "items": 28,
    "url": true
@@ -726,7 +726,7 @@
   "3130": {
    "name": "학과공지",
    "inList": true,
-   "rows": 84,
+   "rows": 83,
    "latest": "2026-10-14",
    "items": 26,
    "url": true
@@ -742,7 +742,7 @@
   "3236": {
    "name": "열린마당 > 공지사항",
    "inList": true,
-   "rows": 380,
+   "rows": 379,
    "latest": "2026-10-23",
    "items": 12,
    "url": false
@@ -750,7 +750,7 @@
   "3373": {
    "name": "알림마당 > 공지사항",
    "inList": true,
-   "rows": 259,
+   "rows": 258,
    "latest": "2026-10-23",
    "items": 30,
    "url": true
@@ -838,9 +838,9 @@
   "4388": {
    "name": "취업소식",
    "inList": true,
-   "rows": 45,
+   "rows": 43,
    "latest": "2026-10-23",
-   "items": 5,
+   "items": 4,
    "url": true
   },
   "4479": {
@@ -878,7 +878,7 @@
   "5345": {
    "name": "커뮤니티 > 학부공지사항",
    "inList": true,
-   "rows": 347,
+   "rows": 343,
    "latest": "2026-10-23",
    "items": 25,
    "url": true
