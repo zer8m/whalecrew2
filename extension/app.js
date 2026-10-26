@@ -42,6 +42,7 @@
     '과제·시험': { c: '#E5484D', bg: '#FDECEC', ic: 'clock' },
     '대외활동': { c: '#7A5AF8', bg: '#F1EDFF', ic: 'trophy' },
     '개인': { c: '#D98D06', bg: '#FFF4DE', ic: 'clock' },
+    '학사일정': { c: '#0E9F6E', bg: '#E3F7EE', ic: 'cap' },
   };
 
   // ───── 날짜 ─────
@@ -78,6 +79,7 @@
 
   function remText(i) {
     const r = getRem(i), extra = (i.custom || []).length;
+    if (i.src === 'academic' && extra && !i.savedAt) return '하루 전 ' + S.settings.time; // 학사일정 기본 알림(시작 하루 전)
     // 시작형(개인 일정)은 D-n 대신 시작 2시간 전 알림(remTimes와 같은 규칙)
     if (i.kind === '시작') return r.d0 !== false ? '시작 2시간 전' + (extra ? ' 외 ' + extra + '개' : '') : extra ? '직접 지정 ' + extra + '개' : '없음';
     const on = [['d7', 'D-7'], ['d3', 'D-3'], ['d1', 'D-1'], ['d0', 'D-Day']].filter(([k]) => r[k]).map(([, l]) => l);
@@ -92,7 +94,7 @@
   }
   function remove(id) {
     S.items = S.items.filter((x) => x.id !== id);
-    if (/^n-/.test(id)) S.hidden.push(id);
+    if (/^(n|ac)-/.test(id)) S.hidden.push(id);
     save();
   }
   const pushAlert = (a) => Core.pushAlert(S, a);
@@ -130,7 +132,7 @@
 
   // 목록 행(시안 메인의 일정 행)
   function row(i, mode, border) {
-    const left = mode === 'up' ? `${parseD(i.date).getDate()}일` : i.time;
+    const left = mode === 'up' ? `${parseD(i.date).getDate()}일` : i.src === 'academic' && i.time === '00:00' ? '종일' : i.time;
     const n = diff(i.date);
     const dchip = i.kind === '마감' ? chip(dd(n), WH, '#EAF0FF') : '';
     const sub = mode === 'up' ? `${i.time} · ${esc(i.sub)}` : esc(i.src === 'notice' ? '학과 공지 자동 연동' : i.sub);
@@ -273,13 +275,13 @@
   function bigCard(i) {
     const c = CAT[i.cat] || CAT['개인'];
     const imp = i.importance === '높음' ? `<span class="chip" style="margin-left:auto;color:#E5484D;background:#FDECEC;gap:3px;">${svg('flag', 10, '#E5484D', 2.6)}중요</span>` : '';
-    const url = i.url ? `<a href="${esc(i.url)}" target="_blank" rel="noopener" style="display:flex;justify-content:space-between;align-items:center;height:36px;border-top:1px solid #E9EDF3;gap:12px;"><span class="c">원문</span><span style="display:inline-flex;align-items:center;gap:4px;font-size:13px;font-weight:600;color:${WH};min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${esc(shortUrl(i.url))}${svg('ext', 12, WH, 2.4)}</span></a>` : '';
+    const url = i.url ? `<a href="${esc(i.url)}" target="_blank" rel="noopener" style="display:flex;justify-content:space-between;align-items:center;height:36px;border-top:1px solid #E9EDF3;gap:12px;"><span class="c">원문${i.also ? ` <span class="c2">· 다른 게시판 ${i.also}곳에도</span>` : ''}</span><span style="display:inline-flex;align-items:center;gap:4px;font-size:13px;font-weight:600;color:${WH};min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${esc(shortUrl(i.url))}${svg('ext', 12, WH, 2.4)}</span></a>` : '';
     const memo = i.memo ? `<div style="display:flex;gap:8px;align-items:flex-start;padding:2px 2px 0;">${svg('memo', 15, '#9AA3B2', 2, 'flex:none;margin-top:2px;')}<span style="display:flex;flex-direction:column;gap:2px;min-width:0;"><span class="c2" style="font-weight:600;">메모</span><span style="font-size:13px;line-height:19px;color:#4B5261;">${esc(i.memo)}</span></span></div>` : '';
     return `<div class="card" style="padding:16px 16px 14px;display:flex;flex-direction:column;gap:12px;">
     <div style="display:flex;align-items:center;gap:6px;">${chip(catLabel(i), c.c, c.bg)}${chip(i.done ? '완료' : dd(diff(i.date)), i.done ? '#2FBF71' : WH, i.done ? '#E6F7EE' : '#EAF0FF')}${imp}</div>
     <a data-go="edit:${i.id}" style="font-size:18px;font-weight:700;letter-spacing:-.02em;line-height:24px;text-wrap:balance;">${esc(i.title)}</a>
     <div class="well" style="padding:4px 14px;display:flex;flex-direction:column;">
-      <div style="display:flex;justify-content:space-between;align-items:center;height:36px;"><span class="c">${i.kind === '시작' ? '시작' : '마감'}</span><span style="font-size:14px;font-weight:600;">${mdw(i.date)} ${i.time}</span></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;height:36px;"><span class="c">${i.kind === '마감' ? '마감' : i.kind === '일정' ? '날짜' : i.kind}</span><span style="font-size:14px;font-weight:600;">${mdw(i.date)}${i.src === 'academic' && i.time === '00:00' ? '' : ' ' + i.time}</span></div>
       <div style="display:flex;justify-content:space-between;align-items:center;height:36px;border-top:1px solid #E9EDF3;"><span class="c">알림</span><span style="font-size:14px;font-weight:600;">${remText(i)}</span></div>
       ${url}
     </div>
@@ -459,7 +461,7 @@
     <span style="display:flex;flex-direction:column;gap:2px;flex:1;"><span class="c2">충남대학교</span><span style="font-size:16px;font-weight:700;letter-spacing:-.02em;">${esc(dept)}</span></span>
     <span style="font-size:13px;font-weight:600;color:${WH};">변경</span>
   </a>
-  ${sec('학교 연동', r('학과 공지 자동 연동', ago + ' · 마감이 있는 글만', tog(s.sync, 'set:sync')))}
+  ${sec('학교 연동', r('학과 공지 자동 연동', ago + ' · 마감이 있는 글만', tog(s.sync, 'set:sync')) + r('학사 일정 함께 표시', '수강신청·계절학기 같은 학교 일정', tog(s.academic, 'set:academic')))}
   ${sec('새 일정의 기본 알림', r('D-7', '', tog(s.d7, 'set:d7')) + r('D-3', '', tog(s.d3, 'set:d3')) + r('D-1', '', tog(s.d1, 'set:d1')) + r('D-Day', '', tog(s.d0, 'set:d0')) +
     `<div class="row" data-act="pickTime" data-arg="settings" style="justify-content:space-between;cursor:pointer;"><span style="display:flex;flex-direction:column;gap:2px;min-width:0;"><span style="font-size:15px;font-weight:500;">알림 시각</span></span><span style="font-size:14px;font-weight:600;display:inline-flex;align-items:center;gap:4px;">${timeTxt}${svg('right', 16, '#C9CFD9', 2)}</span></div>`)}
   ${sec('알림 받는 곳', r('웨일 브라우저 알림', '화면 우측 하단 팝업', tog(s.browser, 'set:browser')) + r('앱 알림 탭', '', tog(s.appTab, 'set:appTab')))}

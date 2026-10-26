@@ -1,7 +1,7 @@
 // 사이드바(app.js)와 백그라운드(background.js)가 같이 쓰는 상태·일정 로직
 (function (root) {
   const DATA_BASE = 'https://zer8m.github.io/whalecrew2/data/';
-  const DEF_SETTINGS = { sync: true, d7: false, d3: true, d1: true, d0: true, time: '09:00', browser: true, appTab: true, dragBtn: true, autoDetect: true };
+  const DEF_SETTINGS = { sync: true, academic: true, d7: false, d3: true, d1: true, d0: true, time: '09:00', browser: true, appTab: true, dragBtn: true, autoDetect: true };
 
   const pad = (n) => String(n).padStart(2, '0');
   const ymd = (d) => d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
@@ -59,15 +59,31 @@
         seen.add(id);
         const dl = n.type === 'deadline';
         out.push({ id, title: n.title + (dl ? ' 마감' : ''), cat: '학과공지', date: n.date, time: n.time || '23:59', kind: dl ? '마감' : '시작',
-          sub: n.writer || n.tag, dept: name, src: 'notice', url: n.url || '', memo: n.attach ? '첨부 ' + n.attach + '건 · 원문에서 확인' : '',
+          sub: n.writer || n.tag, dept: name, src: 'notice', url: n.url || '', also: n.also || 0, memo: n.attach ? '첨부 ' + n.attach + '건 · 원문에서 확인' : '',
           rem: dl ? null : { d7: false, d3: false, d1: false, d0: false } });
       }
     }
     return out;
   }
+  // 학교 학사일정(notices._academic) → 달력 일정. 기간은 시작·마감 두 개로.
+  // 신청·취소처럼 행동이 필요한 일정만 시작 하루 전·마감 하루 전 알림, 나머지는 달력에만.
+  const ACAD = { title: '', cat: '학사일정', sub: '학교 학사일정', src: 'academic', url: 'https://plus.cnu.ac.kr/_prog/academic_calendar/?site_dvs_cd=kr&menu_dvs_cd=05020101' };
+  const NO_REM = { d7: false, d3: false, d1: false, d0: false };
+  function academicItems(S, notices) {
+    const data = notices._academic;
+    if (!S.settings.academic || !data) return [];
+    const out = [];
+    for (const a of data.items) {
+      const before = (s) => [new Date(+at(ymd(addD(parseD(s), -1)), S.settings.time)).toISOString()];
+      if (!a.end) { out.push({ ...ACAD, id: 'ac-' + a.id, title: a.title, date: a.start, time: '00:00', kind: '일정', rem: NO_REM, custom: a.act ? before(a.start) : [] }); continue; }
+      out.push({ ...ACAD, id: 'ac-' + a.id + '-s', title: a.title + ' 시작', date: a.start, time: '00:00', kind: '시작', rem: NO_REM, custom: a.act ? before(a.start) : [] });
+      out.push({ ...ACAD, id: 'ac-' + a.id + '-e', title: a.title + (a.act ? ' 마감' : ' 종료'), date: a.end, time: '23:59', kind: a.act ? '마감' : '종료', rem: a.act ? { ...NO_REM, d1: true } : NO_REM, custom: [] });
+    }
+    return out;
+  }
   function allItems(S, notices, list) {
     const own = new Set(S.items.map((i) => i.id));
-    const extra = noticeItems(S, notices, list).filter((i) => !own.has(i.id) && !S.hidden.includes(i.id));
+    const extra = [...noticeItems(S, notices, list), ...academicItems(S, notices)].filter((i) => !own.has(i.id) && !S.hidden.includes(i.id));
     return [...S.items, ...extra].sort((a, b) => at(a.date, a.time) - at(b.date, b.time));
   }
 

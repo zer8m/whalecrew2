@@ -43,6 +43,15 @@ async function doRefresh() {
     }
   }
   for (const k in seen) if (Date.now() - seen[k] > 120 * 864e5) delete seen[k]; // 넉 달 지난 기록은 정리
+  // 학교 학사일정: 학과와 상관없이 모두에게. 처음 받은 시각을 기록해 그 전 알림 시점은 보내지 않는다
+  try {
+    const r = await fetch(DATA_BASE + 'academic.json', { cache: 'no-store' });
+    if (!r.ok) throw new Error(r.status);
+    next._academic = await r.json();
+    for (const a of next._academic.items) for (const k of ['ac-' + a.id, 'ac-' + a.id + '-s', 'ac-' + a.id + '-e']) if (!seen[k]) seen[k] = Date.now();
+  } catch (e) {
+    if (notices._academic) next._academic = notices._academic;
+  }
   await chrome.storage.local.set({ notices: next, seen });
   for (const n of fresh.slice(0, 5))
     await pushAlert(S, { itemId: 'n-' + n.id, type: 'notice', chip: '새 공지', title: n.title, sub: (n.writer || n.tag) + ' · 달력 추가됨' });

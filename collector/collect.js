@@ -3,6 +3,7 @@
 const fs = require('fs');
 const path = require('path');
 const E = require('../extension/extract.js');
+const { fetchAcademic } = require('./academic.js');
 
 const API = 'https://api.cnu.ac.kr/svc/offcam/pub/homepageboardContents';
 const LIST_API = 'https://api.cnu.ac.kr/svc/offcam/pub/cmsBoard';
@@ -54,6 +55,19 @@ function toItems(rows, board) {
     });
 }
 
+// 같은 공지를 여러 게시판에 올리거나 다시 올린 경우: 제목·날짜·시간이 같으면 하나로.
+// items는 매핑 순서(대표 게시판 먼저)·게시판 안에서는 최신 글 먼저라 앞의 것을 남기고, 겹친 수는 also로.
+function mergeSame(items) {
+  const byKey = new Map();
+  for (const i of items) {
+    const k = i.title + '|' + i.date + '|' + (i.time || '');
+    const f = byKey.get(k);
+    if (!f) byKey.set(k, { ...i });
+    else if (f.id !== i.id) f.also = (f.also || 0) + 1;
+  }
+  return [...byKey.values()];
+}
+
 function readJson(f) {
   try { return JSON.parse(fs.readFileSync(f, 'utf8')); } catch (e) { return null; }
 }
@@ -94,15 +108,21 @@ async function main() {
         items.push(...((prev && prev.items) || []).filter((i) => i.board === b.no)); // 실패한 게시판은 지난 수집분 유지
       } else items.push(...got);
     }
-    const seen = new Set();
-    const uniq = items.filter((i) => !seen.has(i.id) && seen.add(i.id)).sort((a, b) => (a.date + (a.time || '')).localeCompare(b.date + (b.time || '')));
+    const uniq = mergeSame(items).sort((a, b) => (a.date + (a.time || '')).localeCompare(b.date + (b.time || '')));
     const updated = ok ? new Date().toISOString() : (prev && prev.updated) || null;
     fs.writeFileSync(file, JSON.stringify({ updated, ok, items: uniq }) + '\n');
   }
+  // 학교 학사일정(수강신청·계절학기 등). 실패하면 지난 파일 유지
+  try {
+    const items = await fetchAcademic();
+    if (items.length) fs.writeFileSync(path.join(OUT, 'academic.json'), JSON.stringify({ updated: new Date().toISOString(), items }) + '\n');
+    console.log(`학사일정 ${items.length}건`);
+  } catch (e) { console.error('학사일정:', e.message); }
+
   fs.writeFileSync(path.join(OUT, '_report.json'), JSON.stringify({ at: new Date().toISOString(), calls: calls + 1, fails, boards: report }, null, 1) + '\n');
   console.log(`호출 ${calls + 1}건(목록 1건 포함), 실패 ${fails}건`);
   if (calls && fails === calls) process.exit(1); // 전부 실패 = 키 만료·API 변경. Actions 실패 메일로 알린다
 }
 
 if (require.main === module) main().catch((e) => { console.error(e.message); process.exit(1); });
-module.exports = { toItems };
+module.exports = { toItems, mergeSame };
