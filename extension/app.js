@@ -68,7 +68,7 @@
     ci: 0, q: '', tmp: [], alertTab: 0, draft: null, back: 'main', sd: null, scrap: null };
 
   // ───── 일정 ─────
-  const allItems = () => Core.allItems(S, NOTICES, LIST);
+  const allItems = () => Core.allItems(S, NOTICES, LIST).filter((i) => !(S.settings.hideDone && i.done));
   const find = (id) => allItems().find((i) => i.id === id);
   const onDate = (s) => allItems().filter((i) => i.date === s);
   const getRem = (i) => Core.getRem(S, i);
@@ -214,6 +214,11 @@
     const up = future.filter((i) => !heroes.includes(i) && diff(i.date) <= 7).slice(0, 2);
     const day = onDate(U.sel);
     let h = '';
+    const notice = (t) => `<div style="display:flex;align-items:center;gap:6px;min-height:34px;padding:7px 12px;border-radius:8px;background:#FFF8E6;margin-top:2px;"><span class="dot" style="background:#D98D06;"></span><span class="c2" style="color:#7A5A12;">${t}</span></div>`;
+    const age = syncAt() ? Date.now() - syncAt() : 0;
+    if (S.depts.length && S.settings.sync && age > 864e5) h += notice(`학과 공지가 ${Math.floor(age / 864e5)}일 전 기준이에요 · 학교 서버 점검 중일 수 있어요`);
+    const empty = emptyDepts();
+    if (empty.length) h += notice(`${esc(empty.join('·'))}${josaEun(empty[empty.length - 1])} 학교 공지를 받을 수 없어요 · 드래그·직접 입력은 그대로 쓸 수 있어요`);
     if (noDept) h += `<a class="press" data-act="openDeptSheet" style="display:flex;align-items:center;justify-content:space-between;gap:10px;height:34px;padding:0 12px;border-radius:8px;background:#F5F7FB;margin-top:2px;">
     <span class="c2" style="display:inline-flex;align-items:center;gap:6px;min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;"><span class="dot" style="background:${WH};"></span>학과 공지 없이 사용 중</span>
     <span style="display:inline-flex;align-items:center;gap:2px;font-size:12px;font-weight:700;color:${WH};flex:none;">학과 선택${svg('right', 13, WH, 2.4)}</span>
@@ -286,7 +291,8 @@
       ${url}
     </div>
     ${memo}
-    <div style="display:grid;grid-template-columns:repeat(2, minmax(0, 1fr));gap:8px;">
+    <div style="display:grid;grid-template-columns:repeat(3, minmax(0, 1fr));gap:8px;">
+      <button class="btn2 press" data-act="done" data-arg="${i.id}" style="gap:6px;${i.done ? 'color:#2FBF71;' : ''}">${svg('check', 15, i.done ? '#2FBF71' : '#1A1C22', 2.4)}${i.done ? '완료됨' : '완료'}</button>
       <a class="btn2 press" data-go="edit:${i.id}" style="gap:6px;">${svg('pen', 15, '#1A1C22', 2)}수정</a>
       <button class="btn2 press" data-act="del" data-arg="${i.id}" style="gap:6px;color:#E5484D;">${svg('trash', 15, '#E5484D', 2)}삭제</button>
     </div>
@@ -465,9 +471,34 @@
   ${sec('새 일정의 기본 알림', r('D-7', '', tog(s.d7, 'set:d7')) + r('D-3', '', tog(s.d3, 'set:d3')) + r('D-1', '', tog(s.d1, 'set:d1')) + r('D-Day', '', tog(s.d0, 'set:d0')) +
     `<div class="row" data-act="pickTime" data-arg="settings" style="justify-content:space-between;cursor:pointer;"><span style="display:flex;flex-direction:column;gap:2px;min-width:0;"><span style="font-size:15px;font-weight:500;">알림 시각</span></span><span style="font-size:14px;font-weight:600;display:inline-flex;align-items:center;gap:4px;">${timeTxt}${svg('right', 16, '#C9CFD9', 2)}</span></div>`)}
   ${sec('알림 받는 곳', r('웨일 브라우저 알림', '화면 우측 하단 팝업', tog(s.browser, 'set:browser')) + r('앱 알림 탭', '', tog(s.appTab, 'set:appTab')))}
+  ${S.depts.length && S.settings.sync ? sec('받을 게시판', boardRows(r)) : ''}
+  ${sec('화면', r('완료한 일정 숨기기', '달력과 목록에서 완료한 일정을 감춰요', tog(s.hideDone, 'set:hideDone')))}
   ${sec('드래그로 담기', r('글을 드래그하면 버튼 표시', '링커리어·학교 홈페이지 등 모든 사이트', tog(s.dragBtn, 'set:dragBtn')) + r('마감일 자동 인식', '드래그한 글에서 날짜를 찾아 채움', tog(s.autoDetect, 'set:autoDetect')))}
+  ${sec('앱 정보', r('버전', '', `<span class="c">${esc(appVersion())}</span>`) + linkRow('개인정보처리방침', 'https://zer8m.github.io/whalecrew2/privacy.html') + linkRow('의견 보내기', 'https://github.com/zer8m/whalecrew2/issues'))}
 </div>` + nav('settings'));
   }
+  const appVersion = () => { try { return chrome.runtime.getManifest().version; } catch (e) { return '-'; } };
+  const linkRow = (t, href) => `<a class="row" href="${href}" target="_blank" rel="noopener" style="justify-content:space-between;"><span style="font-size:15px;font-weight:500;">${t}</span>${svg('ext', 15, '#9AA3B2', 2)}</a>`;
+  // 선택한 학과의 게시판마다 켜고 끄기(학과끼리 공유하는 게시판은 한 번만)
+  function boardRows(r) {
+    const off = S.offBoards || [], seen = new Set();
+    let h = '';
+    for (const name of S.depts) {
+      const d = deptOf(name);
+      for (const b of d ? d.boards : []) {
+        if (seen.has(b.no)) continue;
+        seen.add(b.no);
+        const tag = b.name.split(/\s*[>|-]\s*/).pop();
+        const site = b.url ? ' · ' + new URL(b.url).host.replace('.cnu.ac.kr', '') : ''; // 같은 이름 게시판 구분(예: computer · ai)
+        h += r(esc(tag), esc(name + site), tog(!off.includes(b.no), 'board', tag + ' 받기').replace('data-act="board"', `data-act="board" data-arg="${b.no}"`));
+      }
+    }
+    return h || r('받을 게시판이 없어요', '이 학과는 학교 API에 게시판이 없어요', '');
+  }
+  const deptOf = (name) => { for (const c of LIST) for (const d of c.depts) if (d.name === name) return d; return null; };
+  // 학교 API에서 공지를 받을 수 없는 학과: 게시판이 없거나, 게시판이 있어도 글을 0건 주는 학과
+  const emptyDepts = () => S.depts.filter((n) => { const d = deptOf(n); if (!d) return false; if (!d.boards.length) return true; const data = NOTICES[d.id]; return !!data && data.rows === 0; });
+  const josaEun = (s) => (((s.charCodeAt(s.length - 1) - 0xAC00) % 28) === 0 ? '는' : '은');
 
   // ───── 7. 드래그 → 사이드바 스크랩 ─────
   function vScrap() {
@@ -519,7 +550,13 @@
   // 화면 깊이: 더 깊이 들어가면 오른쪽에서, 나오면 왼쪽에서, 같은 깊이(하단 탭)는 페이드
   const DEPTH = { onboard: 0, main: 1, alerts: 1, settings: 1, scrap: 2, day: 2, edit: 3 };
   let lastSheet = null;
+  const errorView = () => frame(header(logo(), '') + `<div style="flex:1;display:flex;flex-direction:column;gap:12px;padding:16px 20px;">
+  <div class="card" style="padding:16px;display:flex;flex-direction:column;gap:6px;"><span style="font-size:16px;font-weight:700;">화면을 불러오지 못했어요</span><span class="c">저장한 일정은 그대로 있어요. 다시 시도해 주세요.</span></div>
+  <a class="btn press" data-act="reload" style="width:100%;background:${WH};color:#fff;">다시 시도</a></div>`);
   function renderSide() {
+    try { drawSide(); } catch (e) { console.error('앗!차차 화면 오류', e); side.innerHTML = errorView(); side.dataset.v = 'error'; }
+  }
+  function drawSide() {
     const v = { onboard: vOnboard, main: vMain, day: vDay, edit: vEdit, alerts: vAlerts, settings: vSettings }[U.view];
     const key = U.view === 'main' && U.scrap ? 'scrap' : U.view;
     const scroller = side.querySelector('[style*="overflow-y:auto"]'), top = scroller ? scroller.scrollTop : 0, sameView = side.dataset.v === key;
@@ -630,6 +667,13 @@
       case 'cancelScrap': U.scrap = null; go('main'); break;
       case 'scrapSave': { const it = scrapToItem(U.scrap); upsert(it); savedAlert(it); U.scrap = null; U.sel = it.date; go('day'); break; }
       case 'scrapEdit': U.back = 'main'; U.draft = { ...scrapToItem(U.scrap), isNew: true, fromScrap: true }; go('edit'); break;
+      case 'done': {
+        const it = find(arg); if (!it) break;
+        upsert({ ...it, done: !it.done });
+        if (!it.done) pushAlert({ itemId: it.id, type: 'done', chip: '완료', title: it.title, sub: `${new Date().getMonth() + 1}/${new Date().getDate()} 완료` });
+        renderSide(); break; }
+      case 'board': { const no = +arg, off = S.offBoards || []; S.offBoards = off.includes(no) ? off.filter((x) => x !== no) : [...off, no]; save(); renderSide(); break; }
+      case 'reload': location.reload(); break;
       default:
         if (act.startsWith('set:')) { const k = act.slice(4); S.settings[k] = !S.settings[k]; save(); renderSide(); }
     }
@@ -712,7 +756,9 @@
   setInterval(() => { const t = midnight(new Date()); if (+t !== +TODAY) { TODAY = t; if (U.view !== 'edit') renderSide(); } }, 60e3);
 
   (async () => {
-    ({ S, alerts: ALERTS, notices: NOTICES } = await Core.load());
+    try {
+      ({ S, alerts: ALERTS, notices: NOTICES } = await Core.load());
+    } catch (e) { console.error('앗!차차 불러오기 오류', e); side.innerHTML = errorView(); return; }
     LIST = await Core.colleges();
     COLLEGES = LIST.map((c) => ({ name: c.name, depts: c.depts.map((d) => d.name) }));
     U.view = S.onboarded ? 'main' : 'onboard';

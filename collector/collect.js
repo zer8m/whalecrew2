@@ -83,6 +83,7 @@ async function main() {
   try { const r = await post(LIST_API, { AUTH_KEY: key }); listed = new Map((await r.json()).RESULT.map((b) => [+b.board_no, b.board_nm.trim()])); } catch (e) { console.error('cmsBoard:', e.message); }
 
   const cache = new Map(); // board no → items | Error (학과끼리 게시판을 공유한다)
+  const rowsOf = new Map(); // board no → API가 준 글 수
   const report = {}; // board no → 점검 결과(커밋되는 공개 파일이라 키·본문은 넣지 않는다)
   let calls = 0, fails = 0;
   for (const c of colleges) for (const d of c.depts) {
@@ -96,6 +97,7 @@ async function main() {
         try {
           calls++;
           const rows = await fetchBoard(b.no, key);
+          rowsOf.set(b.no, rows.length);
           const items = toItems(rows, b);
           cache.set(b.no, items);
           const latest = rows.reduce((m, x) => Math.max(m, timeOf(x)), 0);
@@ -110,7 +112,8 @@ async function main() {
     }
     const uniq = mergeSame(items).sort((a, b) => (a.date + (a.time || '')).localeCompare(b.date + (b.time || '')));
     const updated = ok ? new Date().toISOString() : (prev && prev.updated) || null;
-    fs.writeFileSync(file, JSON.stringify({ updated, ok, items: uniq }) + '\n');
+    const rows = ok ? d.boards.reduce((n, b) => n + (rowsOf.get(b.no) || 0), 0) : undefined; // 0이면 학교 API에 공지가 없는 학과
+    fs.writeFileSync(file, JSON.stringify({ updated, ok, rows, items: uniq }) + '\n');
   }
   // 학교 학사일정(수강신청·계절학기 등). 실패하면 지난 파일 유지
   try {

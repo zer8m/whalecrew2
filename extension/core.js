@@ -54,6 +54,7 @@
       const data = notices[deptId(list, name)];
       if (!data) continue;
       for (const n of data.items) {
+        if ((S.offBoards || []).includes(n.board)) continue; // 설정에서 끈 게시판
         const id = 'n-' + n.id;
         if (seen.has(id)) continue; // 복수전공끼리 게시판 공유
         seen.add(id);

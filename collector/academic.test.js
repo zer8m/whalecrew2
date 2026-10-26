@@ -51,3 +51,14 @@ test('학사일정 → 달력: 기간은 시작·마감 두 개, 신청류만 �
   // 설정에서 끄면 사라진다
   assert.strictEqual(C.allItems({ ...S, settings: { ...S.settings, academic: false } }, notices, []).length, 0);
 });
+
+test('설정에서 끈 게시판의 공지는 달력·알림에서 빠진다', async () => {
+  const EXT = path.join(__dirname, '..', 'extension');
+  const ctx = vm.createContext({ chrome: { storage: { local: {} }, runtime: { getURL: (p) => p } }, fetch: async (u) => ({ json: async () => JSON.parse(fs.readFileSync(path.join(EXT, u), 'utf8')) }) });
+  vm.runInContext(fs.readFileSync(path.join(EXT, 'core.js'), 'utf8'), ctx);
+  const C = ctx.Core;
+  const list = [{ name: '공과대학', depts: [{ id: 'd01', name: '컴퓨터인공지능학부', boards: [] }] }];
+  const notices = { d01: { items: [{ id: '305-1', board: 305, title: '학사', type: 'deadline', date: '2026-11-01' }, { id: '307-2', board: 307, title: '취업', type: 'deadline', date: '2026-11-02' }] } };
+  const S = await C.normalize({ depts: ['컴퓨터인공지능학부'], items: [], hidden: [], settings: { academic: false }, offBoards: [307] });
+  assert.deepStrictEqual([...C.allItems(S, notices, list).map((i) => i.id)], ['n-305-1']);
+});

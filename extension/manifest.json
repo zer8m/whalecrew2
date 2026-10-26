@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "앗!차차 - 마감 일정 캘린더",
   "short_name": "앗!차차",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "충남대 학과 공지와 웹에서 드래그한 공고의 마감일을 사이드바 달력에 모아 알림으로 챙겨줍니다.",
   "icons": { "16": "icons/icon16.png", "32": "icons/icon32.png", "48": "icons/icon48.png", "128": "icons/icon128.png" },
   "sidebar_action": {
