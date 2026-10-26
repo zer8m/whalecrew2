@@ -64,3 +64,15 @@ a[data-go],[data-act]{cursor:pointer}
 .hidden-input{position:absolute;opacity:0;pointer-events:none;width:1px;height:1px}
 #side *{scrollbar-width:none}
 #side *::-webkit-scrollbar{display:none}
+/* 화면 전환 */
+@keyframes vInR{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:none}}
+@keyframes vInL{from{opacity:0;transform:translateX(-20px)}to{opacity:1;transform:none}}
+@keyframes vFade{from{opacity:0}to{opacity:1}}
+@keyframes sheetUp{from{transform:translateY(100%)}to{transform:none}}
+.v-in-r{animation:vInR 220ms cubic-bezier(.23,1,.32,1)}
+.v-in-l{animation:vInL 220ms cubic-bezier(.23,1,.32,1)}
+.v-fade{animation:vFade 180ms ease-out}
+.sheet-in{animation:sheetUp 260ms cubic-bezier(.32,.72,0,1)}
+.dim-in{animation:vFade 200ms ease-out}
+/* 애니메이션 줄이기 설정: 미끄러짐 없이 짧은 페이드만 */
+@media (prefers-reduced-motion:reduce){.v-in-r,.v-in-l,.v-fade,.sheet-in,.dim-in{animation:vFade 160ms ease-out}}

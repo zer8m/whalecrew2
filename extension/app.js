@@ -516,13 +516,24 @@
     const t = S.depts.map((n) => NOTICES[Core.deptId(LIST, n)]).filter(Boolean).map((d) => +new Date(d.updated || 0));
     return t.length ? Math.min(...t) : 0;
   }
+  // 화면 깊이: 더 깊이 들어가면 오른쪽에서, 나오면 왼쪽에서, 같은 깊이(하단 탭)는 페이드
+  const DEPTH = { onboard: 0, main: 1, alerts: 1, settings: 1, scrap: 2, day: 2, edit: 3 };
+  let lastSheet = null;
   function renderSide() {
     const v = { onboard: vOnboard, main: vMain, day: vDay, edit: vEdit, alerts: vAlerts, settings: vSettings }[U.view];
-    const scroller = side.querySelector('[style*="overflow-y:auto"]'), top = scroller ? scroller.scrollTop : 0, sameView = side.dataset.v === U.view;
+    const key = U.view === 'main' && U.scrap ? 'scrap' : U.view;
+    const scroller = side.querySelector('[style*="overflow-y:auto"]'), top = scroller ? scroller.scrollTop : 0, sameView = side.dataset.v === key;
+    const from = side.dataset.v;
     side.innerHTML = v();
-    side.dataset.v = U.view;
+    side.dataset.v = key;
     const sc2 = side.querySelector('[style*="overflow-y:auto"]');
     if (sc2 && sameView) sc2.scrollTop = top;
+    // 화면이 바뀔 때만 움직인다(같은 화면 안의 다시 그리기는 그대로)
+    if (from && !sameView) side.firstElementChild.classList.add(DEPTH[key] > DEPTH[from] ? 'v-in-r' : DEPTH[key] < DEPTH[from] ? 'v-in-l' : 'v-fade');
+    // 바텀시트는 처음 열 때만 아래에서 올라온다
+    const dlg = side.querySelector('[role="dialog"]');
+    if (dlg && U.sheet !== lastSheet) { dlg.classList.add('sheet-in'); dlg.previousElementSibling.classList.add('dim-in'); }
+    lastSheet = U.sheet;
   }
   function go(v) { U.view = v; U.sheet = null; renderSide(); }
 
