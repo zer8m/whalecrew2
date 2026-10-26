@@ -474,7 +474,7 @@
   ${S.depts.length && S.settings.sync ? sec('받을 게시판', boardRows(r)) : ''}
   ${sec('화면', r('완료한 일정 숨기기', '달력과 목록에서 완료한 일정을 감춰요', tog(s.hideDone, 'set:hideDone')))}
   ${sec('드래그로 담기', r('글을 드래그하면 버튼 표시', '링커리어·학교 홈페이지 등 모든 사이트', tog(s.dragBtn, 'set:dragBtn')) + r('마감일 자동 인식', '드래그한 글에서 날짜를 찾아 채움', tog(s.autoDetect, 'set:autoDetect')))}
-  ${sec('앱 정보', r('버전', '', `<span class="c">${esc(appVersion())}</span>`) + linkRow('개인정보처리방침', 'https://zer8m.github.io/whalecrew2/privacy.html') + linkRow('의견 보내기', 'https://github.com/zer8m/whalecrew2/issues'))}
+  ${sec('앱 정보', r('버전', '', `<span class="c">${esc(appVersion())}</span>`) + linkRow('개인정보처리방침', 'https://zer8m.github.io/whalecrew2/privacy.html') + linkRow('의견 보내기', 'https://docs.google.com/forms/d/e/1FAIpQLSc_mnnm-YFnfg8KFQTyV1Nh09x46sxsgIr1BqMkMoIg2rZioQ/viewform'))}
 </div>` + nav('settings'));
   }
   const appVersion = () => { try { return chrome.runtime.getManifest().version; } catch (e) { return '-'; } };
