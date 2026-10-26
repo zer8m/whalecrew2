@@ -30,16 +30,34 @@ function parse(html, year) {
   return out.filter((x) => !seen.has(x.id) && seen.add(x.id));
 }
 
+// 학교 서버가 해외(GitHub Actions) 접속에 느릴 때가 있어 넉넉히 기다리고 한 번 더 시도한다
+async function get(url) {
+  for (let k = 0; ; k++) {
+    try {
+      const r = await fetch(url, { signal: AbortSignal.timeout(60000) });
+      if (!r.ok) throw new Error(`HTTP ${r.status}`);
+      return await r.text();
+    } catch (e) { if (k) throw new Error(`학사일정: ${e.message}`); }
+  }
+}
+
 async function fetchAcademic(now = new Date()) {
   const y = now.getFullYear();
   const items = [];
   for (const year of [y, y + 1]) {
-    const r = await fetch(URL_BASE + year, { signal: AbortSignal.timeout(20000) });
-    if (!r.ok) throw new Error(`학사일정 ${year}: HTTP ${r.status}`);
-    items.push(...parse(await r.text(), year));
+    items.push(...parse(await get(URL_BASE + year), year));
   }
   const seen = new Set();
   return items.filter((x) => !seen.has(x.id) && seen.add(x.id));
 }
 
 module.exports = { parse, fetchAcademic };
+
+// 직접 갱신: node collector/academic.js → site/data/academic.json (Actions에서 실패할 때 PC에서 돌려 커밋)
+if (require.main === module) {
+  const out = require('path').join(__dirname, '..', 'site', 'data', 'academic.json');
+  fetchAcademic().then((items) => {
+    require('fs').writeFileSync(out, JSON.stringify({ updated: new Date().toISOString(), items }) + '\n');
+    console.log(`학사일정 ${items.length}건 → ${out}`);
+  }).catch((e) => { console.error(e.message); process.exit(1); });
+}

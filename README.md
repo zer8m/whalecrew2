@@ -27,6 +27,7 @@ node --test "collector/*.test.js"
 - 레포 Settings → Secrets → Actions에 `CNU_KEY`(학내 게시판 API 접속키) 등록. 키는 코드·커밋에 넣지 않는다.
 - Settings → Pages → Source: GitHub Actions. (private 레포는 GitHub Pro 필요)
 - Settings → Variables → Actions에 `COLLECT_ENABLED=true`를 넣어야 워크플로가 돈다(그 전엔 건너뜀).
+- 학사일정은 학교 서버가 Actions 접속에 느려 실패할 수 있다. 그때는 PC에서 `node collector/academic.js` 후 커밋(실패해도 기존 파일 유지)
 - 학과 매핑 다시 만들기: `node collector/build-map.js cmsBoard.json` (cmsBoard 응답 파일은 커밋 금지)
 
 ## 스토어 패키지
