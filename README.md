@@ -13,7 +13,8 @@ extension/   웨일 확장앱(MV3, 빌드 없음) — 스토어 zip 대상
   departments.json        학과 → 학내 게시판 매핑
 collector/   학내 게시판 수집(Node, 의존성 없음) + 테스트
 site/        GitHub Pages: data/{학과id}.json, privacy.html
-docs/        설계 문서, 스토어 등록 문구
+docs/        설계 문서
+store/       웨일 스토어 등록 자료(아이콘·스크린샷·상세 설명·체크리스트)
 ```
 
 ## 개발
