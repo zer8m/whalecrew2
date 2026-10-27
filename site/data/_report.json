@@ -1,5 +1,5 @@
 {
- "at": "2026-10-26T14:16:28.044Z",
+ "at": "2026-10-27T04:24:42.307Z",
  "calls": 128,
  "fails": 0,
  "boards": {
@@ -22,9 +22,9 @@
   "182": {
    "name": "학부 공지",
    "inList": true,
-   "rows": 402,
-   "latest": "2026-10-26",
-   "items": 26,
+   "rows": 406,
+   "latest": "2026-10-27",
+   "items": 27,
    "url": true
   },
   "196": {
@@ -110,15 +110,15 @@
   "307": {
    "name": "공지사항 > 취업정보",
    "inList": true,
-   "rows": 19,
-   "latest": "2026-10-13",
-   "items": 5,
+   "rows": 20,
+   "latest": "2026-10-27",
+   "items": 6,
    "url": true
   },
   "324": {
    "name": "공지사항 > 사업단소식",
    "inList": true,
-   "rows": 82,
+   "rows": 81,
    "latest": "2026-10-26",
    "items": 38,
    "url": true
@@ -174,9 +174,9 @@
   "529": {
    "name": "공지사항 > 공지사항",
    "inList": true,
-   "rows": 48,
+   "rows": 47,
    "latest": "2026-10-22",
-   "items": 25,
+   "items": 24,
    "url": true
   },
   "544": {
@@ -198,25 +198,25 @@
   "603": {
    "name": "공지사항-학부",
    "inList": true,
-   "rows": 173,
-   "latest": "2026-10-23",
-   "items": 34,
+   "rows": 176,
+   "latest": "2026-10-27",
+   "items": 32,
    "url": true
   },
   "617": {
    "name": "게시판 > 학부공지",
    "inList": true,
-   "rows": 43,
-   "latest": "2026-10-26",
+   "rows": 42,
+   "latest": "2026-10-27",
    "items": 17,
    "url": true
   },
   "624": {
    "name": "공지사항",
    "inList": true,
-   "rows": 141,
-   "latest": "2026-10-26",
-   "items": 25,
+   "rows": 143,
+   "latest": "2026-10-27",
+   "items": 24,
    "url": true
   },
   "686": {
@@ -286,15 +286,15 @@
   "944": {
    "name": "공지사항-학부",
    "inList": true,
-   "rows": 34,
-   "latest": "2026-10-23",
-   "items": 20,
+   "rows": 35,
+   "latest": "2026-10-27",
+   "items": 21,
    "url": true
   },
   "969": {
    "name": "공지사항",
    "inList": true,
-   "rows": 39,
+   "rows": 38,
    "latest": "2026-10-23",
    "items": 13,
    "url": true
@@ -302,9 +302,9 @@
   "1044": {
    "name": "공지사항 - 학부",
    "inList": true,
-   "rows": 60,
-   "latest": "2026-10-22",
-   "items": 25,
+   "rows": 61,
+   "latest": "2026-10-27",
+   "items": 24,
    "url": true
   },
   "1057": {
@@ -343,14 +343,14 @@
    "name": "학부 공지사항",
    "inList": true,
    "rows": 65,
-   "latest": "2026-10-23",
+   "latest": "2026-10-27",
    "items": 20,
    "url": true
   },
   "1170": {
    "name": "공지사항 - 학부",
    "inList": true,
-   "rows": 294,
+   "rows": 292,
    "latest": "2026-10-26",
    "items": 27,
    "url": false
@@ -358,7 +358,7 @@
   "1184": {
    "name": "커뮤니티 > 공지사항",
    "inList": true,
-   "rows": 75,
+   "rows": 74,
    "latest": "2026-10-20",
    "items": 31,
    "url": true
@@ -382,16 +382,16 @@
   "1211": {
    "name": "학부 공지사항",
    "inList": true,
-   "rows": 424,
-   "latest": "2026-10-26",
-   "items": 23,
+   "rows": 422,
+   "latest": "2026-10-27",
+   "items": 22,
    "url": true
   },
   "1228": {
    "name": "공지사항 - 학부",
    "inList": true,
-   "rows": 190,
-   "latest": "2026-10-26",
+   "rows": 191,
+   "latest": "2026-10-27",
    "items": 20,
    "url": true
   },
@@ -750,7 +750,7 @@
   "3373": {
    "name": "알림마당 > 공지사항",
    "inList": true,
-   "rows": 260,
+   "rows": 259,
    "latest": "2026-10-26",
    "items": 31,
    "url": true
@@ -831,7 +831,7 @@
    "name": "공지사항",
    "inList": true,
    "rows": 109,
-   "latest": "2026-10-26",
+   "latest": "2026-10-27",
    "items": 15,
    "url": true
   },
@@ -870,7 +870,7 @@
   "5296": {
    "name": "학부공지사항",
    "inList": true,
-   "rows": 67,
+   "rows": 66,
    "latest": "2026-10-23",
    "items": 27,
    "url": true
@@ -950,8 +950,8 @@
   "6293": {
    "name": "학과공지",
    "inList": true,
-   "rows": 12,
-   "latest": "2026-09-22",
+   "rows": 13,
+   "latest": "2026-10-27",
    "items": 8,
    "url": false
   },
