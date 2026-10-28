@@ -474,7 +474,7 @@
   ${S.depts.length && S.settings.sync ? sec('받을 게시판', boardRows(r)) : ''}
   ${sec('화면', r('완료한 일정 숨기기', '달력과 목록에서 완료한 일정을 감춰요', tog(s.hideDone, 'set:hideDone')))}
   ${sec('드래그로 담기', r('글을 드래그하면 버튼 표시', '링커리어·학교 홈페이지 등 모든 사이트', tog(s.dragBtn, 'set:dragBtn')) + r('마감일 자동 인식', '드래그한 글에서 날짜를 찾아 채움', tog(s.autoDetect, 'set:autoDetect')))}
-  ${sec('앱 정보', r('버전', '', `<span class="c">${esc(appVersion())}</span>`) + linkRow('개인정보처리방침', 'https://zer8m.github.io/whalecrew2/privacy.html') + linkRow('의견 보내기', 'https://docs.google.com/forms/d/e/1FAIpQLSc_mnnm-YFnfg8KFQTyV1Nh09x46sxsgIr1BqMkMoIg2rZioQ/viewform'))}
+  ${sec('앱 정보', r('버전', '', `<span class="c">${esc(appVersion())}</span>`) + `<button class="row rowp press" data-act="tutorial" style="justify-content:space-between;"><span style="font-size:15px;font-weight:500;">사용법 다시 보기</span>${svg('right', 16, '#C9CFD9', 2)}</button>` + linkRow('개인정보처리방침', 'https://zer8m.github.io/whalecrew2/privacy.html') + linkRow('의견 보내기', 'https://docs.google.com/forms/d/e/1FAIpQLSc_mnnm-YFnfg8KFQTyV1Nh09x46sxsgIr1BqMkMoIg2rZioQ/viewform'))}
 </div>` + nav('settings'));
   }
   const appVersion = () => { try { return chrome.runtime.getManifest().version; } catch (e) { return '-'; } };
@@ -539,6 +539,52 @@
     pushAlert({ itemId: item.id, type: 'saved', chip: '저장됨', title: item.title, sub: `${d.getMonth() + 1}/${d.getDate()}(${W[d.getDay()]}) ${item.time} · ${on ? on + ' 알림 켜짐' : '알림 없음'}` });
   }
 
+
+  // ───── 튜토리얼(처음 한 번, 카드 3장) ─────
+  // 학과 선택 직후(또는 업데이트 후 처음 열 때) 한 번만. 끝까지 보거나 건너뛰면 S.tutorialSeen. 설정에서 다시 보기
+  const TUT = [
+    { t: '학과 공지가 달력에<br>자동으로 들어와요', d: '점이 있는 날짜를 누르면 그날 마감과<br>원문 링크까지 한 번에 볼 수 있어요.', art: 'cal' },
+    { t: '웹에서 본 공고는<br>드래그로 저장해요', d: '어느 사이트든 공고 글을 마우스로 끌어 선택하면<br><b>앗!차차에 저장</b> 버튼이 떠요. 누르면 마감일과 링크가 채워져요.', art: 'drag' },
+    { t: '마감 전에<br>먼저 알려드려요', d: '기본은 D-3·D-1·D-Day 아침 9시.<br>일정마다 수정에서 원하는 때로 바꿀 수 있어요.', art: 'alarm' },
+  ];
+  function tutArt(kind) {
+    if (kind === 'cal') {
+      const days = Array.from({ length: 14 }, (_, k) => k + 1);
+      const dot = { 3: ['#2B6CFF'], 5: ['#2B6CFF', '#0E9F6E'], 9: ['#E5484D'], 12: ['#2B6CFF'] };
+      return `<div class="tut-art"><div class="card" style="padding:12px 12px 8px;width:100%;"><div style="display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px 0;">${days.map((n) => `<span class="day"><span class="n" style="${n === 5 ? `background:${WH};color:#fff;font-weight:700;` : ''}">${n}</span><span class="d">${(dot[n] || []).map((c) => `<i style="background:${c};"></i>`).join('')}</span></span>`).join('')}</div></div>
+        <div class="card tut-pop" style="padding:10px 12px;display:flex;flex-direction:column;gap:4px;width:88%;align-self:flex-end;margin-top:-18px;box-shadow:0 10px 24px rgba(26,28,34,.12);">${chip('학과공지', WH, '#EAF0FF', 'align-self:flex-start;')}<span style="font-size:13px;font-weight:700;">수강신청 확인 및 변경 마감</span><span class="c2" style="display:flex;gap:6px;align-items:center;">18:00 · <span style="color:${WH};font-weight:600;">원문 ${svg('ext', 10, WH, 2.4)}</span></span></div></div>`;
+    }
+    if (kind === 'drag') {
+      return `<div class="tut-art"><div class="card tut-page" style="padding:14px 14px 16px;width:100%;display:flex;flex-direction:column;gap:7px;position:relative;">
+        ${chip('대외활동', '#7A5AF8', '#F1EDFF', 'align-self:flex-start;')}
+        <span style="font-size:15px;font-weight:800;"><span class="tut-sel">2026 대학생 서포터즈 모집</span></span>
+        <span class="c2"><span class="tut-sel tut-sel2">모집기간 : ~ 11.03 18:00</span></span>
+        <span class="tut-btn"><i><img src="chacha.png" alt=""></i><span>앗!차차에 저장</span></span>
+        <span class="tut-cursor" aria-hidden="true"></span>
+        <i class="tut-ln" style="width:92%"></i><i class="tut-ln" style="width:70%"></i></div></div>`;
+    }
+    return `<div class="tut-art"><div class="tut-note"><img src="chacha.png" alt=""><span style="display:flex;flex-direction:column;gap:2px;min-width:0;"><b style="font-size:13px;">D-1 · 장학생 선발 신청 마감</b><span class="c2">내일 18:00까지 · 학사공지</span></span></div>
+      <div style="display:flex;gap:6px;margin-top:14px;">${['D-7', 'D-3', 'D-1', 'D-Day'].map((l, k) => `<span class="chip" style="height:30px;padding:0 12px;border-radius:9px;font-size:13px;${k ? `color:#fff;background:${WH};` : 'color:#7B8494;background:#fff;border:1px solid #E1E6EE;'}">${l}</span>`).join('')}</div></div>`;
+  }
+  function vTutorial() {
+    const k = U.tstep || 0, c = TUT[k], last = k === TUT.length - 1;
+    return frame(header(logo(), `<div style="display:flex;align-items:center;"><a class="c2" data-act="tutDone" style="padding-right:10px;font-weight:600;color:#7B8494;">건너뛰기</a></div>`) +
+`<div style="flex:1;display:flex;flex-direction:column;gap:18px;padding:8px 24px 12px;overflow-y:auto;overflow-x:hidden;">
+  <div class="tut-stage" style="background:#F5F7FB;border-radius:18px;padding:22px 20px;min-height:250px;display:flex;align-items:center;justify-content:center;">${tutArt(c.art)}</div>
+  <div style="display:flex;flex-direction:column;gap:10px;">
+    <span class="c2" style="font-weight:700;color:${WH};">${k + 1} / ${TUT.length}</span>
+    <h1 style="margin:0;font-size:24px;font-weight:700;line-height:32px;letter-spacing:-.03em;">${c.t}</h1>
+    <p class="c" style="margin:0;font-size:14px;line-height:22px;color:#4B5261;">${c.d}</p>
+  </div>
+</div>
+<div style="flex:none;display:flex;flex-direction:column;gap:14px;padding:12px 24px 20px;">
+  <div style="display:flex;gap:6px;justify-content:center;" aria-hidden="true">${TUT.map((_, i) => `<i style="width:${i === k ? 18 : 6}px;height:6px;border-radius:999px;background:${i === k ? WH : '#D5DAE3'};display:block;transition:width 200ms;"></i>`).join('')}</div>
+  <div style="display:flex;gap:8px;">${k ? `<a class="btn press" data-act="tutPrev" style="flex:none;width:96px;background:#F5F7FB;color:#1A1C22;font-size:15px;">이전</a>` : ''}<a class="btn press" data-act="${last ? 'tutDone' : 'tutNext'}" style="flex:1;background:${WH};color:#fff;">${last ? '시작하기' : '다음'}</a></div>
+</div>`);
+  }
+  // 튜토리얼을 아직 안 봤으면 튜토리얼, 봤으면 목적지로
+  const afterOnboard = () => { if (S.tutorialSeen) go('main'); else { U.tstep = 0; go('tutorial'); } };
+
   // ───── 렌더 ─────
   const $ = (id) => document.getElementById(id);
   const side = $('side');
@@ -548,7 +594,7 @@
     return t.length ? Math.min(...t) : 0;
   }
   // 화면 깊이: 더 깊이 들어가면 오른쪽에서, 나오면 왼쪽에서, 같은 깊이(하단 탭)는 페이드
-  const DEPTH = { onboard: 0, main: 1, alerts: 1, settings: 1, scrap: 2, day: 2, edit: 3 };
+  const DEPTH = { onboard: 0, tutorial: 1, main: 1, alerts: 1, settings: 1, scrap: 2, day: 2, edit: 3 };
   let lastSheet = null;
   const errorView = () => frame(header(logo(), '') + `<div style="flex:1;display:flex;flex-direction:column;gap:12px;padding:16px 20px;">
   <div class="card" style="padding:16px;display:flex;flex-direction:column;gap:6px;"><span style="font-size:16px;font-weight:700;">화면을 불러오지 못했어요</span><span class="c">저장한 일정은 그대로 있어요. 다시 시도해 주세요.</span></div>
@@ -557,7 +603,7 @@
     try { drawSide(); } catch (e) { console.error('앗!차차 화면 오류', e); side.innerHTML = errorView(); side.dataset.v = 'error'; }
   }
   function drawSide() {
-    const v = { onboard: vOnboard, main: vMain, day: vDay, edit: vEdit, alerts: vAlerts, settings: vSettings }[U.view];
+    const v = { onboard: vOnboard, tutorial: vTutorial, main: vMain, day: vDay, edit: vEdit, alerts: vAlerts, settings: vSettings }[U.view];
     const key = U.view === 'main' && U.scrap ? 'scrap' : U.view;
     const scroller = side.querySelector('[style*="overflow-y:auto"]'), top = scroller ? scroller.scrollTop : 0, sameView = side.dataset.v === key;
     const from = side.dataset.v;
@@ -627,8 +673,8 @@
     const act = a.dataset.act, arg = a.dataset.arg;
     const D = U.draft;
     switch (act) {
-      case 'skip': S.depts = []; S.onboarded = true; S.deptAt = Date.now(); save(); U.q = ''; go('main'); break;
-      case 'startDepts': S.depts = [...U.tmp]; S.onboarded = true; S.deptAt = Date.now(); save().then(refreshNotices); U.q = ''; go('main'); break;
+      case 'skip': S.depts = []; S.onboarded = true; S.deptAt = Date.now(); save(); U.q = ''; afterOnboard(); break;
+      case 'startDepts': S.depts = [...U.tmp]; S.onboarded = true; S.deptAt = Date.now(); save().then(refreshNotices); U.q = ''; afterOnboard(); break;
       case 'pickDept': U.tmp = U.tmp.includes(arg) ? U.tmp.filter((x) => x !== arg) : [...U.tmp, arg]; refreshDeptUi(U.sheet === 'dept'); break;
       case 'college': U.ci = +arg; U.q = ''; const q = $('q'); if (q) q.value = ''; refreshDeptUi(U.sheet === 'dept'); break;
       case 'openDeptSheet': U.tmp = [...S.depts]; U.q = ''; U.ci = 0; U.sheet = 'dept'; renderSide(); break;
@@ -674,6 +720,10 @@
         renderSide(); break; }
       case 'board': { const no = +arg, off = S.offBoards || []; S.offBoards = off.includes(no) ? off.filter((x) => x !== no) : [...off, no]; save(); renderSide(); break; }
       case 'reload': location.reload(); break;
+      case 'tutNext': U.tstep = Math.min((U.tstep || 0) + 1, TUT.length - 1); renderSide(); break;
+      case 'tutPrev': U.tstep = Math.max((U.tstep || 0) - 1, 0); renderSide(); break;
+      case 'tutDone': S.tutorialSeen = true; save(); go('main'); break;
+      case 'tutorial': U.tstep = 0; go('tutorial'); break;
       default:
         if (act.startsWith('set:')) { const k = act.slice(4); S.settings[k] = !S.settings[k]; save(); renderSide(); }
     }
@@ -761,7 +811,7 @@
     } catch (e) { console.error('앗!차차 불러오기 오류', e); side.innerHTML = errorView(); return; }
     LIST = await Core.colleges();
     COLLEGES = LIST.map((c) => ({ name: c.name, depts: c.depts.map((d) => d.name) }));
-    U.view = S.onboarded ? 'main' : 'onboard';
+    U.view = !S.onboarded ? 'onboard' : S.tutorialSeen ? 'main' : 'tutorial';
     ready = true;
     renderSide();
     const r = await chrome.storage.local.get(['pendingScrap', 'focus']);

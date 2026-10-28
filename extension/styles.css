@@ -64,6 +64,25 @@ a[data-go],[data-act]{cursor:pointer}
 .hidden-input{position:absolute;opacity:0;pointer-events:none;width:1px;height:1px}
 #side *{scrollbar-width:none}
 #side *::-webkit-scrollbar{display:none}
+/* 튜토리얼 그림 */
+.tut-art{width:100%;max-width:300px;display:flex;flex-direction:column;align-items:stretch}
+.tut-pop{animation:tutPop 2.4s cubic-bezier(.23,1,.32,1) infinite}
+@keyframes tutPop{0%,12%{opacity:0;transform:translateY(8px)}24%,88%{opacity:1;transform:none}100%{opacity:0}}
+.tut-sel{background-image:linear-gradient(#C5D6FF,#C5D6FF);background-repeat:no-repeat;background-size:0 100%;animation:tutSel 3.2s steps(24,end) infinite}
+.tut-sel2{animation-name:tutSel2}
+@keyframes tutSel{0%,8%{background-size:0 100%}30%,100%{background-size:100% 100%}}
+@keyframes tutSel2{0%,30%{background-size:0 100%}44%,100%{background-size:100% 100%}}
+.tut-btn{display:flex;align-items:center;gap:6px;opacity:0;animation:tutBtn 3.2s ease-out infinite}
+.tut-btn i{width:30px;height:30px;border-radius:9px;overflow:hidden;display:block;box-shadow:0 4px 12px rgba(43,108,255,.28),0 0 0 3px #fff}.tut-btn i img{width:30px;height:30px;display:block}
+.tut-btn span{height:22px;padding:0 8px;border-radius:6px;background:#1A1C22;color:#fff;font-size:11px;font-weight:600;display:inline-flex;align-items:center}
+@keyframes tutBtn{0%,46%{opacity:0;transform:translateY(-4px)}54%,72%{opacity:1;transform:none}78%{opacity:1;transform:scale(.92)}84%,100%{opacity:1;transform:none}}
+.tut-cursor{position:absolute;width:0;height:0;border-left:7px solid transparent;border-right:7px solid transparent;border-bottom:18px solid #1A1C22;transform:rotate(-30deg);left:16px;top:44px;animation:tutCur 3.2s ease-in-out infinite;filter:drop-shadow(0 0 1px #fff)}
+@keyframes tutCur{0%,6%{left:16px;top:44px}30%{left:200px;top:44px}44%{left:150px;top:74px}62%{left:30px;top:106px}74%,100%{left:30px;top:106px}}
+.tut-ln{display:block;height:7px;border-radius:4px;background:#EEF1F6}
+.tut-note{display:flex;gap:10px;align-items:center;background:#fff;border:1px solid #E1E6EE;border-radius:12px;padding:12px 14px;box-shadow:0 12px 28px rgba(26,28,34,.12);animation:tutPop 2.8s cubic-bezier(.23,1,.32,1) infinite}
+.tut-note img{width:32px;height:32px;border-radius:9px;flex:none}
+@media (prefers-reduced-motion:reduce){.tut-pop,.tut-note,.tut-btn,.tut-cursor{animation:none;opacity:1}.tut-sel,.tut-sel2{animation:none;background-size:100% 100%}.tut-cursor{display:none}}
+
 /* 화면 전환 */
 @keyframes vInR{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:none}}
 @keyframes vInL{from{opacity:0;transform:translateX(-20px)}to{opacity:1;transform:none}}
