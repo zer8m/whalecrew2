@@ -427,8 +427,8 @@
   }
   function vAlerts() {
     const tabs = ['전체', '안 읽음', '마감', '공지'];
-    const unread = ALERTS.filter((a) => !a.read).length;
-    const list = ALERTS.filter((a) => [true, !a.read, a.type === 'deadline' || a.type === 'start', a.type === 'notice'][U.alertTab]);
+    const unread = ALERTS.filter((a) => !a.read && !(a.type === 'notice' && !find(a.itemId))).length;
+    const list = ALERTS.filter((a) => !(a.type === 'notice' && !find(a.itemId))).filter((a) => [true, !a.read, a.type === 'deadline' || a.type === 'start', a.type === 'notice'][U.alertTab]);
     const groups = [['오늘', []], ['이번 주', []], ['지난주', []]];
     for (const a of list) { const n = Math.round((TODAY - midnight(new Date(a.at))) / 864e5); groups[n <= 0 ? 0 : n < 7 ? 1 : 2][1].push(a); }
     const item = (a, last) => {

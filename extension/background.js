@@ -147,8 +147,13 @@ async function focusItem(id, windowId) {
   openSidebar(windowId);
 }
 function openSidebar(windowId) {
-  if (!sidebar) return;
-  try { windowId ? sidebar.show(windowId) : sidebar.show(); } catch (e) {}
+  if (!sidebar) return Promise.resolve(false);
+  return new Promise((done) => {
+    try {
+      const cb = () => done(!chrome.runtime.lastError);
+      windowId ? sidebar.show(windowId, {}, cb) : sidebar.show(undefined, {}, cb);
+    } catch (e) { done(false); }
+  });
 }
 chrome.notifications.onClicked.addListener((nid) => { chrome.notifications.clear(nid); focusItem(nid.startsWith('group|') ? '@alerts' : itemOf(nid)); });
 chrome.notifications.onButtonClicked.addListener(async (nid, btn) => {
@@ -167,12 +172,13 @@ chrome.notifications.onButtonClicked.addListener(async (nid, btn) => {
 });
 
 // ───── 메시지 ─────
-chrome.runtime.onMessage.addListener((m, sender) => {
+chrome.runtime.onMessage.addListener((m, sender, reply) => {
   if (m.type === 'scrap') {
-    // 사이드바가 열리면 pendingScrap을 읽어 스크랩 화면을 띄운다. 못 열면 배지로 알린다.
+    // 사이드바가 열리면 pendingScrap을 읽어 스크랩 화면을 띄운다. 못 열면 배지로 알리고, 페이지에도 결과를 돌려준다
     chrome.storage.local.set({ pendingScrap: { text: m.text, url: m.url, title: m.title, at: Date.now() } });
     if (sidebar) { sidebar.setBadgeText({ text: '1' }); sidebar.setBadgeBackgroundColor({ color: '#2B6CFF' }); }
-    openSidebar(sender.tab && sender.tab.windowId);
+    openSidebar(sender.tab && sender.tab.windowId).then((opened) => reply({ opened }));
+    return true; // reply를 비동기로 보낸다
   } else if (m.type === 'refresh') refresh().then(tick);
   else if (m.type === 'clearBadge' && sidebar) sidebar.setBadgeText({ text: '' });
 });

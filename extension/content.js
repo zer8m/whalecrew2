@@ -30,7 +30,7 @@
     setTimeout(() => {
       const sel = getSelection();
       const t = sel ? sel.toString().trim() : '';
-      if (!enabled || t.length < 2 || !sel.rangeCount || !alive()) return hide();
+      if (!enabled || t.length < 2 || !sel.rangeCount) return hide();
       text = sel.toString();
       const r = sel.getRangeAt(0).getBoundingClientRect();
       host.style.left = Math.max(8, Math.min(r.left, innerWidth - 200)) + scrollX + 'px';
@@ -42,10 +42,29 @@
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') hide(); });
   // 버튼을 눌러도 선택이 풀리지 않게
   root.querySelector('button').addEventListener('mousedown', (e) => e.preventDefault());
+  // 누른 뒤 결과를 페이지에 짧게 알려준다(사이드바가 자동으로 안 열리는 경우도 알 수 있게)
+  const toast = document.createElement('attchacha-toast');
+  toast.style.cssText = 'all:initial;position:fixed;right:20px;bottom:24px;z-index:2147483647;display:none;';
+  const troot = toast.attachShadow({ mode: 'closed' });
+  (document.body || document.documentElement).appendChild(toast);
+  let tt;
+  function say(msg, warn) {
+    troot.innerHTML = `<style>div{display:flex;align-items:center;gap:10px;max-width:340px;padding:12px 14px;border-radius:12px;background:#1A1C22;color:#fff;font:600 13px/1.5 'Pretendard',-apple-system,'Malgun Gothic',system-ui,sans-serif;letter-spacing:-.01em;box-shadow:0 12px 30px rgba(26,28,34,.28)}img{width:28px;height:28px;border-radius:8px;flex:none}b{color:${warn ? '#FFC24B' : '#8FB2FF'}}</style><div role="status"><img src="${alive() ? chrome.runtime.getURL('chacha.png') : ''}" alt="">${msg}</div>`;
+    toast.style.display = 'block';
+    clearTimeout(tt);
+    tt = setTimeout(() => { toast.style.display = 'none'; }, warn ? 6500 : 3500);
+  }
   root.querySelector('button').addEventListener('click', () => {
     hide();
-    if (!alive()) return alert('앗!차차가 업데이트됐어요. 이 페이지를 새로고침한 뒤 다시 드래그해 주세요.');
-    chrome.runtime.sendMessage({ type: 'scrap', text, url: location.href, title: document.title });
+    if (!alive()) return say('앗!차차가 업데이트됐어요. <b>이 페이지를 새로고침(F5)</b>한 뒤 다시 드래그해 주세요.', true);
+    const sel = text;
     getSelection().removeAllRanges();
+    try {
+      chrome.runtime.sendMessage({ type: 'scrap', text: sel, url: location.href, title: document.title }, (r) => {
+        if (chrome.runtime.lastError) return say('저장하지 못했어요. <b>페이지를 새로고침</b>한 뒤 다시 해 주세요.', true);
+        if (r && r.opened) say('사이드바에서 <b>날짜를 확인하고 저장</b>하세요.');
+        else say('담았어요! 오른쪽 사이드바의 <b>앗!차차 아이콘</b>을 눌러 저장을 마무리하세요.', true);
+      });
+    } catch (e) { say('앗!차차가 업데이트됐어요. <b>이 페이지를 새로고침(F5)</b>한 뒤 다시 드래그해 주세요.', true); }
   });
 })();
