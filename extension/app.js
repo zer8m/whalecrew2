@@ -32,6 +32,7 @@
     info: '<circle cx="12" cy="12" r="9"></circle><path d="M12 11v5M12 8h.01"></path>',
     cap: '<path d="m2 9 10-5 10 5-10 5z"></path><path d="M6 11.5V17c0 1.5 3 3 6 3s6-1.5 6-3v-5.5M22 9v6"></path>',
     flag: '<path d="M4 22V4a1 1 0 0 1 1-1h12l-2 4 2 4H5"></path>',
+    refresh: '<path d="M21 12a9 9 0 1 1-2.64-6.36L21 8"></path><path d="M21 3v5h-5"></path>',
     pen: '<path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"></path>',
   };
   const svg = (n, size, stroke, sw, style) =>
@@ -202,7 +203,7 @@
     const [y, m] = U.month;
     const head = mode === 'scrap'
       ? `<div style="display:flex;align-items:center;justify-content:space-between;height:40px;padding-left:4px;"><span style="font-size:16px;font-weight:700;letter-spacing:-.02em;">${y}년 ${m + 1}월</span><span style="display:flex;"><button class="ib press" data-act="month" data-arg="-1" aria-label="이전 달">${svg('left', 18, '#4B5261', 2)}</button><button class="ib press" data-act="month" data-arg="1" aria-label="다음 달">${svg('right', 18, '#4B5261', 2)}</button></span></div>`
-      : `<div style="display:flex;align-items:center;justify-content:center;gap:12px;height:40px;position:relative;"><button class="ib press" data-act="month" data-arg="-1" aria-label="이전 달">${svg('left', 18, '#4B5261', 2)}</button><span style="font-size:16px;font-weight:700;letter-spacing:-.02em;min-width:96px;text-align:center;">${y}년 ${m + 1}월</span><button class="ib press" data-act="month" data-arg="1" aria-label="다음 달">${svg('right', 18, '#4B5261', 2)}</button><button class="press" data-act="today" style="position:absolute;right:0;height:28px;padding:0 10px;border-radius:8px;border:1px solid #E1E6EE;background:#fff;font-size:12px;font-weight:600;color:#4B5261;cursor:pointer;">오늘</button></div>`;
+      : `<div style="display:flex;align-items:center;justify-content:center;gap:12px;height:40px;position:relative;">${refreshBtn()}<button class="ib press" data-act="month" data-arg="-1" aria-label="이전 달">${svg('left', 18, '#4B5261', 2)}</button><span style="font-size:16px;font-weight:700;letter-spacing:-.02em;min-width:96px;text-align:center;">${y}년 ${m + 1}월</span><button class="ib press" data-act="month" data-arg="1" aria-label="다음 달">${svg('right', 18, '#4B5261', 2)}</button><button class="press" data-act="today" style="position:absolute;right:0;height:28px;padding:0 10px;border-radius:8px;border:1px solid #E1E6EE;background:#fff;font-size:12px;font-weight:600;color:#4B5261;cursor:pointer;">오늘</button></div>`;
     return `<div class="card" style="padding:${mode === 'scrap' ? '6px 12px 10px' : '4px 12px 8px'};">${head}${weekHead}${monthGrid(y, m, sel, mode)}</div>`;
   }
   function vMain() {
@@ -585,6 +586,16 @@
   // 튜토리얼을 아직 안 봤으면 튜토리얼, 봤으면 목적지로
   const afterOnboard = () => { if (S.tutorialSeen) go('main'); else { U.tstep = 0; go('tutorial'); } };
 
+  function refreshBtn() {
+    const just = U.refreshedAt && Date.now() - U.refreshedAt < 2500;
+    // 겉에는 마지막으로 불러온 시각, 마우스를 올리면 학교 게시판 수집 시각
+    const f = U.fetchedAt ? new Date(U.fetchedAt) : null;
+    const got = f ? (midnight(f) < TODAY ? `${f.getMonth() + 1}/${f.getDate()} ` : '') + hm(f) : '';
+    const col = syncAt() ? hm(new Date(syncAt())) : '';
+    const tip = `새로고침${got ? ' · ' + got + ' 불러옴' : ''}${col ? ' · 학교 게시판 ' + col + ' 수집분' : ''}`;
+    return `<button class="press${U.refreshing ? ' spin' : ''}" data-act="refresh" title="${tip}" aria-label="${tip}" style="position:absolute;left:0;height:28px;padding:0 7px;border-radius:8px;border:1px solid #E1E6EE;background:#fff;display:inline-flex;align-items:center;gap:4px;cursor:pointer;color:${just ? '#2FBF71' : '#7B8494'};font-size:11px;font-weight:600;font-variant-numeric:tabular-nums;">${just ? svg('check', 13, '#2FBF71', 2.4) + '완료' : svg('refresh', 13, '#4B5261', 2.2) + (U.refreshing ? '' : got)}</button>`;
+  }
+
   // ───── 렌더 ─────
   const $ = (id) => document.getElementById(id);
   const side = $('side');
@@ -720,6 +731,7 @@
         renderSide(); break; }
       case 'board': { const no = +arg, off = S.offBoards || []; S.offBoards = off.includes(no) ? off.filter((x) => x !== no) : [...off, no]; save(); renderSide(); break; }
       case 'reload': location.reload(); break;
+      case 'refresh': manualRefresh(); break;
       case 'tutNext': U.tstep = Math.min((U.tstep || 0) + 1, TUT.length - 1); renderSide(); break;
       case 'tutPrev': U.tstep = Math.max((U.tstep || 0) - 1, 0); renderSide(); break;
       case 'tutDone': S.tutorialSeen = true; save(); go('main'); break;
@@ -773,6 +785,13 @@
 
   // ───── 드래그 스크랩 수신(content.js → background → storage) ─────
   const refreshNotices = () => chrome.runtime.sendMessage({ type: 'refresh' }).catch(() => {});
+  // 달력 옆 새로고침: 수집된 최신 공지·학사일정을 바로 다시 받아온다(학교 API는 하루 4회 수집 때만 호출)
+  function manualRefresh() {
+    if (U.refreshing) return;
+    U.refreshing = true; U.refreshedAt = 0; renderSide();
+    const done = () => { U.refreshing = false; U.refreshedAt = Date.now(); renderSide(); setTimeout(() => { if (Date.now() - U.refreshedAt >= 2400) renderSide(); }, 2500); };
+    chrome.runtime.sendMessage({ type: 'refresh' }).then(done, done);
+  }
   function takeScrap(p) {
     if (!p) return;
     chrome.storage.local.remove('pendingScrap');
@@ -797,6 +816,7 @@
   chrome.storage.onChanged.addListener(async (c) => {
     if (c.alerts) ALERTS = c.alerts.newValue || [];
     if (c.notices) NOTICES = c.notices.newValue || {};
+    if (c.fetchedAt) U.fetchedAt = c.fetchedAt.newValue;
     if (!ready) return;
     if (c.S && c.S.newValue && JSON.stringify(c.S.newValue) !== JSON.stringify(S)) S = await Core.normalize(c.S.newValue);
     if (c.pendingScrap && c.pendingScrap.newValue) return takeScrap(c.pendingScrap.newValue);
@@ -814,7 +834,8 @@
     U.view = !S.onboarded ? 'onboard' : S.tutorialSeen ? 'main' : 'tutorial';
     ready = true;
     renderSide();
-    const r = await chrome.storage.local.get(['pendingScrap', 'focus']);
+    const r = await chrome.storage.local.get(['pendingScrap', 'focus', 'fetchedAt']);
+    if (r.fetchedAt) { U.fetchedAt = r.fetchedAt; renderSide(); }
     takeScrap(r.pendingScrap);
     takeFocus(r.focus);
     refreshNotices();

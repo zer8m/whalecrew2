@@ -83,6 +83,11 @@ a[data-go],[data-act]{cursor:pointer}
 .tut-note img{width:32px;height:32px;border-radius:9px;flex:none}
 @media (prefers-reduced-motion:reduce){.tut-pop,.tut-note,.tut-btn,.tut-cursor{animation:none;opacity:1}.tut-sel,.tut-sel2{animation:none;background-size:100% 100%}.tut-cursor{display:none}}
 
+/* 새로고침 아이콘 회전 */
+.spin svg{animation:spin .9s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.spin svg{animation:none;opacity:.5}}
+
 /* 화면 전환 */
 @keyframes vInR{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:none}}
 @keyframes vInL{from{opacity:0;transform:translateX(-20px)}to{opacity:1;transform:none}}

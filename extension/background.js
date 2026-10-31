@@ -52,7 +52,7 @@ async function doRefresh() {
   } catch (e) {
     if (notices._academic) next._academic = notices._academic;
   }
-  await chrome.storage.local.set({ notices: next, seen });
+  await chrome.storage.local.set({ notices: next, seen, ...(ids.some((id) => next[id] && next[id] !== notices[id]) || next._academic !== notices._academic ? { fetchedAt: Date.now() } : {}) });
   for (const n of fresh.slice(0, 5))
     await pushAlert(S, { itemId: 'n-' + n.id, type: 'notice', chip: '새 공지', title: n.title, sub: (n.writer || n.tag) + ' · 달력 추가됨' });
 }
@@ -179,6 +179,6 @@ chrome.runtime.onMessage.addListener((m, sender, reply) => {
     if (sidebar) { sidebar.setBadgeText({ text: '1' }); sidebar.setBadgeBackgroundColor({ color: '#2B6CFF' }); }
     openSidebar(sender.tab && sender.tab.windowId).then((opened) => reply({ opened }));
     return true; // reply를 비동기로 보낸다
-  } else if (m.type === 'refresh') refresh().then(tick);
+  } else if (m.type === 'refresh') { refresh().then(tick).then(() => reply({ ok: true })); return true; }
   else if (m.type === 'clearBadge' && sidebar) sidebar.setBadgeText({ text: '' });
 });
