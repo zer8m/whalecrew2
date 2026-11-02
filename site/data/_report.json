@@ -1,5 +1,5 @@
 {
- "at": "2026-11-01T12:57:24.330Z",
+ "at": "2026-11-02T05:17:32.500Z",
  "calls": 128,
  "fails": 0,
  "boards": {
@@ -118,8 +118,8 @@
   "324": {
    "name": "공지사항 > 사업단소식",
    "inList": true,
-   "rows": 81,
-   "latest": "2026-10-29",
+   "rows": 82,
+   "latest": "2026-11-02",
    "items": 39,
    "url": true
   },
@@ -207,7 +207,7 @@
    "name": "게시판 > 학부공지",
    "inList": true,
    "rows": 43,
-   "latest": "2026-10-29",
+   "latest": "2026-11-02",
    "items": 18,
    "url": true
   },
@@ -286,16 +286,16 @@
   "944": {
    "name": "공지사항-학부",
    "inList": true,
-   "rows": 35,
-   "latest": "2026-10-29",
-   "items": 21,
+   "rows": 36,
+   "latest": "2026-11-02",
+   "items": 22,
    "url": true
   },
   "969": {
    "name": "공지사항",
    "inList": true,
-   "rows": 37,
-   "latest": "2026-10-29",
+   "rows": 38,
+   "latest": "2026-11-02",
    "items": 13,
    "url": true
   },
@@ -566,9 +566,9 @@
   "2241": {
    "name": "학부공지",
    "inList": true,
-   "rows": 188,
-   "latest": "2026-10-30",
-   "items": 17,
+   "rows": 189,
+   "latest": "2026-11-02",
+   "items": 16,
    "url": false
   },
   "2251": {
@@ -623,7 +623,7 @@
    "name": "공지사항(학부)",
    "inList": true,
    "rows": 97,
-   "latest": "2026-10-28",
+   "latest": "2026-11-02",
    "items": 25,
    "url": true
   },
@@ -750,16 +750,16 @@
   "3373": {
    "name": "알림마당 > 공지사항",
    "inList": true,
-   "rows": 257,
-   "latest": "2026-10-29",
-   "items": 26,
+   "rows": 259,
+   "latest": "2026-11-02",
+   "items": 23,
    "url": true
   },
   "3409": {
    "name": "1. 학부공지사항",
    "inList": true,
-   "rows": 8,
-   "latest": "2026-09-09",
+   "rows": 9,
+   "latest": "2026-11-02",
    "items": 5,
    "url": true
   },
