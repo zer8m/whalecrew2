@@ -1,5 +1,5 @@
 {
- "at": "2026-11-03T05:59:09.751Z",
+ "at": "2026-11-03T14:01:57.196Z",
  "calls": 128,
  "fails": 0,
  "boards": {
@@ -119,7 +119,7 @@
    "name": "공지사항 > 사업단소식",
    "inList": true,
    "rows": 82,
-   "latest": "2026-11-02",
+   "latest": "2026-11-03",
    "items": 39,
    "url": true
   },
@@ -190,17 +190,17 @@
   "580": {
    "name": "공지사항 - 대학",
    "inList": true,
-   "rows": 54,
-   "latest": "2026-10-30",
-   "items": 28,
+   "rows": 55,
+   "latest": "2026-11-03",
+   "items": 29,
    "url": true
   },
   "603": {
    "name": "공지사항-학부",
    "inList": true,
-   "rows": 176,
-   "latest": "2026-10-29",
-   "items": 33,
+   "rows": 178,
+   "latest": "2026-11-03",
+   "items": 32,
    "url": true
   },
   "617": {
@@ -214,7 +214,7 @@
   "624": {
    "name": "공지사항",
    "inList": true,
-   "rows": 126,
+   "rows": 127,
    "latest": "2026-11-03",
    "items": 24,
    "url": true
@@ -263,7 +263,7 @@
    "name": "커뮤니티 > 학부공지사항",
    "inList": true,
    "rows": 21,
-   "latest": "2026-10-26",
+   "latest": "2026-11-03",
    "items": 11,
    "url": true
   },
@@ -303,7 +303,7 @@
    "name": "공지사항 - 학부",
    "inList": true,
    "rows": 65,
-   "latest": "2026-11-02",
+   "latest": "2026-11-03",
    "items": 24,
    "url": true
   },
@@ -366,8 +366,8 @@
   "1192": {
    "name": "학부 공지사항",
    "inList": true,
-   "rows": 249,
-   "latest": "2026-11-02",
+   "rows": 250,
+   "latest": "2026-11-03",
    "items": 29,
    "url": true
   },
@@ -390,7 +390,7 @@
   "1228": {
    "name": "공지사항 - 학부",
    "inList": true,
-   "rows": 195,
+   "rows": 196,
    "latest": "2026-11-03",
    "items": 19,
    "url": true
@@ -486,8 +486,8 @@
   "1579": {
    "name": "공지사항 > 학부",
    "inList": true,
-   "rows": 48,
-   "latest": "2026-10-22",
+   "rows": 49,
+   "latest": "2026-11-03",
    "items": 23,
    "url": true
   },
@@ -622,8 +622,8 @@
   "2583": {
    "name": "공지사항(학부)",
    "inList": true,
-   "rows": 98,
-   "latest": "2026-11-02",
+   "rows": 99,
+   "latest": "2026-11-03",
    "items": 25,
    "url": true
   },
@@ -742,17 +742,17 @@
   "3236": {
    "name": "열린마당 > 공지사항",
    "inList": true,
-   "rows": 392,
-   "latest": "2026-11-02",
+   "rows": 395,
+   "latest": "2026-11-03",
    "items": 6,
    "url": false
   },
   "3373": {
    "name": "알림마당 > 공지사항",
    "inList": true,
-   "rows": 261,
+   "rows": 262,
    "latest": "2026-11-03",
-   "items": 22,
+   "items": 23,
    "url": true
   },
   "3409": {
@@ -830,16 +830,16 @@
   "4383": {
    "name": "공지사항",
    "inList": true,
-   "rows": 110,
-   "latest": "2026-11-02",
+   "rows": 111,
+   "latest": "2026-11-03",
    "items": 13,
    "url": true
   },
   "4388": {
    "name": "취업소식",
    "inList": true,
-   "rows": 42,
-   "latest": "2026-11-02",
+   "rows": 43,
+   "latest": "2026-11-03",
    "items": 4,
    "url": true
   },
