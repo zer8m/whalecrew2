@@ -1,5 +1,5 @@
 {
- "at": "2026-11-05T05:56:29.067Z",
+ "at": "2026-11-05T14:24:29.332Z",
  "calls": 128,
  "fails": 0,
  "boards": {
@@ -182,8 +182,8 @@
   "544": {
    "name": "공지사항",
    "inList": true,
-   "rows": 47,
-   "latest": "2026-11-04",
+   "rows": 48,
+   "latest": "2026-11-05",
    "items": 30,
    "url": true
   },
@@ -198,8 +198,8 @@
   "603": {
    "name": "공지사항-학부",
    "inList": true,
-   "rows": 178,
-   "latest": "2026-11-03",
+   "rows": 179,
+   "latest": "2026-11-05",
    "items": 32,
    "url": true
   },
@@ -335,7 +335,7 @@
    "name": "학부공지사항",
    "inList": true,
    "rows": 62,
-   "latest": "2026-11-03",
+   "latest": "2026-11-05",
    "items": 33,
    "url": true
   },
@@ -366,9 +366,9 @@
   "1192": {
    "name": "학부 공지사항",
    "inList": true,
-   "rows": 252,
-   "latest": "2026-11-04",
-   "items": 29,
+   "rows": 253,
+   "latest": "2026-11-05",
+   "items": 28,
    "url": true
   },
   "1193": {
@@ -382,7 +382,7 @@
   "1211": {
    "name": "학부 공지사항",
    "inList": true,
-   "rows": 430,
+   "rows": 432,
    "latest": "2026-11-05",
    "items": 24,
    "url": true
@@ -494,9 +494,9 @@
   "1581": {
    "name": "공지사항 > 취업",
    "inList": true,
-   "rows": 18,
-   "latest": "2026-10-07",
-   "items": 9,
+   "rows": 19,
+   "latest": "2026-11-05",
+   "items": 10,
    "url": true
   },
   "1587": {
@@ -742,9 +742,9 @@
   "3236": {
    "name": "열린마당 > 공지사항",
    "inList": true,
-   "rows": 396,
-   "latest": "2026-11-04",
-   "items": 8,
+   "rows": 398,
+   "latest": "2026-11-05",
+   "items": 9,
    "url": false
   },
   "3373": {
