@@ -1,14 +1,14 @@
 {
- "at": "2026-11-05T14:24:29.332Z",
+ "at": "2026-11-06T05:52:27.987Z",
  "calls": 128,
  "fails": 0,
  "boards": {
   "139": {
    "name": "학과공지",
    "inList": true,
-   "rows": 31,
-   "latest": "2026-11-02",
-   "items": 17,
+   "rows": 32,
+   "latest": "2026-11-06",
+   "items": 18,
    "url": true
   },
   "171": {
@@ -22,7 +22,7 @@
   "182": {
    "name": "학부 공지",
    "inList": true,
-   "rows": 398,
+   "rows": 397,
    "latest": "2026-11-03",
    "items": 27,
    "url": true
@@ -119,7 +119,7 @@
    "name": "공지사항 > 사업단소식",
    "inList": true,
    "rows": 82,
-   "latest": "2026-11-04",
+   "latest": "2026-11-06",
    "items": 40,
    "url": true
   },
@@ -190,7 +190,7 @@
   "580": {
    "name": "공지사항 - 대학",
    "inList": true,
-   "rows": 55,
+   "rows": 54,
    "latest": "2026-11-03",
    "items": 29,
    "url": true
@@ -198,7 +198,7 @@
   "603": {
    "name": "공지사항-학부",
    "inList": true,
-   "rows": 179,
+   "rows": 178,
    "latest": "2026-11-05",
    "items": 32,
    "url": true
@@ -262,9 +262,9 @@
   "846": {
    "name": "커뮤니티 > 학부공지사항",
    "inList": true,
-   "rows": 19,
+   "rows": 18,
    "latest": "2026-11-03",
-   "items": 9,
+   "items": 8,
    "url": true
   },
   "869": {
@@ -335,7 +335,7 @@
    "name": "학부공지사항",
    "inList": true,
    "rows": 62,
-   "latest": "2026-11-05",
+   "latest": "2026-11-06",
    "items": 33,
    "url": true
   },
@@ -350,7 +350,7 @@
   "1170": {
    "name": "공지사항 - 학부",
    "inList": true,
-   "rows": 300,
+   "rows": 299,
    "latest": "2026-11-05",
    "items": 30,
    "url": false
@@ -383,8 +383,8 @@
    "name": "학부 공지사항",
    "inList": true,
    "rows": 432,
-   "latest": "2026-11-05",
-   "items": 24,
+   "latest": "2026-11-06",
+   "items": 23,
    "url": true
   },
   "1228": {
@@ -438,7 +438,7 @@
   "1442": {
    "name": "공지사항",
    "inList": true,
-   "rows": 82,
+   "rows": 81,
    "latest": "2026-10-22",
    "items": 22,
    "url": true
@@ -446,8 +446,8 @@
   "1489": {
    "name": "게시판 > 공지사항",
    "inList": true,
-   "rows": 23,
-   "latest": "2026-11-03",
+   "rows": 24,
+   "latest": "2026-11-06",
    "items": 12,
    "url": true
   },
@@ -550,8 +550,8 @@
   "2003": {
    "name": "대학 > 대학공지",
    "inList": true,
-   "rows": 336,
-   "latest": "2026-11-04",
+   "rows": 339,
+   "latest": "2026-11-06",
    "items": 26,
    "url": true
   },
@@ -566,7 +566,7 @@
   "2241": {
    "name": "학부공지",
    "inList": true,
-   "rows": 192,
+   "rows": 191,
    "latest": "2026-11-04",
    "items": 16,
    "url": false
