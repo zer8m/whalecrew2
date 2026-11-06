@@ -1,5 +1,5 @@
 {
- "at": "2026-11-06T05:52:27.987Z",
+ "at": "2026-11-06T14:00:15.069Z",
  "calls": 128,
  "fails": 0,
  "boards": {
@@ -118,7 +118,7 @@
   "324": {
    "name": "공지사항 > 사업단소식",
    "inList": true,
-   "rows": 82,
+   "rows": 81,
    "latest": "2026-11-06",
    "items": 40,
    "url": true
@@ -126,8 +126,8 @@
   "353": {
    "name": "커뮤니티 > 학부공지사항",
    "inList": true,
-   "rows": 22,
-   "latest": "2026-11-03",
+   "rows": 24,
+   "latest": "2026-11-06",
    "items": 11,
    "url": true
   },
@@ -142,8 +142,8 @@
   "402": {
    "name": "정보광장 > 공지사항",
    "inList": true,
-   "rows": 10,
-   "latest": "2026-10-15",
+   "rows": 11,
+   "latest": "2026-11-06",
    "items": 5,
    "url": true
   },
@@ -182,17 +182,17 @@
   "544": {
    "name": "공지사항",
    "inList": true,
-   "rows": 48,
-   "latest": "2026-11-05",
-   "items": 30,
+   "rows": 50,
+   "latest": "2026-11-06",
+   "items": 32,
    "url": true
   },
   "580": {
    "name": "공지사항 - 대학",
    "inList": true,
-   "rows": 54,
-   "latest": "2026-11-03",
-   "items": 29,
+   "rows": 55,
+   "latest": "2026-11-06",
+   "items": 30,
    "url": true
   },
   "603": {
@@ -238,9 +238,9 @@
   "725": {
    "name": "간호학과 > 공지사항 > 학부",
    "inList": true,
-   "rows": 45,
-   "latest": "2026-11-03",
-   "items": 39,
+   "rows": 44,
+   "latest": "2026-11-06",
+   "items": 38,
    "url": true
   },
   "746": {
@@ -294,9 +294,9 @@
   "969": {
    "name": "공지사항",
    "inList": true,
-   "rows": 39,
-   "latest": "2026-11-03",
-   "items": 13,
+   "rows": 38,
+   "latest": "2026-11-06",
+   "items": 14,
    "url": true
   },
   "1044": {
@@ -327,7 +327,7 @@
    "name": "학과 공지사항",
    "inList": true,
    "rows": 10,
-   "latest": "2026-11-02",
+   "latest": "2026-11-06",
    "items": 5,
    "url": true
   },
@@ -343,7 +343,7 @@
    "name": "학부 공지사항",
    "inList": true,
    "rows": 67,
-   "latest": "2026-11-04",
+   "latest": "2026-11-06",
    "items": 19,
    "url": true
   },
@@ -366,7 +366,7 @@
   "1192": {
    "name": "학부 공지사항",
    "inList": true,
-   "rows": 253,
+   "rows": 248,
    "latest": "2026-11-05",
    "items": 28,
    "url": true
@@ -384,7 +384,7 @@
    "inList": true,
    "rows": 432,
    "latest": "2026-11-06",
-   "items": 23,
+   "items": 25,
    "url": true
   },
   "1228": {
@@ -438,7 +438,7 @@
   "1442": {
    "name": "공지사항",
    "inList": true,
-   "rows": 81,
+   "rows": 80,
    "latest": "2026-10-22",
    "items": 22,
    "url": true
@@ -494,9 +494,9 @@
   "1581": {
    "name": "공지사항 > 취업",
    "inList": true,
-   "rows": 19,
+   "rows": 18,
    "latest": "2026-11-05",
-   "items": 10,
+   "items": 9,
    "url": true
   },
   "1587": {
@@ -542,7 +542,7 @@
   "1845": {
    "name": "정보마당 > 공지사항",
    "inList": true,
-   "rows": 150,
+   "rows": 146,
    "latest": "2026-11-04",
    "items": 37,
    "url": true
@@ -550,7 +550,7 @@
   "2003": {
    "name": "대학 > 대학공지",
    "inList": true,
-   "rows": 339,
+   "rows": 337,
    "latest": "2026-11-06",
    "items": 26,
    "url": true
@@ -734,23 +734,23 @@
   "3132": {
    "name": "장학금안내",
    "inList": true,
-   "rows": 21,
+   "rows": 18,
    "latest": "2026-09-10",
-   "items": 18,
+   "items": 16,
    "url": true
   },
   "3236": {
    "name": "열린마당 > 공지사항",
    "inList": true,
-   "rows": 398,
-   "latest": "2026-11-05",
-   "items": 9,
+   "rows": 395,
+   "latest": "2026-11-06",
+   "items": 8,
    "url": false
   },
   "3373": {
    "name": "알림마당 > 공지사항",
    "inList": true,
-   "rows": 263,
+   "rows": 259,
    "latest": "2026-11-05",
    "items": 23,
    "url": true
@@ -838,7 +838,7 @@
   "4388": {
    "name": "취업소식",
    "inList": true,
-   "rows": 44,
+   "rows": 43,
    "latest": "2026-11-04",
    "items": 4,
    "url": true
@@ -846,8 +846,8 @@
   "4479": {
    "name": "커뮤니티 > 공지사항",
    "inList": true,
-   "rows": 22,
-   "latest": "2026-11-03",
+   "rows": 24,
+   "latest": "2026-11-06",
    "items": 11,
    "url": false
   },
@@ -911,7 +911,7 @@
    "name": "sis notice",
    "inList": true,
    "rows": 7,
-   "latest": "2026-11-03",
+   "latest": "2026-11-06",
    "items": 2,
    "url": true
   },
