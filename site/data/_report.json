@@ -1,12 +1,12 @@
 {
- "at": "2026-11-07T12:44:36.199Z",
+ "at": "2026-11-08T05:22:22.280Z",
  "calls": 128,
  "fails": 0,
  "boards": {
   "139": {
    "name": "학과공지",
    "inList": true,
-   "rows": 32,
+   "rows": 31,
    "latest": "2026-11-06",
    "items": 18,
    "url": true
@@ -342,7 +342,7 @@
   "1146": {
    "name": "학부 공지사항",
    "inList": true,
-   "rows": 67,
+   "rows": 65,
    "latest": "2026-11-06",
    "items": 19,
    "url": true
@@ -366,7 +366,7 @@
   "1192": {
    "name": "학부 공지사항",
    "inList": true,
-   "rows": 246,
+   "rows": 245,
    "latest": "2026-11-05",
    "items": 28,
    "url": true
@@ -382,7 +382,7 @@
   "1211": {
    "name": "학부 공지사항",
    "inList": true,
-   "rows": 427,
+   "rows": 426,
    "latest": "2026-11-06",
    "items": 25,
    "url": true
@@ -566,7 +566,7 @@
   "2241": {
    "name": "학부공지",
    "inList": true,
-   "rows": 190,
+   "rows": 188,
    "latest": "2026-11-04",
    "items": 16,
    "url": false
@@ -622,7 +622,7 @@
   "2583": {
    "name": "공지사항(학부)",
    "inList": true,
-   "rows": 101,
+   "rows": 99,
    "latest": "2026-11-04",
    "items": 24,
    "url": true
@@ -910,7 +910,7 @@
   "5695": {
    "name": "sis notice",
    "inList": true,
-   "rows": 7,
+   "rows": 6,
    "latest": "2026-11-06",
    "items": 2,
    "url": true
@@ -990,9 +990,9 @@
   "7087": {
    "name": "학부공지_비교과",
    "inList": true,
-   "rows": 31,
+   "rows": 29,
    "latest": "2026-09-10",
-   "items": 15,
+   "items": 14,
    "url": false
   },
   "7164": {
